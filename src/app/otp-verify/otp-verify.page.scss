@@ -1,0 +1,57 @@
+.top-logo-section {
+    height: 50%;
+}
+
+
+.middle-content {
+    text-align: center;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+
+.custom-input-otp {
+    border: 3px solid #561d5e;
+    // margin: 46px 20px;
+    border-radius: 10px;
+}
+
+
+
+.middle-content {
+    text-align: center;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    margin: 0px 30px;
+}
+
+
+.input-content {
+    height: 50%;
+}
+
+
+.otp-inputs ion-input {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    border-radius: 50%;
+    --background: #ebebeb;
+    --padding-start: 0px;
+    line-height: 32px;
+    color: #561d5e;
+}
+
+
+.otp-heading {
+    margin: 0;
+    color: #561d5e;
+    font-style: italic;
+}

@@ -1,17 +1,100 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
+
+    <ion-row>
+
+      <ion-col col-6>
+        <ion-title>
+          <img class="header-logo" src="assets/imgs/Icon.png">
+          <span class="header-name"> Home </span>
+        </ion-title>
+      </ion-col>
+      <ion-col col-6 class="text-right">
+        <a>
+          <ion-icon name="ellipse"> </ion-icon>
+        </a>
+      </ion-col>
+
+    </ion-row>
+
+
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+
+
+  <div class="jobs-list">
+    <p class="heading-section" *ngIf="upcoming.length!=0">Upcoming Jobs Request</p>
+
+    <ion-row>
+      <ion-col size="6" *ngFor="let upcomingjobs of upcoming">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>
+              <ion-icon name="briefcase-outline"></ion-icon> {{upcomingjobs.title}}
+            </ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content>
+            <p class="small-font">{{upcomingjobs.requirement | slice:0:50}} </p>
+            <p class="small-font pref-date">Service Date: {{upcomingjobs.date}} </p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+
+    <p class="heading-section" *ngIf="today.length!=0">Today Jobs Request</p>
+
+
+    <ion-row>
+      <ion-col size="6" *ngFor="let todayjobs of today">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>
+              <ion-icon name="briefcase-outline"></ion-icon> {{todayjobs.title}}
+            </ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content>
+            <p class="small-font">{{todayjobs.requirement | slice:0:50}} </p>
+            <p class="small-font pref-date">Service Date: {{todayjobs.date}} </p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <p class="heading-section" *ngIf="category.length!=0">Jobs Near You</p>
+
+
+    <ion-row>
+      <ion-col size="6" *ngFor="let categoryjobs of category">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>
+              <ion-icon name="briefcase-outline"></ion-icon> {{categoryjobs.title}}
+            </ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content>
+            <p class="small-font">{{categoryjobs.requirement | slice:0:50}} </p>
+            <p class="small-font pref-date">Service Date: {{categoryjobs.date}} </p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+
+
+
+  </div>
+
+
+
+
+
+
 </ion-content>

@@ -1,0 +1,52 @@
+<ion-content>
+
+  <div class="top-logo-section theme-color-back">
+    <div class="middle-content">
+      <img src="assets/imgs/logo.png">
+    </div>
+  </div>
+
+  <div class="input-content" *ngIf="!ShowEnterOTP">
+    <div class="middle-content ">
+      <ion-item class="custom-input-otp">
+        <ion-label position="floating">Email ID / Phone Number</ion-label>
+        <ion-input [(ngModel)]="username"></ion-input>
+      </ion-item>
+      <br>
+      <ion-button [disabled]="username.length==0" (click)="LoginNow()" class="theme-btn" expand="block">Login / SignUp
+      </ion-button>
+    </div>
+  </div>
+
+  <div class="input-content otp-inputs" *ngIf="ShowEnterOTP">
+
+    <div class="middle-content ">
+      <h4 class="otp-heading">
+        Please enter OTP recieved
+      </h4>
+      <ion-row text-center>
+        <ion-col>
+          <ion-input #otp1 required maxLength="1" (keyup)="otpController($event,otp2,'')">
+          </ion-input>
+          <ion-input #otp2 required maxLength="1" (keyup)="otpController($event,otp3,otp1)">
+          </ion-input>
+          <ion-input #otp3 required maxLength="1" (keyup)="otpController($event,otp4,otp2)">
+          </ion-input>
+          <ion-input #otp4 required maxLength="1" (keyup)="otpController($event,'',otp3)" (input)="VerifyNow()">
+          </ion-input>
+        </ion-col>
+      </ion-row>
+      <div class="mtb-10">
+        <div *ngIf="TimerTextShow">Resend OTP in : <span id="timer"></span></div>
+
+        <div *ngIf="!TimerTextShow"><i>Didn't recieved OTP ?</i>&nbsp;&nbsp;&nbsp;<a
+            class="text-primary text-decoration-underline" style="cursor: pointer;" (click)="LoginNow()">Resend OTP</a>
+        </div>
+      </div>
+      <ion-button [disabled]="username.length==0" (click)="VerifyNow()" class="theme-btn" expand="block">Verify OTP
+      </ion-button>
+    </div>
+
+  </div>
+
+</ion-content>

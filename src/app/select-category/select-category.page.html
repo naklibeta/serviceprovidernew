@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> Select Categories </ion-title>
+    <a (click)="Back()">Done </a>
+  </ion-toolbar>
+
+
+</ion-header>
+
+<ion-content>
+
+
+
+
+
+
+
+  <div class="wrapper">
+    <ul>
+      <li *ngFor="let category of CategoryData; let i=index;">
+        <input type="checkbox" id="list-item-{{i}}" class="subcat-inputs">
+        <label for="list-item-{{i}}" class="first" (click)="SelectAllSubcats(i)">
+          <ion-icon name="caret-down-outline"></ion-icon> {{category.subCateName}}
+        </label>
+        <ul *ngFor="let subcategory of category.serviceDetails">
+
+
+          <li class="subcategorylist">
+            <ion-item>
+              <ion-label>{{subcategory.name}}</ion-label>
+              <ion-checkbox slot="end" (click)="SelectCategory(subcategory)" class="subcat-checkbox-{{i}}">
+              </ion-checkbox>
+            </ion-item>
+          </li>
+
+
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+
+
+</ion-content>

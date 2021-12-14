@@ -24,3 +24,44 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+
+.theme-color-back {
+    background: #f7c704;
+}
+
+
+ion-toolbar {
+    --background: #f7c704 !important;
+}
+
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.theme-btn {
+    --background: #561d5e !important;
+}
+
+.mtb-10 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+.header-logo {
+    width: 34px;
+    position: absolute;
+    left: 2px;
+    top: -4px;
+}
+
+.header-name {
+    margin-left: 30px;
+}
