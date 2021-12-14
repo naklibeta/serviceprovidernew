@@ -37,6 +37,10 @@ const routes: Routes = [
   {
     path: 'select-category',
     loadChildren: () => import('./select-category/select-category.module').then(m => m.SelectCategoryPageModule)
+  },
+  {
+    path: 'job-details',
+    loadChildren: () => import('./job-details/job-details.module').then( m => m.JobDetailsPageModule)
   }
 ];
 @NgModule({
