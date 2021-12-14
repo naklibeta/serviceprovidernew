@@ -26,6 +26,14 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 
+ion-content {
+    --background: #fbfbfb;
+}
+
+
+* {
+    font-family: "Poppins", sans-serif;
+}
 
 .theme-color-back {
     background: #f7c704;
@@ -52,6 +60,10 @@ ion-toolbar {
 .mtb-10 {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.mt-20 {
+    margin-top: 40px;
 }
 
 

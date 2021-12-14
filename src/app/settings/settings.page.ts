@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsPage implements OnInit {
 
-  constructor() { }
+  constructor(public apiService: ApiService, public router: Router) { }
 
   ngOnInit() {
+
+  }
+
+  ProfessionalDetails() {
+    this.router.navigate(['/professional-details']);
   }
 
 }

@@ -13,6 +13,7 @@ export class Tab1Page implements OnInit {
   public today: any = [];
   public category: any = [];
   public providerId: any = '';
+  public IntervalVar: any;
 
   constructor(public apiService: ApiService, public router: Router) {
     let UserData = this.apiService.Get_UserData();
@@ -20,17 +21,23 @@ export class Tab1Page implements OnInit {
   }
 
   ngOnInit() {
-    let env = this;
+
     this.LoadJobs();
 
-    setInterval(() => {
+  }
+
+  ionViewDidEnter() {
+    let env = this;
+    this.IntervalVar = setInterval(() => {
       env.LoadJobs();
     }, 10000);
-
-
-
-
   }
+
+  ionViewDidLeave() {
+    clearInterval(this.IntervalVar);
+  }
+
+  //
 
   LoadJobs() {
     this.apiService.Common_POST('/getJobs', { provider_id: this.providerId }).subscribe((results) => {

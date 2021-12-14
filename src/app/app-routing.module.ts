@@ -40,7 +40,11 @@ const routes: Routes = [
   },
   {
     path: 'job-details',
-    loadChildren: () => import('./job-details/job-details.module').then( m => m.JobDetailsPageModule)
+    loadChildren: () => import('./job-details/job-details.module').then(m => m.JobDetailsPageModule)
+  },
+  {
+    path: 'professional-details',
+    loadChildren: () => import('./settings/professional-details/professional-details.module').then(m => m.ProfessionalDetailsPageModule)
   }
 ];
 @NgModule({

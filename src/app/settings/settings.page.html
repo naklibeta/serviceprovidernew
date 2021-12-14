@@ -1,9 +1,54 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>settings</ion-title>
+    <ion-title>Settings</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <ion-item>
+    <ion-avatar slot="start">
+      <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+    </ion-avatar>
+    <ion-label>
+      <h2>UserName </h2>
+      <p>user@gmail.com</p>
+      <p class="color-theme">Profile Activated</p>
+    </ion-label>
+  </ion-item>
+
+
+  <div class="mt-20">
+
+    <ion-row class="menu-rows">
+      <ion-col size="2">
+        <ion-icon name="person-add-outline"></ion-icon>
+      </ion-col>
+      <ion-col size="8">
+        <span class="menu-label"> Registration </span>
+      </ion-col>
+      <ion-col size="2">
+        <ion-icon name="checkmark-outline" color="success"></ion-icon>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="menu-rows" (click)="ProfessionalDetails()">
+      <ion-col size="2">
+        <ion-icon name="person-add-outline"></ion-icon>
+      </ion-col>
+      <ion-col size="8">
+        <span class="menu-label"> Professional Details </span>
+      </ion-col>
+      <ion-col size="2">
+        <ion-icon name="checkmark-outline"></ion-icon>
+      </ion-col>
+    </ion-row>
+
+  </div>
+
+
+
+
+
 
 </ion-content>

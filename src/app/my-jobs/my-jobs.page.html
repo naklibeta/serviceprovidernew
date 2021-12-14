@@ -1,9 +1,33 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>my-jobs</ion-title>
+    <ion-title>My Jobs</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+
+  <ion-card *ngFor="let joblist of MyJobs">
+
+    <ion-card-content>
+      <ion-row>
+
+        <ion-row>
+          <ion-col size="8">
+            <ion-card-title>{{joblist.title}}</ion-card-title>
+          </ion-col>
+          <ion-col size="4">
+            <span class="status-txt">Send Quotation </span>
+            <ion-icon name="ellipse" class="color-theme"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <p class="date text-detail">Preferred Date:- {{apiService.formatDate(joblist.date)}} </p>
+        <p class="text-detail"> {{joblist.detail | slice:0:100}} </p>
+
+
+      </ion-row>
+
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>

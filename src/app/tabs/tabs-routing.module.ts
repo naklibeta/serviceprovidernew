@@ -19,6 +19,18 @@ const routes: Routes = [
         path: 'tab3',
         loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
       },
+
+      {
+        path: 'myjobs',
+        loadChildren: () => import('../../app/my-jobs/my-jobs.module').then(m => m.MyJobsPageModule)
+      },
+
+      {
+        path: 'settings',
+        loadChildren: () => import('../../app/settings/settings.module').then(m => m.SettingsPageModule)
+      },
+
+
       {
         path: '',
         redirectTo: '/tabs/tab1',
@@ -36,4 +48,4 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }
