@@ -38,6 +38,14 @@ export class ApiService {
     return JSON.parse(User);
   }
 
+  public Get_ProviderId() {
+    let User = localStorage.getItem('UserData');
+    let UserD = JSON.parse(User);
+
+    return UserD.providerId;
+  }
+
+
 
   formatDate(dateP: any) {
     var d = new Date(dateP),

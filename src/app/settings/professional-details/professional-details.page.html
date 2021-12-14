@@ -6,6 +6,54 @@
 
 <ion-content>
 
-  <ion-button color="themepurple" expand="block"> </ion-button>
+  <div class="form-section">
+
+    <form #regForm="ngForm" (ngSubmit)="UpdateProNow(regForm.value)">
+
+
+      <ion-item>
+        <ion-label position="floating">Highest Degree Name</ion-label>
+        <ion-input [(ngModel)]="ProviderData.degree" type="text" name="degree"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Highest Qualification</ion-label>
+        <ion-select type="text" [(ngModel)]="ProviderData.education" name="education">
+          <ion-select-option value="{{degree.name}}" *ngFor="let degree of AllDegress">
+            {{degree.name}} </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Highest Qualification Certificate</ion-label>
+
+        <ion-icon name="camera-outline" class="camera-icon" (click)="StartCamera()"></ion-icon>
+
+        <img [src]="ProviderData.certificate" class="cert-img">
+
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Occupation / Business Name</ion-label>
+        <ion-input type="text" [(ngModel)]="ProviderData.occupation" name="occupation"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">GSTIN (Optional)</ion-label>
+        <ion-input type="text" [(ngModel)]="ProviderData.gstin" name="gstin"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Tell us about yourself</ion-label>
+        <ion-textarea type="text" [(ngModel)]="ProviderData.aboutUs" name="aboutUs"></ion-textarea>
+      </ion-item>
+
+      <br><br>
+      <ion-button [disabled]="!regForm.valid" type="submit" class="theme-btn" expand="block">Submit
+      </ion-button>
+
+    </form>
+
+  </div>
 
 </ion-content>
