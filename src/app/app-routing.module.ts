@@ -47,9 +47,10 @@ const routes: Routes = [
     loadChildren: () => import('./settings/professional-details/professional-details.module').then(m => m.ProfessionalDetailsPageModule)
   },
   {
-    path: 'kyc',
-    loadChildren: () => import('./settings/professional-details/kyc/kyc.module').then(m => m.KycPageModule)
+    path: 'quotation',
+    loadChildren: () => import('./quotation/quotation.module').then(m => m.QuotationPageModule)
   }
+
 ];
 @NgModule({
   imports: [
