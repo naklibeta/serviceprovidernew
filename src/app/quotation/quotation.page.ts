@@ -12,6 +12,12 @@ export class QuotationPage implements OnInit {
   public JobDetails: any = {};
   public JobId: any;
 
+  public CoreAmount: any = 0;
+  public CGST: any = 0;
+  public SGST: any = 0;
+  public IGST: any = 0;
+  public TotalAmount: any = 0;
+
   constructor(public apiService: ApiService, public router: Router) { }
 
   ngOnInit() {
@@ -37,5 +43,26 @@ export class QuotationPage implements OnInit {
     }, err => {
       this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
     });
+  }
+
+
+  AmountChanged(target: any) {
+
+    let value = target.value;
+    this.TotalAmount = value;
+
+  }
+
+  TaxChanged(target: any, type) {
+
+    let targetval = target.value;
+
+    if (type == 'CGST') {
+
+      let cgstamount = (targetval / 100) * this.CoreAmount;
+      this.TotalAmount = cgstamount + this.CoreAmount;
+
+    }
+
   }
 }
