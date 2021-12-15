@@ -1,8 +1,14 @@
+h6 {
+ margin: auto 0;
+}
+
 ion-grid {
     margin: 0 10px;
 }
 
 ion-input {
     border: 1px solid #561d5e;
-    border-radius: 5px
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 20px;
 }
