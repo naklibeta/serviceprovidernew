@@ -1,5 +1,28 @@
+.tag-con {
+    padding-top: 10px; padding-bottom: 0;
+}
+
+.tag {
+    font-size: 14px; font-weight: 500; margin-bottom: 0;
+}
+
+.date-tag-con {
+    padding-top: 0;
+}
+
+.date-tag {
+    color: #5e5e5e; font-size: 10px; font-weight: 600;
+}
+
+.text-area {
+    border: 1px solid #561d5e;
+    border-radius: 5px;
+    font-size: 14px;
+    min-height: 100px; margin: 0;
+}
+
 ion-input {
-    border: 1px solid #909090;
+    border: 1px solid #561d5e;
     border-radius: 5px;
     font-size: 14px;
 }

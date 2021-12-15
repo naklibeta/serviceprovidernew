@@ -53,7 +53,12 @@ const routes: Routes = [
   {
     path: 'quotation',
     loadChildren: () => import('./quotation/quotation.module').then(m => m.QuotationPageModule)
+  },
+  {
+    path: 'reference',
+    loadChildren: () => import('./settings/reference/reference.module').then(m => m.ReferencePageModule)
   }
+
 
 ];
 @NgModule({
