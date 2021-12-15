@@ -27,9 +27,14 @@
       <ion-item>
         <ion-label position="floating">Highest Qualification Certificate</ion-label>
 
-        <ion-icon name="camera-outline" class="camera-icon" (click)="StartCamera()"></ion-icon>
+        <ion-icon *ngIf="!ProviderData.certificate && selectedImage == '' " name="camera-outline" class="camera-icon"
+          (click)="presentAlertConfirm()">
+        </ion-icon>
 
-        <img [src]="ProviderData.certificate" class="cert-img">
+        <img *ngIf="selectedImage == '' " [src]="ProviderData.certificate" class="cert-img"
+          (click)="presentAlertConfirm()">
+
+        <img *ngIf="selectedImage != '' " [src]="selectedImage" class="cert-img" (click)="presentAlertConfirm()">
 
       </ion-item>
 

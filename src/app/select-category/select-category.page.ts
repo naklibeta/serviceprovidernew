@@ -10,12 +10,42 @@ import { Router } from '@angular/router';
 export class SelectCategoryPage implements OnInit {
 
   public CategoryData = [];
+  public OrgCategoryData = [];
   public SelectedCategoryData = [];
+  public SelectedCategories: any = [];
 
   constructor(public apiService: ApiService, public router: Router) { }
 
   ngOnInit() {
     this.GetSelectionOptions();
+
+    let catSelected = localStorage.getItem('selectedCategories');
+    this.SelectedCategories = JSON.parse(catSelected);
+
+    if (this.SelectedCategories) {
+      this.SelectedCategoryData = this.SelectedCategories;
+    }
+
+
+
+
+  }
+
+
+  SetSelected() {
+
+    let env = this;
+    env.CategoryData.forEach(function (valueCat, i) {
+      //--loop over sub cats-------------------------------
+      let SubCats = valueCat.serviceDetails;
+      SubCats.forEach(function (SubCatsValue, j) {
+        var results = env.SelectedCategories.filter(function (entry) { return SubCatsValue.name == entry.name; });
+        if (results.length != 0) {
+          env.CategoryData[i].serviceDetails[j].selected = true;
+        }
+      });
+    });
+
   }
 
 
@@ -25,7 +55,16 @@ export class SelectCategoryPage implements OnInit {
 
     this.apiService.Common_GET('/getService').subscribe((results) => {
       if (results.statusCode == 200) {
-        this.CategoryData = results.data;
+        this.OrgCategoryData = this.CategoryData = results.data;
+
+
+        let env = this;
+
+        setTimeout(() => {
+          env.SetSelected();
+        }, 1000);
+
+
       } else {
         this.apiService.presentToast(results.message, 3000);
       }
@@ -70,6 +109,28 @@ export class SelectCategoryPage implements OnInit {
 
     allEl.forEach(element => {
       element.click();
+    });
+
+  }
+
+
+  SearchByName(target: any) {
+
+    let valueSearch = target.value;
+
+    if (valueSearch.length <= 2) {
+      this.CategoryData = this.OrgCategoryData;
+      return;
+    }
+
+    // this.CategoryData
+
+    debugger
+
+    this.CategoryData = this.OrgCategoryData.filter(item => {
+
+      return item.subCateName.startsWith(valueSearch);
+
     });
 
   }

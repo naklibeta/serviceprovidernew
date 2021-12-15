@@ -24,6 +24,10 @@
 
 <ion-content [fullscreen]="true">
 
+  <div class="middle-content" *ngIf="DashboardMsg">
+    <p class="input-content"> {{DashboardMsg}} </p>
+  </div>
+
 
 
   <div class="jobs-list">

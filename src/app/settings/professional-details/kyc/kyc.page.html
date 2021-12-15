@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>KYC Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="form-section">
+
+    <form #regForm="ngForm" (ngSubmit)="UpdateKYCNow(regForm.value)">
+
+
+      <ion-item>
+        <ion-label position="floating">Account Holder Name</ion-label>
+        <ion-input [(ngModel)]="ProviderData.name" type="text" name="name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Bank Name</ion-label>
+        <ion-input [(ngModel)]="ProviderData.bank" type="text" name="bank"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">IFSC Code</ion-label>
+        <ion-input [(ngModel)]="ProviderData.ifsc" type="text" name="ifsc"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Branch Name</ion-label>
+        <ion-input [(ngModel)]="ProviderData.branch" type="text" name="branch"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Bank Account Number</ion-label>
+        <ion-input [(ngModel)]="ProviderData.ac_number" type="number" name="ac_number"></ion-input>
+      </ion-item>
+
+      <p *ngIf="inValidAcc" class="warning-text">Account number does not match</p>
+      <ion-item>
+        <ion-label position="floating">Confirm Bank Account Number</ion-label>
+        <ion-input (input)="CheckAc($event.target)" [(ngModel)]="ProviderData.cacNumber" type="number" name="cacNumber">
+        </ion-input>
+
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label position="floating">PAN Card</ion-label>
+        <ion-icon *ngIf="!ProviderData.pancard && selectedpanImage == '' " name="camera-outline" class="camera-icon"
+          (click)="ChooseImage('pan')">
+        </ion-icon>
+        <img *ngIf="selectedpanImage == '' " [src]="ProviderData.pancard" class="cert-img" (click)="ChooseImage('pan')">
+        <img *ngIf="selectedpanImage != '' " [src]="selectedpanImage" class="cert-img" (click)="ChooseImage('pan')">
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Aadhar Front</ion-label>
+        <ion-icon *ngIf="!ProviderData.aadharCardFront && selected_aFront_Image == '' " name="camera-outline"
+          class="camera-icon" (click)="ChooseImage('aFront')">
+        </ion-icon>
+        <img *ngIf="selected_aFront_Image == '' " [src]="ProviderData.aadharCardFront" class="cert-img"
+          (click)="ChooseImage('aFront')">
+        <img *ngIf="selected_aFront_Image != '' " [src]="selected_aFront_Image" class="cert-img"
+          (click)="ChooseImage('aFront')">
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Aadhar Back</ion-label>
+        <ion-icon *ngIf="!ProviderData.aadharCardFront && selected_aBack_Image == '' " name="camera-outline"
+          class="camera-icon" (click)="ChooseImage('aBack')">
+        </ion-icon>
+        <img *ngIf="selected_aBack_Image == '' " [src]="ProviderData.aadharCardBack" class="cert-img"
+          (click)="ChooseImage('aBack')">
+        <img *ngIf="selected_aBack_Image != '' " [src]="selected_aBack_Image" class="cert-img"
+          (click)="ChooseImage('aBack')">
+      </ion-item>
+
+
+
+      <br><br>
+      <ion-button [disabled]="!regForm.valid" type="submit" class="theme-btn" expand="block">Submit
+      </ion-button>
+
+
+    </form>
+
+
+
+  </div>
+</ion-content>

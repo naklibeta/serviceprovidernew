@@ -19,6 +19,7 @@ export class OtpVerifyPage implements OnInit {
   public TimerTextShow = false;
   public FinalOTP: any;
   public UserVerified: boolean;
+  public timerOn = true;
 
   constructor(public apiService: ApiService, public router: Router) { }
 
@@ -29,6 +30,8 @@ export class OtpVerifyPage implements OnInit {
   LoginNow() {
     // this.router.navigate(['']);
     this.ShowEnterOTP = true;
+
+
     // this.otp1.value = this.otp2.value = this.otp3.value = this.otp4.value = '';
 
     this.apiService.Common_POST('/login', { username: this.username }).subscribe((results) => {
@@ -42,6 +45,23 @@ export class OtpVerifyPage implements OnInit {
           this.FinalOTP = OTPEncoded - 1212;
           console.log(this.FinalOTP, 'this.FinalOTP');
           this.UserVerified = results.userVerification;
+
+          let env = this;
+          setTimeout(() => {
+
+            env.timer(60);
+          }, 1000);
+          this.TimerTextShow = true;
+
+          //--------------------------
+
+          let doc1: any = document.getElementById('otp1');
+          let doc2: any = document.getElementById('otp2');
+          let doc3: any = document.getElementById('otp3');
+          let doc4: any = document.getElementById('otp4');
+          doc1.value = doc2.value = doc3.value = doc4.value = '';
+
+          //--------------------------------
         } else {
           this.apiService.presentToast('Error occured: OTP not sent from server', 3000);
         }
@@ -91,6 +111,34 @@ export class OtpVerifyPage implements OnInit {
     else {
       return 0;
     }
+  }
+
+
+  timer(remaining: any) {
+    let env = this;
+    var m: any = Math.floor(remaining / 60);
+    var s: any = remaining % 60;
+
+    m = m < 10 ? '0' + m : m;
+    s = s < 10 ? '0' + s : s;
+    let selectDoc: any = document.getElementById('timer');
+    selectDoc.innerHTML = m + ':' + s;
+    remaining -= 1;
+
+    if (remaining >= 0 && this.timerOn) {
+      setTimeout(function () {
+        env.timer(remaining);
+      }, 1000);
+      return;
+    }
+
+    if (!this.timerOn) {
+      // Do validate stuff here
+      return;
+    }
+    this.TimerTextShow = false;
+    // Do timeout stuff here
+    //alert('Timeout for otp');
   }
 
 }

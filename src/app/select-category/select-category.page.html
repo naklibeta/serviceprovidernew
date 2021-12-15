@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title> Select Categories </ion-title>
-    <a (click)="Back()">Done </a>
+    <a class="done" (click)="Back()">Done </a>
   </ion-toolbar>
 
 
@@ -11,15 +11,23 @@
 
 
 
-
+  <ion-searchbar showCancelButton="never" (input)="SearchByName($event.target)"></ion-searchbar>
 
 
 
   <div class="wrapper">
+
+
+
+
     <ul>
       <li *ngFor="let category of CategoryData; let i=index;">
         <input type="checkbox" id="list-item-{{i}}" class="subcat-inputs">
-        <label for="list-item-{{i}}" class="first" (click)="SelectAllSubcats(i)">
+
+        <input type="checkbox" id="list-selectall-{{i}}" class="select-all-check" (click)="SelectAllSubcats(i)">
+
+
+        <label for="list-item-{{i}}" class="first">
           <ion-icon name="caret-down-outline"></ion-icon> {{category.subCateName}}
         </label>
         <ul *ngFor="let subcategory of category.serviceDetails">
@@ -27,8 +35,13 @@
 
           <li class="subcategorylist">
             <ion-item>
-              <ion-label>{{subcategory.name}}</ion-label>
-              <ion-checkbox slot="end" (click)="SelectCategory(subcategory)" class="subcat-checkbox-{{i}}">
+              <ion-label> {{subcategory.name}} {{subcategory.selected}} </ion-label>
+              <ion-checkbox *ngIf="!subcategory.selected" slot="end" (click)="SelectCategory(subcategory)"
+                class="subcat-checkbox-{{i}}">
+              </ion-checkbox>
+
+              <ion-checkbox checked="checked" *ngIf="subcategory.selected" slot="end"
+                (click)="SelectCategory(subcategory)" class="subcat-checkbox-{{i}}">
               </ion-checkbox>
             </ion-item>
           </li>

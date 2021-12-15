@@ -14,6 +14,7 @@ export class Tab1Page implements OnInit {
   public category: any = [];
   public providerId: any = '';
   public IntervalVar: any;
+  public DashboardMsg: any = '';
 
   constructor(public apiService: ApiService, public router: Router) {
     let UserData = this.apiService.Get_UserData();
@@ -50,7 +51,8 @@ export class Tab1Page implements OnInit {
         }
 
       } else {
-        this.apiService.presentToast(results.message, 3000);
+        this.DashboardMsg = results.message;
+        //this.apiService.presentToast(results.message, 3000);
       }
 
     }, err => {

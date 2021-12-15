@@ -1,5 +1,5 @@
 .wrapper {
-    margin: 10% auto;
+    margin: 5% auto;
     width: 400px;
 }
 
@@ -34,12 +34,20 @@ ul ul li {
 
 .subcat-inputs[type="checkbox"] {
     position: absolute;
-    /* left: -9999px; */
-    right: 2rem;
-    margin-top: 1rem;
-    height: 18px;
-    width: 18px;
+    left: -9999px;
+    // right: 2rem;
+    // margin-top: 1rem;
+    // height: 18px;
+    // width: 18px;
 
+}
+
+.select-all-check{
+    position: absolute;
+    margin-top: 15px;
+    right: 15px;
+    width: 17px;
+    height: 17px;
 }
 
 input[type="checkbox"]~ul {
@@ -74,4 +82,12 @@ input[type="checkbox"]:checked+label {
     right: 3rem;
 
 
+}
+
+
+.done {
+    position: absolute;
+    right: 10px;
+    top: 16px;
+    color: #561d5e;
 }
