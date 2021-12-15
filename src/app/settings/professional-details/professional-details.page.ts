@@ -126,8 +126,6 @@ export class ProfessionalDetailsPage implements OnInit {
         const file = new File([blob], "filecertificate", { type: "image/jpeg" });
         this.selectedFile = file;
       })
-
-
   }
 
 

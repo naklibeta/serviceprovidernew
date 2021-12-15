@@ -60,4 +60,13 @@ export class Tab1Page implements OnInit {
     });
   }
 
+
+  JobDetails(upcomingjobs: any) {
+
+    localStorage.setItem('jobdetails', upcomingjobs.orderId);
+
+    this.router.navigate(['/job-details']);
+
+  }
+
 }

@@ -9,20 +9,20 @@
     <ion-row>
       <ion-col>
         <div>
-          <h3 class="page-title">Job Detail :</h3>
-          <p class="order-id">Order Id : 1545121</p>
+          <h3 class="page-title">{{JobDetails.title}}</h3>
+          <p class="order-id">Order Id : {{JobId}}</p>
         </div>
       </ion-col>
       <ion-col>
         <div>
-          <h6 class="date">16/07/2021</h6>
+          <h6 class="date">{{ apiService.formatDate(JobDetails.date)}}</h6>
         </div>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <div class="img-div">
-          <ion-img src="../.../../../assets/imgs/logo.png"></ion-img>
+          <ion-img [src]="JobDetails.url"></ion-img>
         </div>
       </ion-col>
     </ion-row>
@@ -30,52 +30,74 @@
       <ion-col>
         <div>
           <p class="detail-content">
-            At vero eos et accusam et justo duo dolores et ea
-            rebum. Stet clita kasd gubergren, no sea takimata
-            sanctus est Lorem ipsum dolor sit amet.
+            {{JobDetails.detail}}
           </p>
-          <p class="detail-content">
-            Accusam et justo duo dolores et ea rebum. Stet
-            clita kasd gubergren, no sea takimata sanctus est
-            Lorem ipsum dolor sit amet.
-          </p>
+
         </div>
-        <div>
-          <p class="date-2">01/00/2000</p>
-        </div>
+
       </ion-col>
     </ion-row>
+
+
+    <ion-row *ngIf="JobDetails.status!=0">
+      <ion-col>
+        <div>
+          <h5 class="address-tag">Customer Name :</h5>
+        </div>
+        <div>
+          <h6 class="address nomargin">
+            {{JobDetails.customerName}}
+          </h6>
+        </div>
+
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="JobDetails.status!=0">
+      <ion-col>
+        <div>
+          <h5 class="address-tag">Customer Contact Number :</h5>
+        </div>
+        <div>
+          <h6 class="address nomargin">
+            {{JobDetails.mobile}}
+          </h6>
+        </div>
+
+      </ion-col>
+    </ion-row>
+
+
     <ion-row>
       <ion-col>
         <div>
           <h5 class="address-tag">Address :</h5>
         </div>
         <div>
-          <h6 class="address">
-            H.n 12, Street road, near mega due 4d
-            Cafe, Udaipur
+          <h6 class="address nomargin">
+            {{JobDetails.address}}
           </h6>
         </div>
-        <div>
+        <!-- <div>
           <p class="detail-content">
             Accusam et justo duo dolores et ea rebum. Stet
             clita kasd gubergren, no sea takimata sanctus est
             Lorem ipsum dolor sit amet Sampler.
           </p>
-        </div>
+        </div> -->
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <div>
-          <ion-button expand="block" color="themepurple">ACCEPT</ion-button>
+          <ion-button expand="block" color="themepurple" (click)="AcceptJob()">ACCEPT</ion-button>
         </div>
       </ion-col>
-      <ion-col>
+      <!-- <ion-col>
         <div>
           <ion-button expand="block" color="themeoutlinepurple">DECLINE</ion-button>
         </div>
-      </ion-col>
+      </ion-col> -->
     </ion-row>
   </ion-grid>
 </ion-content>
