@@ -57,7 +57,11 @@ const routes: Routes = [
   {
     path: 'reference',
     loadChildren: () => import('./settings/reference/reference.module').then(m => m.ReferencePageModule)
+  },  {
+    path: 'schedule-training',
+    loadChildren: () => import('./schedule-training/schedule-training.module').then( m => m.ScheduleTrainingPageModule)
   }
+
 
 
 ];
