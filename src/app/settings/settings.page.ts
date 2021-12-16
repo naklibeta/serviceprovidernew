@@ -58,4 +58,12 @@ export class SettingsPage implements OnInit {
     this.router.navigate(['/kyc']);
   }
 
+  reference() {
+    this.router.navigate(['/reference']);
+  }
+
+  training() {
+    this.router.navigate(['/schedule-training']);
+  }
+
 }
