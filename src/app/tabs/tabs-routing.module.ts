@@ -30,6 +30,18 @@ const routes: Routes = [
         loadChildren: () => import('../../app/settings/settings.module').then(m => m.SettingsPageModule)
       },
 
+      {
+        path: 'payments',
+        loadChildren: () => import('../../app/payments/payments.module').then(m => m.PaymentsPageModule)
+      },
+
+      {
+        path: 'notifications',
+        loadChildren: () => import('../../app/notification/notification.module').then(m => m.NotificationPageModule)
+      },
+
+
+
 
       {
         path: '',

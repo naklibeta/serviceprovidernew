@@ -18,6 +18,10 @@ export class QuotationPage implements OnInit {
   public IGST: any = 0;
   public TotalAmount: any = 0;
 
+  public CGST_Amount: any = 0;
+  public SGST_Amount: any = 0;
+  public IGST_Amount: any = 0;
+
   constructor(public apiService: ApiService, public router: Router) { }
 
   ngOnInit() {
@@ -25,6 +29,35 @@ export class QuotationPage implements OnInit {
     this.JobId = localStorage.getItem('jobdetails');
     this.LoadJob();
 
+  }
+
+
+  SendQuo(values: any) {
+
+    let SendData = {
+      "orderId": this.JobId,
+      "quotation": values.quotation,
+      "amount": this.TotalAmount,
+      "gst": this.CGST,
+      "sgst": this.SGST,
+      "igst": this.IGST
+    }
+
+    this.apiService.Common_POST('/insertQuotation', SendData).subscribe((results) => {
+      if (results.statusCode == 200) {
+
+        if (results.data) {
+          this.router.navigate(['/my-jobs']);
+          this.apiService.presentToast(results.message, 3000);
+        }
+
+      } else {
+        this.apiService.presentToast('Error occured, unable to send quotation ', 3000);
+      }
+
+    }, err => {
+      this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
+    });
   }
 
 
@@ -57,12 +90,38 @@ export class QuotationPage implements OnInit {
 
     let targetval = target.value;
 
-    if (type == 'CGST') {
+    if (type == 'CGST' || type == 'SGST') {
+      this.TotalAmount = 0;
+      this.IGST_Amount = 0;
+      this.IGST = 0;
 
-      let cgstamount = (targetval / 100) * this.CoreAmount;
-      this.TotalAmount = cgstamount + this.CoreAmount;
+      if (type == 'CGST') this.CGST_Amount = (targetval / 100) * this.CoreAmount;
+      if (type == 'SGST') this.SGST_Amount = (targetval / 100) * this.CoreAmount;
+      this.TotalAmount = this.CGST_Amount + this.CoreAmount + this.SGST_Amount;
+
+
+    }
+
+
+    if (type == 'IGST') {
+
+      //reset C/SGST------------
+      this.TotalAmount = 0;
+      this.CGST_Amount = 0;
+      this.SGST_Amount = 0;
+      this.CGST = 0;
+      this.SGST = 0;
+
+
+      this.IGST_Amount = (targetval / 100) * this.CoreAmount;
+      this.TotalAmount = this.IGST_Amount + this.CoreAmount;
 
     }
 
   }
+
+  CalculateTotal() {
+
+  }
+
 }

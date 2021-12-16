@@ -41,10 +41,16 @@ export class JobDetailsPage implements OnInit {
 
 
   AcceptJob() {
-    this.apiService.Common_POST('/jobDetails', { orderId: this.JobId }).subscribe((results) => {
+
+    let AcceptSend = {
+      "provider_id": this.apiService.Get_ProviderId(),
+      "orderId": this.JobId
+    }
+
+    this.apiService.Common_POST('/accept', AcceptSend).subscribe((results) => {
       if (results.statusCode == 200) {
-
-
+        this.ngOnInit();
+        this.apiService.presentToast(results.message, 3000);
 
       } else {
         this.apiService.presentToast('Error occured, unable to accept job ', 3000);
@@ -54,6 +60,60 @@ export class JobDetailsPage implements OnInit {
       this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
     });
   }
+
+  StartStatus() {
+
+    let AcceptSend = {
+      "provider_id": this.apiService.Get_ProviderId(),
+      "orderId": this.JobId
+    }
+
+    this.apiService.Common_POST('/start', AcceptSend).subscribe((results) => {
+      if (results.statusCode == 200) {
+        this.ngOnInit();
+        this.apiService.presentToast(results.message, 3000);
+
+      } else {
+        this.apiService.presentToast('Error occured, unable to start job ', 3000);
+      }
+
+    }, err => {
+      this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
+    });
+  }
+
+  EndStatus() {
+
+    let AcceptSend = {
+      "provider_id": this.apiService.Get_ProviderId(),
+      "orderId": this.JobId
+    }
+
+    this.apiService.Common_POST('/end', AcceptSend).subscribe((results) => {
+      if (results.statusCode == 200) {
+        this.ngOnInit();
+        this.apiService.presentToast(results.message, 3000);
+
+      } else {
+        this.apiService.presentToast('Error occured, unable to end job ', 3000);
+      }
+
+    }, err => {
+      this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
+    });
+  }
+
+
+
+  SendQuotation() {
+    this.router.navigate(['/quotation']);
+  }
+
+  UpdateQuotation() {
+    this.router.navigate(['/quotation', 'update']);
+  }
+
+
 
 
 }

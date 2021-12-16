@@ -39,4 +39,11 @@ export class MyJobsPage implements OnInit {
     });
   }
 
+
+  GotoJobs(joblist) {
+    localStorage.setItem('jobdetails', joblist.orderId);
+
+    this.router.navigate(['/job-details']);
+  }
+
 }

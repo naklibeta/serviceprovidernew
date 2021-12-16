@@ -76,12 +76,28 @@ ion-toolbar {
 
 .header-name {
     margin-left: 30px;
+    color: #561d5e;
+
 }
 
-.warning-text{
+.warning-text {
     font-size: 12px;
     font-style: italic;
     color: #b72121;
     padding-left: 10px;
     margin: 0;
+}
+
+
+.status-inactive {
+    color: #858585;
+}
+
+.status-active {
+    color: #37ce19;
+}
+
+.status-user a {
+    color: #561d5e;
+    font-size: 13px;
 }

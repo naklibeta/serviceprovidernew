@@ -85,5 +85,18 @@ export class ApiService {
     return [year, month, day].join('-');
   }
 
+  Get_UserStatus() {
+    let UserData = localStorage.getItem('UserData');
+    let UserParsed = JSON.parse(UserData);
+
+    let Status = UserParsed.is_active;
+
+    if (Status == '0' || Status == 0) {
+      return 'InActive';
+    } else {
+      return 'Active';
+    }
+  }
+
 
 }

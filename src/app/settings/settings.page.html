@@ -1,6 +1,21 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Settings</ion-title>
+    <ion-row>
+      <ion-col col-6>
+        <ion-title>
+          <img class="header-logo" src="assets/imgs/Icon.png">
+          <span class="header-name"> Settings </span>
+        </ion-title>
+      </ion-col>
+      <ion-col col-6 class="text-right status-user">
+        <a *ngIf="apiService.Get_UserStatus() == 'InActive' ">
+          <ion-icon name="ellipse" class="status-inactive"> </ion-icon> InActive
+        </a>
+        <a *ngIf="apiService.Get_UserStatus() == 'Active' ">
+          <ion-icon name="ellipse" class="status-active"> </ion-icon> Active
+        </a>
+      </ion-col>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
@@ -18,7 +33,7 @@
   </ion-item>
 
 
-  <div class="mt-20">
+  <div class="">
 
     <ion-row class="menu-rows">
       <ion-col size="2">
@@ -46,7 +61,7 @@
 
     <ion-row class="menu-rows" (click)="kyc()">
       <ion-col size="2">
-        <ion-icon name="person-add-outline"></ion-icon>
+        <ion-icon name="people-circle-outline"></ion-icon>
       </ion-col>
       <ion-col size="8">
         <span class="menu-label"> KYC </span>
@@ -58,7 +73,7 @@
 
     <ion-row class="menu-rows">
       <ion-col size="2">
-        <ion-icon name="person-add-outline"></ion-icon>
+        <ion-icon name="person-circle-outline"></ion-icon>
       </ion-col>
       <ion-col size="8">
         <span class="menu-label"> References </span>
@@ -70,7 +85,7 @@
 
     <ion-row class="menu-rows">
       <ion-col size="2">
-        <ion-icon name="person-add-outline"></ion-icon>
+        <ion-icon name="newspaper-outline"></ion-icon>
       </ion-col>
       <ion-col size="8">
         <span class="menu-label"> Training Schedule </span>
@@ -82,7 +97,7 @@
 
     <ion-row class="menu-rows">
       <ion-col size="2">
-        <ion-icon name="person-add-outline"></ion-icon>
+        <ion-icon name="person-outline"></ion-icon>
       </ion-col>
       <ion-col size="8">
         <span class="menu-label"> Personal Details </span>
@@ -94,7 +109,7 @@
 
     <ion-row class="menu-rows">
       <ion-col size="2">
-        <ion-icon name="person-add-outline"></ion-icon>
+        <ion-icon name="star-outline"></ion-icon>
       </ion-col>
       <ion-col size="8">
         <span class="menu-label"> Reviews </span>
@@ -106,7 +121,7 @@
 
     <ion-row class="menu-rows">
       <ion-col size="2">
-        <ion-icon name="person-add-outline"></ion-icon>
+        <ion-icon name="help-circle-outline"></ion-icon>
       </ion-col>
       <ion-col size="8">
         <span class="menu-label"> Help & Support </span>
@@ -118,7 +133,7 @@
 
     <ion-row class="menu-rows">
       <ion-col size="2">
-        <ion-icon name="person-add-outline"></ion-icon>
+        <ion-icon name="people-outline"></ion-icon>
       </ion-col>
       <ion-col size="8">
         <span class="menu-label"> Invite Friends </span>
@@ -130,7 +145,7 @@
 
     <ion-row class="menu-rows">
       <ion-col size="2">
-        <ion-icon name="person-add-outline"></ion-icon>
+        <ion-icon name="list-outline"></ion-icon>
       </ion-col>
       <ion-col size="8">
         <span class="menu-label"> About Us </span>
@@ -142,7 +157,7 @@
 
     <ion-row class="menu-rows" (click)="logout()">
       <ion-col size="2">
-        <ion-icon name="person-add-outline"></ion-icon>
+        <ion-icon name="log-out-outline"></ion-icon>
       </ion-col>
       <ion-col size="8">
         <span class="menu-label"> Logout </span>

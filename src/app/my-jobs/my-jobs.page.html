@@ -1,6 +1,21 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>My Jobs</ion-title>
+    <ion-row>
+      <ion-col col-6>
+        <ion-title>
+          <img class="header-logo" src="assets/imgs/Icon.png">
+          <span class="header-name"> My Jobs </span>
+        </ion-title>
+      </ion-col>
+      <ion-col col-6 class="text-right status-user">
+        <a *ngIf="apiService.Get_UserStatus() == 'InActive' ">
+          <ion-icon name="ellipse" class="status-inactive"> </ion-icon> InActive
+        </a>
+        <a *ngIf="apiService.Get_UserStatus() == 'Active' ">
+          <ion-icon name="ellipse" class="status-active"> </ion-icon> Active
+        </a>
+      </ion-col>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
@@ -10,19 +25,23 @@
   <ion-card *ngFor="let joblist of MyJobs">
 
     <ion-card-content>
-      <ion-row>
 
-        <ion-row>
-          <ion-col size="8">
-            <ion-card-title>{{joblist.title}}</ion-card-title>
-          </ion-col>
-          <ion-col size="4">
-            <span class="status-txt">Send Quotation </span>
-            <ion-icon name="ellipse" class="color-theme"></ion-icon>
-          </ion-col>
-        </ion-row>
-        <p class="date text-detail">Preferred Date:- {{apiService.formatDate(joblist.date)}} </p>
-        <p class="text-detail"> {{joblist.detail | slice:0:100}} </p>
+
+      <ion-row (click)="GotoJobs(joblist)">
+        <ion-col size="8">
+          <ion-card-title>{{joblist.title}}</ion-card-title>
+        </ion-col>
+        <ion-col size="4">
+          <span class="status-txt">Send Quotation </span>
+          <ion-icon name="ellipse" class="color-theme"></ion-icon>
+        </ion-col>
+
+
+        <ion-col size="12">
+          <p class="date text-detail">Preferred Date:- {{apiService.formatDate(joblist.date)}} </p>
+          <p class="text-detail"> {{joblist.detail | slice:0:100}} </p>
+        </ion-col>
+
 
 
       </ion-row>

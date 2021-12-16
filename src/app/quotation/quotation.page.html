@@ -1,93 +1,106 @@
 <ion-header>
+
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
     <ion-title>Quotation</ion-title>
   </ion-toolbar>
+
+
+
 </ion-header>
 
 <ion-content fullscreen>
+  <form #regForm="ngForm" (ngSubmit)="SendQuo(regForm.value)">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="tag-con">
+          <ion-label class="tag">{{JobDetails.title}}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="date-tag-con">
+          <ion-label class="date-tag" position="stacked">Preferred Date :
+            {{apiService.formatDate(JobDetails.date)}}
+          </ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-textarea class="text-area" placeholder="Additional Description" name="quotation" ngModel>
+          </ion-textarea>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col class="tag-con">
-        <ion-label class="tag">{{JobDetails.title}}</ion-label>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="date-tag-con">
-        <ion-label class="date-tag" position="stacked">Preferred Date :
-          {{apiService.formatDate(JobDetails.date)}}
-        </ion-label>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-textarea class="text-area" placeholder="Additional Description">
-        </ion-textarea>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col class="tag-col">
-        <p class="amount-tag">Amount :</p>
-      </ion-col>
-      <ion-col>
-        <ion-input placeholder="0" type="number" [(ngModel)]="CoreAmount" (input)="AmountChanged($event.target)">
-        </ion-input>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="3" class="tag-col">
-        <p>CGST @</p>
-      </ion-col>
-      <ion-col size="3">
-        <ion-input placeholder="0 %" type="number" [(ngModel)]="CGST" (input)="TaxChanged($event.target, 'CGST')">
-        </ion-input>
-      </ion-col>
-      <ion-col size="6">
-        <ion-input placeholder="0" type="number" disabled="true"></ion-input>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="3" class="tag-col">
-        <p>SGST @</p>
-      </ion-col>
-      <ion-col size="3">
-        <ion-input placeholder="0 %" type="number" [(ngModel)]="SGST"></ion-input>
-      </ion-col>
-      <ion-col size="6">
-        <ion-input placeholder="0" type="number" disabled="true"></ion-input>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="3" class="tag-col">
-        <p>IGST @</p>
-      </ion-col>
-      <ion-col size="3">
-        <ion-input placeholder="0 %" type="number" [(ngModel)]="IGST"></ion-input>
-      </ion-col>
-      <ion-col size="6">
-        <ion-input placeholder="0" type="number" disabled="true"></ion-input>
-      </ion-col>
-    </ion-row>
-    <ion-row class="total-amount-row">
-      <ion-col class="tag-col">
-        <p class="amount-tag">Total Amount :</p>
-        <p class="tax-tag">* inclusive of all taxes</p>
-      </ion-col>
-      <ion-col>
-        <p>₹ {{TotalAmount}}/-</p>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col class="tag-col">
-        <ion-button expand="block" color="themepurple">SUBMIT</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <ion-grid>
+      <ion-row>
+        <ion-col class="tag-col">
+          <p class="amount-tag">Amount :</p>
+        </ion-col>
+        <ion-col>
+          <ion-input placeholder="0" type="number" [(ngModel)]="CoreAmount" (input)="AmountChanged($event.target)">
+          </ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="3" class="tag-col">
+          <p>CGST @</p>
+        </ion-col>
+        <ion-col size="3">
+          <ion-input placeholder="0 %" type="number" [(ngModel)]="CGST" (input)="TaxChanged($event.target, 'CGST')">
+          </ion-input>
+        </ion-col>
+        <ion-col size="6">
+          <ion-input placeholder="0" type="number" disabled="true" [(ngModel)]="CGST_Amount"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="3" class="tag-col">
+          <p>SGST @</p>
+        </ion-col>
+        <ion-col size="3">
+          <ion-input placeholder="0 %" type="number" [(ngModel)]="SGST" (input)="TaxChanged($event.target, 'SGST')">
+          </ion-input>
+        </ion-col>
+        <ion-col size="6">
+          <ion-input placeholder="0" type="number" disabled="true" [(ngModel)]="SGST_Amount"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="3" class="tag-col">
+          <p>IGST @</p>
+        </ion-col>
+        <ion-col size="3">
+          <ion-input placeholder="0 %" type="number" [(ngModel)]="IGST" (input)="TaxChanged($event.target, 'IGST')">
+          </ion-input>
+        </ion-col>
+        <ion-col size="6">
+          <ion-input placeholder="0" type="number" disabled="true" [(ngModel)]="IGST_Amount"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row class="total-amount-row">
+        <ion-col class="tag-col">
+          <p class="amount-tag">Total Amount :</p>
+          <p class="tax-tag">* inclusive of all taxes</p>
+        </ion-col>
+        <ion-col>
+          <p>₹ {{TotalAmount}}/-</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col class="tag-col">
+          <ion-button expand="block" color="themepurple" type="submit"> SUBMIT</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </form>
 
 </ion-content>
