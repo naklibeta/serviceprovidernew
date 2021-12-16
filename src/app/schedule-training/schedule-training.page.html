@@ -5,49 +5,53 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col class="detail-col">
-        <div>
-          Name : Rajesh Malik
-        </div>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="detail-col">
-        <div>
-          Mobile number : +91 12354 45872
-        </div>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="detail-col">
-        <div>
-          Email id : sample@gmail.com
-        </div>
-      </ion-col>
-    </ion-row>
-    <ion-row class="schedule-row">
-      <ion-col>
-        <div>Schedule :</div>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="date-col">
-        <ion-datetime presentation="time-date" placeholder="Preferred Date"></ion-datetime>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="date-col">
-        <ion-datetime displayFormat="hh:mm A" placeholder="Preferred Time"></ion-datetime>
-      </ion-col>
-    </ion-row>
-    <ion-row class="button-row">
-      <ion-col class="button-col">
-        <div>
-          <ion-button class="button" color="themepurple" expand="block">SUBMIT</ion-button>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+
+  <form #regForm="ngForm" (ngSubmit)="UpdateProNow(regForm.value)">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="detail-col">
+          <div>
+            Name : {{myDetails.name}}
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="detail-col">
+          <div>
+            Mobile number : {{myDetails.mobile}}
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="detail-col">
+          <div>
+            Email id : {{myDetails.emailId}}
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="schedule-row">
+        <ion-col>
+          <div>Schedule :</div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="date-col">
+          <ion-datetime presentation="time-date" placeholder="Preferred Date" ngModel name="date"></ion-datetime>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="date-col">
+          <ion-datetime displayFormat="hh:mm A" placeholder="Preferred Time" ngModel name="time"></ion-datetime>
+        </ion-col>
+      </ion-row>
+      <ion-row class="button-row">
+        <ion-col class="button-col">
+          <div>
+            <ion-button class="button" color="themepurple" expand="block" type="submit">SUBMIT</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
 </ion-content>

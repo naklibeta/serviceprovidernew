@@ -30,10 +30,7 @@ export class MyJobsPage implements OnInit {
       if (results.statusCode == 200) {
         this.MyJobs = results.data;
       } else {
-
       }
-
-
     }, err => {
       this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
     });
@@ -42,7 +39,6 @@ export class MyJobsPage implements OnInit {
 
   GotoJobs(joblist) {
     localStorage.setItem('jobdetails', joblist.orderId);
-
     this.router.navigate(['/job-details']);
   }
 

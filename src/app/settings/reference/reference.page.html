@@ -6,48 +6,64 @@
 
 <ion-content fullscreen>
 
-  <ion-list>
-    <ion-item>
-      <ion-avatar slot="start">
-        <img src="../../../assets/icon/favicon.png" />
-      </ion-avatar>
-      <h6>Person Name I</h6>
-    </ion-item>
-  </ion-list>
+  <form #regForm="ngForm" (ngSubmit)="UpdateProNow(regForm.value)">
 
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-input placeholder="Enter your name" type="text"></ion-input>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-input placeholder="Mobile number" type="number"></ion-input>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <ion-list>
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="../../../assets/icon/favicon.png" />
+        </ion-avatar>
+        <h6>Person I</h6>
+      </ion-item>
+    </ion-list>
 
-  <ion-list>
-    <ion-item>
-      <ion-avatar slot="start">
-        <img src="../../../assets/icon/favicon.png" />
-      </ion-avatar>
-      <h6>Person Name II</h6>
-    </ion-item>
-  </ion-list>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-input placeholder="Enter your name" type="text" [(ngModel)]="ProviderData.name1" name="name1">
+          </ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-input placeholder="Mobile number" type="number" [(ngModel)]="ProviderData.mobile1" name="mobile1">
+          </ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-input placeholder="Enter your name" type="text"></ion-input>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-input placeholder="Mobile number" type="number"></ion-input>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <ion-list>
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="../../../assets/icon/favicon.png" />
+        </ion-avatar>
+        <h6>Person II</h6>
+      </ion-item>
+    </ion-list>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-input placeholder="Enter your name" type="text" [(ngModel)]="ProviderData.name2" name="name2">
+          </ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-input placeholder="Mobile number" type="number" [(ngModel)]="ProviderData.mobile2" name="mobile2">
+          </ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button color="themepurple" expand="block" type="submit">UPDATE</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </form>
 
 </ion-content>
