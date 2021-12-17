@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Help & Support</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item lines="full" lines="full" *ngFor="let faqs of faq">
+    <ion-label>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="1" class="q-tag">
+            <h3 class="ion-text-wrap"><b>Q.</b></h3>
+          </ion-col>
+          <ion-col size="11">
+            <h3 class="ion-text-wrap"><b>{{faqs.questions}}</b></h3>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <!-- <h2 class="ion-text-wrap"><b>Q.</b> {{faqs.questions}}</h2> -->
+      <div innerHtml="{{faqs.answers}}" class="ion-text-wrap">
+      </div>
+    </ion-label>
+  </ion-item>
+
+</ion-content>

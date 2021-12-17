@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Reviews</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+  <ion-list>
+    <ion-item lines="full" *ngFor="let reviews of reviewdata">
+      <ion-label>
+        <h3>{{reviews.name}}</h3>
+        <div>
+          <!-- <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon> -->
+          {{reviews.ratings}}
+        </div>
+        <p class="ion-text-wrap">{{reviews.review}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

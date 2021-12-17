@@ -25,11 +25,9 @@
     <span> No job(s) found </span>
   </div>
 
-
   <ion-card *ngFor="let joblist of MyJobs">
 
     <ion-card-content>
-
 
       <ion-row (click)="GotoJobs(joblist)">
         <ion-col size="7">
@@ -40,17 +38,14 @@
           <ion-icon name="ellipse" class="color-theme"></ion-icon>
         </ion-col>
 
-
         <ion-col size="12">
           <p class="date text-detail">Preferred Date:- {{apiService.formatDate(joblist.date)}} </p>
           <p class="text-detail"> {{joblist.detail | slice:0:100}} </p>
         </ion-col>
-
-
-
       </ion-row>
 
     </ion-card-content>
+
   </ion-card>
 
 </ion-content>

@@ -15,4 +15,5 @@ import { Camera } from '@awesome-cordova-plugins/camera/ngx';
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, Camera],
   bootstrap: [AppComponent],
 })
+
 export class AppModule { }

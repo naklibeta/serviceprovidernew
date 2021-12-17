@@ -14,7 +14,6 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./register/register.module').then(m => m.RegisterPageModule)
   },
-
   {
     path: 'my-jobs',
     loadChildren: () => import('./my-jobs/my-jobs.module').then(m => m.MyJobsPageModule)
@@ -58,6 +57,14 @@ const routes: Routes = [
   {
     path: 'schedule-training',
     loadChildren: () => import('./settings/schedule-training/schedule-training.module').then(m => m.ScheduleTrainingPageModule)
+  },
+  {
+    path: 'reviews',
+    loadChildren: () => import('./settings/reviews/reviews.module').then(m => m.ReviewsPageModule)
+  },
+  {
+    path: 'help-and-support',
+    loadChildren: () => import('./settings/help-and-support/help-and-support.module').then(m => m.HelpAndSupportPageModule)
   }
 
 
