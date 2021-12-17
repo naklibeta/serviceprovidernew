@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../api.service';
+import { ApiService } from '../../api.service';
 
 @Component({
   selector: 'app-schedule-training',
@@ -17,6 +17,8 @@ export class ScheduleTrainingPage implements OnInit {
   }
 
   UpdateProNow(value) {
+
+    this.apiService.showLoader('Please wait, updating details..');
 
     value.providerId = this.apiService.Get_ProviderId();
 

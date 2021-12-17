@@ -34,6 +34,8 @@ export class RegisterPage implements OnInit {
 
   RegisterNow(formvalues: any) {
 
+    this.apiService.showLoader('Please wait, registering user..');
+
     //----find state name and city name-------------------------------------------------------
 
     let UserData: any = localStorage.getItem('UserData');
@@ -58,9 +60,12 @@ export class RegisterPage implements OnInit {
 
     this.apiService.Common_POST('/register-provider', formvalues).subscribe((results) => {
       if (results.statusCode == 200) {
+
+        debugger
         localStorage.setItem('UserData', JSON.stringify(results.data));
+        this.apiService.presentToast(results.message, 3000);
         localStorage.setItem('isLogged', 'true');
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['']);
       } else {
         this.apiService.presentToast(results.message, 3000);
       }

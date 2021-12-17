@@ -23,6 +23,9 @@ export class JobDetailsPage implements OnInit {
 
 
   LoadJob() {
+
+    this.apiService.showLoader('Please wait, getting job details..');
+
     this.apiService.Common_POST('/jobDetails', { orderId: this.JobId }).subscribe((results) => {
       if (results.statusCode == 200) {
 

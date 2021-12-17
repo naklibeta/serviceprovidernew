@@ -3,13 +3,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { ToastController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  constructor(public http: HttpClient, public toastController: ToastController) { }
+  constructor(public http: HttpClient, public toastController: ToastController, public loadingController: LoadingController) { }
 
 
   public Common_Test(postFix: any, data: any): Observable<any> {
@@ -96,6 +97,40 @@ export class ApiService {
     } else {
       return 'Active';
     }
+  }
+
+  showLoader(loaderMsg) {
+    this.loadingController.create({
+      message: loaderMsg
+    }).then((res) => {
+      res.present();
+      res.onDidDismiss().then((dis) => {
+      });
+    });
+    this.hideLoader();
+  }
+
+  hideLoader() {
+    setTimeout(() => {
+      this.loadingController.dismiss();
+    }, 2000);
+  }
+
+  JobStatus(status) {
+
+    if (status == 0) { return 'Open'; }
+    else if (status == 1) { return 'Accepted By Provider'; }
+    else if (status == 2) { return 'Quotation Sent to User'; }
+    else if (status == 3) { return 'Quotation Accepted'; }
+    else if (status == 4) { return 'Quotation Rejected'; }
+    else if (status == 5) { return 'Start Work'; }
+    else if (status == 6) { return 'End Work'; }
+    else if (status == 7) { return 'Order Cancelled By User'; }
+    else if (status == 8) { return 'Payment Received'; }
+    else if (status == 9) { return 'Refund Initiated'; }
+    else if (status == 10) { return 'Refund Processed'; }
+    else { return ''; }
+
   }
 
 

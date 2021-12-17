@@ -14,10 +14,7 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./register/register.module').then(m => m.RegisterPageModule)
   },
-  {
-    path: 'dashboard',
-    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardPageModule)
-  },
+
   {
     path: 'my-jobs',
     loadChildren: () => import('./my-jobs/my-jobs.module').then(m => m.MyJobsPageModule)
@@ -57,9 +54,10 @@ const routes: Routes = [
   {
     path: 'reference',
     loadChildren: () => import('./settings/reference/reference.module').then(m => m.ReferencePageModule)
-  },  {
+  },
+  {
     path: 'schedule-training',
-    loadChildren: () => import('./schedule-training/schedule-training.module').then( m => m.ScheduleTrainingPageModule)
+    loadChildren: () => import('./settings/schedule-training/schedule-training.module').then(m => m.ScheduleTrainingPageModule)
   }
 
 

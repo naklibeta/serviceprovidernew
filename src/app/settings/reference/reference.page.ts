@@ -33,6 +33,8 @@ export class ReferencePage implements OnInit {
 
   UpdateProNow(value) {
 
+    this.apiService.showLoader('Please wait, updating details..');
+
     value.providerId = this.apiService.Get_ProviderId();
 
     this.apiService.Common_POST('/reference', value).subscribe((results) => {

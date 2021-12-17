@@ -29,6 +29,8 @@ export class ProfessionalDetailsPage implements OnInit {
 
   UpdateProNow(values: any) {
 
+    this.apiService.showLoader('Please wait, updating details..');
+
     let ProviderId = this.apiService.Get_ProviderId();
 
     let formData: FormData = new FormData();
@@ -46,6 +48,7 @@ export class ProfessionalDetailsPage implements OnInit {
 
     this.apiService.Common_POST('/qualification', formData).subscribe((results) => {
       if (results.statusCode == 200) {
+        this.apiService.presentToast(results.message, 3000);
 
       } else {
         this.apiService.presentToast(results.message, 3000);
@@ -77,6 +80,8 @@ export class ProfessionalDetailsPage implements OnInit {
 
     this.apiService.Common_POST('/findProviderDetails', { providerId: this.apiService.Get_ProviderId() }).subscribe((results) => {
       if (results.statusCode == 200) {
+
+
         this.ProviderData = results.data;
       } else {
         this.apiService.presentToast(results.message, 3000);

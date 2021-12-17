@@ -11,6 +11,7 @@ export class MyJobsPage implements OnInit {
 
   public providerId: any = '';
   public MyJobs: any = [];
+  public no_data: boolean = false;
 
   constructor(public apiService: ApiService, public router: Router) {
     let UserData = this.apiService.Get_UserData();
@@ -18,7 +19,7 @@ export class MyJobsPage implements OnInit {
   }
 
   ngOnInit() {
-
+    this.apiService.showLoader('Please wait, getting your jobs..');
     this.GetJobs();
   }
 
@@ -29,6 +30,11 @@ export class MyJobsPage implements OnInit {
     this.apiService.Common_POST('/myjobs', { provider_id: this.providerId }).subscribe((results) => {
       if (results.statusCode == 200) {
         this.MyJobs = results.data;
+
+        if (this.MyJobs.length == 0) {
+          this.no_data = true;
+        }
+
       } else {
       }
     }, err => {

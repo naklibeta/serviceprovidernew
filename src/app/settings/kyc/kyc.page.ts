@@ -36,6 +36,8 @@ export class KycPage implements OnInit {
 
   UpdateKYCNow(values: any) {
 
+    this.apiService.showLoader('Please wait, updating details..');
+
     let ProviderId = this.apiService.Get_ProviderId();
 
     let formData: FormData = new FormData();
@@ -61,6 +63,7 @@ export class KycPage implements OnInit {
 
     this.apiService.Common_POST('/kyc', formData).subscribe((results) => {
       if (results.statusCode == 200) {
+        this.GetProviderData();
         this.apiService.presentToast(results.message, 3000);
       } else {
         this.apiService.presentToast(results.message, 3000);
@@ -78,6 +81,7 @@ export class KycPage implements OnInit {
     this.apiService.Common_POST('/findProviderDetails', { providerId: this.apiService.Get_ProviderId() }).subscribe((results) => {
       if (results.statusCode == 200) {
         this.ProviderData = results.data;
+        if (results.data) localStorage.setItem('UserData', JSON.stringify(results.data));
       } else {
         this.apiService.presentToast(results.message, 3000);
       }

@@ -17,6 +17,7 @@ export class SelectCategoryPage implements OnInit {
   constructor(public apiService: ApiService, public router: Router) { }
 
   ngOnInit() {
+    this.apiService.showLoader('Please wait, getting categories..');
     this.GetSelectionOptions();
 
     let catSelected = localStorage.getItem('selectedCategories');
@@ -36,14 +37,28 @@ export class SelectCategoryPage implements OnInit {
 
     let env = this;
     env.CategoryData.forEach(function (valueCat, i) {
+      var check = 0;
       //--loop over sub cats-------------------------------
       let SubCats = valueCat.serviceDetails;
       SubCats.forEach(function (SubCatsValue, j) {
         var results = env.SelectedCategories.filter(function (entry) { return SubCatsValue.name == entry.name; });
         if (results.length != 0) {
           env.CategoryData[i].serviceDetails[j].selected = true;
+          check++;
         }
+
+
+        //-----Check All Subcats Selected--------
+
       });
+
+      if (check == SubCats.length) {
+        env.CategoryData[i].selected = true;
+      }
+
+      console.log(env.CategoryData);
+
+
     });
 
   }
@@ -103,7 +118,7 @@ export class SelectCategoryPage implements OnInit {
   }
 
 
-  SelectAllSubcats(i: any) {
+  SelectAllSubcats(i: any, targetval) {
 
     let allEl: any = document.querySelectorAll(".subcat-checkbox-" + i);
 

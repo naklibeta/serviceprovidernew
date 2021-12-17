@@ -21,14 +21,22 @@
 
 <ion-content>
 
-  <ion-item>
+  <ion-item style="margin:10px 0px">
     <ion-avatar slot="start">
-      <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+      <!-- <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"> -->
+
+      <img *ngIf="selectedImage == '' " onerror="this.src='assets/imgs/Icon.png';" [src]="ProviderData.photo"
+        class="cert-img" (click)="presentAlertConfirm()">
+
+      <img *ngIf="selectedImage != '' " [src]="selectedImage" class="cert-img" (click)="presentAlertConfirm()">
+
+
     </ion-avatar>
     <ion-label>
-      <h2>UserName </h2>
-      <p>user@gmail.com</p>
-      <p class="color-theme">Profile Activated</p>
+      <h2 style="text-transform: capitalize;">{{ProviderData.name}}</h2>
+      <p>{{ProviderData.emailId}}</p>
+      <p class="color-theme" *ngIf="apiService.Get_UserStatus() == 'Active' ">Profile Activated</p>
+      <p class="color-theme" *ngIf="apiService.Get_UserStatus() == 'InActive' ">Profile Inactive</p>
     </ion-label>
   </ion-item>
 
@@ -55,7 +63,8 @@
         <span class="menu-label"> Professional Details </span>
       </ion-col>
       <ion-col size="2">
-        <ion-icon name="checkmark-outline"></ion-icon>
+        <ion-icon name="checkmark-outline" *ngIf="Qualification" color="success"></ion-icon>
+        <ion-icon name="alert-circle-outline" *ngIf="!Qualification" color="danger"></ion-icon>
       </ion-col>
     </ion-row>
 
@@ -67,7 +76,9 @@
         <span class="menu-label"> KYC </span>
       </ion-col>
       <ion-col size="2">
-        <ion-icon name="checkmark-outline"></ion-icon>
+        <ion-icon *ngIf="apiService.Get_UserStatus() == 'Active' " name="checkmark-outline" color="success"></ion-icon>
+        <ion-icon *ngIf="apiService.Get_UserStatus() == 'InActive' " name="alert-circle-outline" color="danger">
+        </ion-icon>
       </ion-col>
     </ion-row>
 
@@ -79,7 +90,8 @@
         <span class="menu-label"> References </span>
       </ion-col>
       <ion-col size="2">
-        <ion-icon name="checkmark-outline"></ion-icon>
+        <ion-icon name="checkmark-outline" *ngIf="RefAdded" color="success"></ion-icon>
+        <ion-icon name="alert-circle-outline" *ngIf="!RefAdded" color="danger"></ion-icon>
       </ion-col>
     </ion-row>
 
@@ -91,7 +103,8 @@
         <span class="menu-label"> Training Schedule </span>
       </ion-col>
       <ion-col size="2">
-        <ion-icon name="checkmark-outline"></ion-icon>
+        <ion-icon name="checkmark-outline" *ngIf="TrainingFilled" color="success"></ion-icon>
+        <ion-icon name="alert-circle-outline" *ngIf="!TrainingFilled" color="danger"></ion-icon>
       </ion-col>
     </ion-row>
 
@@ -103,7 +116,7 @@
         <span class="menu-label"> Personal Details </span>
       </ion-col>
       <ion-col size="2">
-        <ion-icon name="checkmark-outline"></ion-icon>
+
       </ion-col>
     </ion-row>
 

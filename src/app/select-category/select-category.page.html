@@ -24,7 +24,11 @@
       <li *ngFor="let category of CategoryData; let i=index;">
         <input type="checkbox" id="list-item-{{i}}" class="subcat-inputs">
 
-        <input type="checkbox" id="list-selectall-{{i}}" class="select-all-check" (click)="SelectAllSubcats(i)">
+        <input type="checkbox" id="list-selectall-{{i}}" class="select-all-check"
+          (click)="SelectAllSubcats(i, $event.target)" checked="checked" *ngIf="category.selected">
+
+        <input type="checkbox" id="list-selectall-{{i}}" class="select-all-check"
+          (click)="SelectAllSubcats(i, $event.target)" *ngIf="!category.selected">
 
 
         <label for="list-item-{{i}}" class="first">
