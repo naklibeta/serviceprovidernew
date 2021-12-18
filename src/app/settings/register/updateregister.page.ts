@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../api.service';
+import { ApiService } from '../../api.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.page.html',
-  styleUrls: ['./register.page.scss'],
+  templateUrl: './updateregister.page.html',
+  styleUrls: ['./updateregister.page.scss'],
 })
-export class RegisterPage implements OnInit {
+export class UpdateRegisterPage implements OnInit {
 
   States: any = [];
   Cities: any = [];
+
+  StateValue: any;
+  CityValue: any;
 
   Email: any = '';
   Mobile: any = '';
@@ -26,21 +29,18 @@ export class RegisterPage implements OnInit {
 
     this.GetSelectionOptions();
 
-    if (!this.apiService.Get_UserData()) {
-      let SetEmail = localStorage.getItem('pre_email');
-      if (SetEmail) {
-        this.ProviderData.emailId = SetEmail
-      }
+    this.GetProviderData();
 
-      let SetMobile = localStorage.getItem('pre_mobile');
-      if (SetMobile) {
-        this.ProviderData.pre_mobile = SetMobile
-      }
+
+    let SetEmail = localStorage.getItem('pre_email');
+    if (SetEmail) {
+      this.Email = SetEmail
     }
 
-
-
-
+    let SetMobile = localStorage.getItem('pre_mobile');
+    if (SetMobile) {
+      this.Mobile = SetMobile
+    }
 
 
   }
@@ -80,22 +80,14 @@ export class RegisterPage implements OnInit {
 
 
     formvalues.serviceCategory = this.SelectedCategories;
-    formvalues.id = UserData.id;
-
-    let checkUpdate = '/profile';
-
-    if (!this.apiService.Get_UserData()) {
-      checkUpdate = '/register-provider';
-    } else {
-      formvalues.providerId = this.ProviderData.providerId
-    }
+    formvalues.id = UserData.id
 
 
 
-    this.apiService.Common_POST(checkUpdate, formvalues).subscribe((results) => {
+    this.apiService.Common_POST('/profile', formvalues).subscribe((results) => {
       if (results.statusCode == 200) {
 
-
+        debugger
         localStorage.setItem('UserData', JSON.stringify(results.data));
         this.apiService.presentToast(results.message, 3000);
         localStorage.setItem('isLogged', 'true');
@@ -116,7 +108,10 @@ export class RegisterPage implements OnInit {
     this.apiService.Common_GET('/findStates').subscribe((results) => {
       if (results.statusCode == 200) {
         this.States = results.data;
-        this.GetProviderData();
+
+
+
+
       } else {
         this.apiService.presentToast(results.message, 3000);
       }
@@ -128,14 +123,12 @@ export class RegisterPage implements OnInit {
   }
 
   GetCitis(id: any) {
-
+    console.log(id.value, 'state id');
     //------------Get Data CIties------------------------------------------
 
     this.apiService.Common_GET('/findCityByState/' + id.value).subscribe((results) => {
       if (results.statusCode == 200) {
         this.Cities = results.data;
-
-        this.ProviderData.cityId = this.ProviderData.cityId;
       } else {
         this.apiService.presentToast(results.message, 3000);
       }
@@ -158,15 +151,9 @@ export class RegisterPage implements OnInit {
     this.apiService.Common_POST('/findProviderDetails', { providerId: this.apiService.Get_ProviderId() }).subscribe((results) => {
       if (results.statusCode == 200) {
 
-
-        env.ProviderData = results.data;
-
-        if (results.serviceCategory) {
-          localStorage.setItem('selectedCategories', JSON.stringify(results.serviceCategory));
-
-          this.SelectedCategories = results.serviceCategory
-        }
-
+        setTimeout(() => {
+          env.ProviderData = results.data;
+        }, 5000);
 
       } else {
         this.apiService.presentToast(results.message, 3000);
@@ -175,5 +162,6 @@ export class RegisterPage implements OnInit {
       this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
     });
   }
+
 
 }

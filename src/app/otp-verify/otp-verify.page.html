@@ -10,7 +10,7 @@
     <div class="middle-content ">
       <ion-item class="custom-input-otp">
         <ion-label position="floating">Email ID / Phone Number</ion-label>
-        <ion-input [(ngModel)]="username"></ion-input>
+        <ion-input (input)="validateEmail($event.target)" [(ngModel)]="username"></ion-input>
       </ion-item>
       <br>
       <ion-button [disabled]="username.length==0" (click)="LoginNow()" class="theme-btn" expand="block">Login / SignUp

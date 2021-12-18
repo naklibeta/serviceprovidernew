@@ -20,14 +20,22 @@ export class OtpVerifyPage implements OnInit {
   public FinalOTP: any;
   public UserVerified: boolean;
   public timerOn = true;
+  public WarningTxt = false;
 
   constructor(public apiService: ApiService, public router: Router) { }
 
   ngOnInit() {
-
+    this.ShowEnterOTP = false;
   }
 
   LoginNow() {
+
+    if (this.WarningTxt == false) {
+      this.apiService.presentToast('Please enter correct mobile number or email address', 3000);
+      return;
+    }
+
+    this.apiService.showLoader('Please wait, sending OTP..');
     // this.router.navigate(['']);
     this.ShowEnterOTP = true;
 
@@ -80,6 +88,7 @@ export class OtpVerifyPage implements OnInit {
     let OTPEntered = this.otp1.value + '' + this.otp2.value + '' + this.otp3.value + '' + this.otp4.value;
 
     if (OTPEntered.length != 4) {
+      this.apiService.presentToast('Please enter 4 digit OTP', 3000)
       return;
     }
     this.ShowEnterOTP = true;
@@ -139,6 +148,28 @@ export class OtpVerifyPage implements OnInit {
     this.TimerTextShow = false;
     // Do timeout stuff here
     //alert('Timeout for otp');
+  }
+
+
+  validateEmail(stringEntered) {
+
+    var email = stringEntered.value;
+
+    var mailFormat = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})|([0-9]{10})+$/;
+    if (email == "") {
+      this.WarningTxt = false;
+    }
+    else if (!mailFormat.test(email)) {
+      this.WarningTxt = false;
+    }
+    else {
+      if (email.includes('@')) {
+        localStorage.setItem('pre_email', email);
+      } else {
+        localStorage.setItem('pre_mobile', email);
+      }
+      this.WarningTxt = true;
+    }
   }
 
 }

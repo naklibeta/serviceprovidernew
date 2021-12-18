@@ -53,9 +53,15 @@ export class Tab1Page implements OnInit {
   // }
 
   ionViewDidEnter() {
+
+    let providerIc_check = this.apiService.Get_ProviderId();
+
+    if (!providerIc_check) {
+      clearInterval(this.IntervalVar);
+      this.router.navigate(['/otp-verify']);
+    }
+
     let env = this;
-
-
 
 
     this.IntervalVar = setInterval(() => {
@@ -67,7 +73,7 @@ export class Tab1Page implements OnInit {
     clearInterval(this.IntervalVar);
   }
 
-  //
+
 
   LoadJobs() {
     this.apiService.Common_POST('/getJobs', { provider_id: this.providerId }).subscribe((results) => {

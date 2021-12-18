@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>KYC Details</ion-title>
+    <ion-title>Update KYC Details</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,33 +16,35 @@
 
       <ion-item>
         <ion-label position="floating">Account Holder Name</ion-label>
-        <ion-input [(ngModel)]="ProviderData.name" type="text" name="name"></ion-input>
+        <ion-input [(ngModel)]="ProviderData.name" type="text" name="name" required></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Bank Name</ion-label>
-        <ion-input [(ngModel)]="ProviderData.bank" type="text" name="bank"></ion-input>
+        <ion-input [(ngModel)]="ProviderData.bank" type="text" name="bank" required></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">IFSC Code</ion-label>
-        <ion-input [(ngModel)]="ProviderData.ifsc" type="text" name="ifsc"></ion-input>
+        <ion-input [(ngModel)]="ProviderData.ifsc" type="text" name="ifsc" required></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Branch Name</ion-label>
-        <ion-input [(ngModel)]="ProviderData.branch" type="text" name="branch"></ion-input>
+        <ion-input [(ngModel)]="ProviderData.branch" type="text" name="branch" required></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Bank Account Number</ion-label>
-        <ion-input [(ngModel)]="ProviderData.ac_number" type="number" name="ac_number"></ion-input>
+        <ion-input [(ngModel)]="ProviderData.ac_number" tel type="tel" name="ac_number" required maxlength="18"
+          minlength="6"></ion-input>
       </ion-item>
 
       <p *ngIf="inValidAcc" class="warning-text">Account number does not match</p>
       <ion-item>
         <ion-label position="floating">Confirm Bank Account Number</ion-label>
-        <ion-input (input)="CheckAc($event.target)" [(ngModel)]="ProviderData.cacNumber" type="number" name="cacNumber">
+        <ion-input (input)="CheckAc($event.target)" [(ngModel)]="ProviderData.cacNumber" type="number" name="cacNumber"
+          required maxlength="18" minlength="6">
         </ion-input>
 
       </ion-item>

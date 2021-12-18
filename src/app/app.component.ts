@@ -25,16 +25,18 @@ export class AppComponent {
         PushNotifications.register();
       } else {
       }
+    }, err => {
+
     });
 
-    PushNotifications.addListener('registration',
-      (token: Token) => {
-        env.UpdateDeviceToken(token);
-      }
-    );
+    // PushNotifications.addListener('registration',
+    //   (token: Token) => {
+    //     env.UpdateDeviceToken(token);
+    //   }
+    // );
 
-    PushNotifications.addListener('registrationError', (error: any) => {
-    });
+    // PushNotifications.addListener('registrationError', (error: any) => {
+    // });
 
   }
 

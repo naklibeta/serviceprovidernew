@@ -12,31 +12,33 @@
 
       <ion-item>
         <ion-label position="floating">Full Name</ion-label>
-        <ion-input ngModel type="text" name="name"></ion-input>
+        <ion-input [(ngModel)]="ProviderData.name" type="text" name="name" required></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Email</ion-label>
-        <ion-input email type="email" ngModel name="emailId"></ion-input>
+        <ion-input email type="email" [(ngModel)]="ProviderData.emailId" name="emailId" required></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Phone Number</ion-label>
-        <ion-input type="number" ngModel name="mobile"></ion-input>
+        <ion-input type="tel" maxlength="10" maxlength="10" [(ngModel)]="ProviderData.mobile" name="mobile" required>
+        </ion-input>
       </ion-item>
 
-      <ion-item>
+      <ion-item *ngIf="States.length!=0">
         <ion-label position="floating">State</ion-label>
-        <ion-select type="text" ngModel name="stateId" (ionChange)="GetCitis($event.target)">
-          <ion-select-option value="{{state.id}}" *ngFor="let state of States">
+        <ion-select type="text" [(ngModel)]="ProviderData.stateId" name="stateId" (ionChange)="GetCitis($event.target)"
+          required>
+          <ion-select-option [value]="state.id" *ngFor="let state of States">
             {{state.name}} </ion-select-option>
         </ion-select>
       </ion-item>
 
-      <ion-item>
+      <ion-item *ngIf="Cities.length!=0">
         <ion-label position="floating">City</ion-label>
-        <ion-select type="text" ngModel name="cityId">
-          <ion-select-option value="{{city.id}}" *ngFor="let city of Cities" value="f">{{city.city}}</ion-select-option>
+        <ion-select type="text" [(ngModel)]="ProviderData.cityId" name="cityId" required>
+          <ion-select-option [value]="city.id" *ngFor="let city of Cities">{{city.city}}</ion-select-option>
         </ion-select>
       </ion-item>
 
@@ -47,7 +49,7 @@
 
       <ion-item>
         <ion-label position="floating">Current Address</ion-label>
-        <ion-input type="text" ngModel name="address"></ion-input>
+        <ion-input type="text" [(ngModel)]="ProviderData.address" name="address" required></ion-input>
       </ion-item>
 
       <br>

@@ -50,6 +50,8 @@ export class ProfessionalDetailsPage implements OnInit {
       if (results.statusCode == 200) {
         this.apiService.presentToast(results.message, 3000);
 
+        this.back();
+
       } else {
         this.apiService.presentToast(results.message, 3000);
       }
@@ -164,6 +166,13 @@ export class ProfessionalDetailsPage implements OnInit {
 
     await alert.present();
   }
+
+  back() {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate(['/settings']));
+  }
+
+
 
 
 

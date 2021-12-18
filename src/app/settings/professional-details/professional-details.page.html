@@ -16,12 +16,12 @@
 
       <ion-item>
         <ion-label position="floating">Highest Degree Name</ion-label>
-        <ion-input [(ngModel)]="ProviderData.degree" type="text" name="degree"></ion-input>
+        <ion-input [(ngModel)]="ProviderData.degree" type="text" name="degree" required></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Highest Qualification</ion-label>
-        <ion-select type="text" [(ngModel)]="ProviderData.education" name="education">
+        <ion-select type="text" [(ngModel)]="ProviderData.education" name="education" required>
           <ion-select-option value="{{degree.name}}" *ngFor="let degree of AllDegress">
             {{degree.name}} </ion-select-option>
         </ion-select>
@@ -43,7 +43,7 @@
 
       <ion-item>
         <ion-label position="floating">Occupation / Business Name</ion-label>
-        <ion-input type="text" [(ngModel)]="ProviderData.occupation" name="occupation"></ion-input>
+        <ion-input type="text" [(ngModel)]="ProviderData.occupation" name="occupation" required></ion-input>
       </ion-item>
 
       <ion-item>

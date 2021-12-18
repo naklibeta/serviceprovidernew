@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-schedule-training',
@@ -10,7 +11,7 @@ export class ScheduleTrainingPage implements OnInit {
 
   public myDetails: any = {};
 
-  constructor(public apiService: ApiService) { }
+  constructor(public apiService: ApiService, public router: Router) { }
 
   ngOnInit() {
     this.myDetails = this.apiService.Get_UserData()
@@ -25,6 +26,9 @@ export class ScheduleTrainingPage implements OnInit {
     this.apiService.Common_POST('/setTraining', value).subscribe((results) => {
       if (results.statusCode == 200) {
         this.apiService.presentToast(results.message, 3000);
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+          this.router.navigate(['/settings']));
+
       } else {
         this.apiService.presentToast(results.message, 3000);
       }

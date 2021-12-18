@@ -27,10 +27,17 @@ export class SettingsPage implements OnInit {
 
   }
 
-  ionViewDidEnter() {
-    this.GetProviderData();
 
+
+
+
+  ionViewDidEnter() {
+    console.log('view changes');
+    this.GetProviderData();
   }
+
+
+
 
 
   ProfessionalDetails() {
@@ -92,21 +99,29 @@ export class SettingsPage implements OnInit {
         debugger
 
         //---------------Set Flags--------------------------
-        if (this.ProviderData.degree && this.ProviderData.education &&
-          this.ProviderData.certificate) {
+        if (this.ProviderData.degree && this.ProviderData.education) {
           this.Qualification = true;
+        } else {
+          this.Qualification = false;
         }
 
         let TrainingData = results.trainingData;
 
-        if (TrainingData.date && TrainingData.time) {
-          this.TrainingFilled = true;
+        if (TrainingData) {
+          if (TrainingData.date && TrainingData.time) {
+            this.TrainingFilled = true;
+          } else {
+            this.TrainingFilled = false;
+          }
+        } else {
+          this.TrainingFilled = false;
         }
 
         if (this.ProviderData.mobile1 && this.ProviderData.mobile2) {
           this.RefAdded = true;
+        } else {
+          this.RefAdded = false;
         }
-
 
       } else {
         this.apiService.presentToast(results.message, 3000);
@@ -115,9 +130,6 @@ export class SettingsPage implements OnInit {
       this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
     });
   }
-
-
-
 
 
 

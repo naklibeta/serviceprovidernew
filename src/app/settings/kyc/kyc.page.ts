@@ -36,6 +36,17 @@ export class KycPage implements OnInit {
 
   UpdateKYCNow(values: any) {
 
+    if (!this.ProviderData.aadharCardFront && !this.selected_aFront_Image) {
+      this.apiService.presentToast('Please select Aadhar Card Front Image', 3000);
+      return;
+    }
+
+    if (!this.ProviderData.aadharCardBack && !this.selected_aBack_Image) {
+      this.apiService.presentToast('Please select Aadhar Card Front Image', 3000);
+      return;
+    }
+
+
     this.apiService.showLoader('Please wait, updating details..');
 
     let ProviderId = this.apiService.Get_ProviderId();

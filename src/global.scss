@@ -91,15 +91,24 @@ ion-toolbar {
 
 .status-inactive {
     color: #858585;
+    position: absolute;
+    left: -15px;
+    margin-top: 7px;
 }
+
 
 .status-active {
     color: #37ce19;
+    position: absolute;
+    left: -15px;
+    margin-top: 7px;
 }
+
 
 .status-user a {
     color: #561d5e;
     font-size: 13px;
+    position: relative;
 }
 
 .no-data-msg {

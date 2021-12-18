@@ -6,6 +6,10 @@
 
 <ion-content fullscreen>
 
+  <div class="no-data-msg" *ngIf=" no_data">
+    <span> No notification(s) found </span>
+  </div>
+
   <ion-list>
     <ion-item lines="full" *ngFor="let notification of notificationsdata">
       <ion-grid>

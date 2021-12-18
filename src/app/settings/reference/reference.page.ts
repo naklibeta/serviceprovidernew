@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reference',
@@ -11,7 +12,7 @@ export class ReferencePage implements OnInit {
 
   public ProviderData: any = {};
 
-  constructor(public apiService: ApiService) { }
+  constructor(public apiService: ApiService, public router: Router) { }
 
   ngOnInit() {
     this.GetProviderData()
@@ -39,6 +40,7 @@ export class ReferencePage implements OnInit {
 
     this.apiService.Common_POST('/reference', value).subscribe((results) => {
       if (results.statusCode == 200) {
+        this.back();
         this.apiService.presentToast(results.message, 3000);
       } else {
         this.apiService.presentToast(results.message, 3000);
@@ -46,6 +48,11 @@ export class ReferencePage implements OnInit {
     }, err => {
       this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
     });
+  }
+
+  back() {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate(['/settings']));
   }
 
 }

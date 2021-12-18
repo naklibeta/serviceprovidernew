@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Update Personal Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="form-section">
+
+    <form #regForm="ngForm" (ngSubmit)="RegisterNow(regForm.value)">
+
+
+      <ion-item>
+        <ion-label position="floating">State {{ProviderData.stateId}}</ion-label>
+        <ion-select type="text" [(ngModel)]="ProviderData.stateId" name="stateId" (ionChange)="GetCitis($event.target)"
+          required>
+          <ion-select-option [value]="state.id" *ngFor="let state of States">
+            {{state.name}} </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+
+
+      <br>
+      <ion-button [disabled]="!regForm.valid" type="submit" class="theme-btn" expand="block">Submit
+      </ion-button>
+
+    </form>
+
+  </div>
+
+</ion-content>
