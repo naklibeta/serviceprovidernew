@@ -24,7 +24,6 @@ export class NotificationPage implements OnInit {
       if (results.statusCode == 200) {
         this.notificationsdata = results.data;
 
-
         if (this.notificationsdata.length == 0) {
           this.no_data = true;
         }

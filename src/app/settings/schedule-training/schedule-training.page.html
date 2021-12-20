@@ -32,28 +32,45 @@
           </div>
         </ion-col>
       </ion-row>
-      <ion-row class="schedule-row">
-        <ion-col>
-          <div>Schedule :</div>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="date-col">
-          <ion-datetime presentation="time-date" placeholder="Preferred Date" ngModel name="date"></ion-datetime>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="date-col">
-          <ion-datetime displayFormat="hh:mm A" placeholder="Preferred Time" ngModel name="time"></ion-datetime>
-        </ion-col>
-      </ion-row>
-      <ion-row class="button-row">
-        <ion-col class="button-col">
-          <div>
-            <ion-button class="button" color="themepurple" expand="block" type="submit">SUBMIT</ion-button>
-          </div>
-        </ion-col>
-      </ion-row>
+      <div *ngIf="trainingData==false">
+        <ion-row class="schedule-row">
+          <ion-col>
+            <div>Schedule :</div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="date-col">
+            <ion-datetime presentation="time-date" placeholder="Preferred Date" ngModel name="date"></ion-datetime>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="date-col">
+            <ion-datetime displayFormat="hh:mm A" placeholder="Preferred Time" ngModel name="time"></ion-datetime>
+          </ion-col>
+        </ion-row>
+        <ion-row class="button-row">
+          <ion-col class="button-col">
+            <div>
+              <ion-button class="button" color="themepurple" expand="block" type="submit">SUBMIT</ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
+      </div>
+      <div *ngIf="trainingData==true" class="schedule-div">
+        <div class="warning-text">
+          <ion-row class="training-detail">
+            <ion-col>
+              <div>Your training is scheduled on :-</div>
+              <div>
+                Date : {{trainingDetails.date}}
+              </div>
+              <div>
+                Time : {{trainingDetails.time}}
+              </div>
+            </ion-col>
+          </ion-row>
+        </div>
+      </div>
     </ion-grid>
   </form>
 

@@ -25,17 +25,22 @@
     <!-- Tab bar -->
     <ion-tab-bar slot="top">
       <ion-tab-button (click)="TabChange(true)">
-        <ion-icon name="calendar"></ion-icon>
+        <ion-icon name="checkbox"></ion-icon>
         <ion-label>Completed</ion-label>
       </ion-tab-button>
 
       <ion-tab-button (click)="TabChange(false)">
-        <ion-icon name="person-circle"></ion-icon>
+        <ion-icon name="list"></ion-icon>
         <ion-label>Pending</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
 
     <ion-list *ngIf="showCompletedList">
+
+      <div class="no-data-msg" *ngIf=" no_data">
+        <span> No payment(s) found </span>
+      </div>
+
       <ion-item lines="full" *ngFor="let completedpayment of paymentData">
         <ion-grid>
           <ion-row>
@@ -89,6 +94,11 @@
     </ion-list>
 
     <ion-list *ngIf="!showCompletedList">
+
+      <div class="no-data-msg" *ngIf=" no_data">
+        <span> No pending payment(s) found </span>
+      </div>
+
       <ion-item *ngFor="let pendingpayment of pendingpayments">
         <ion-grid>
           <ion-row>

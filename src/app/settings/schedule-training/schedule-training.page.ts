@@ -7,13 +7,18 @@ import { Router } from '@angular/router';
   templateUrl: './schedule-training.page.html',
   styleUrls: ['./schedule-training.page.scss'],
 })
+
 export class ScheduleTrainingPage implements OnInit {
 
   public myDetails: any = {};
+  public ProviderData: any = {};
+  public trainingData: boolean = false;
+  public trainingDetails: any = {};
 
   constructor(public apiService: ApiService, public router: Router) { }
 
   ngOnInit() {
+    this.GetProviderData()
     this.myDetails = this.apiService.Get_UserData()
   }
 
@@ -28,7 +33,27 @@ export class ScheduleTrainingPage implements OnInit {
         this.apiService.presentToast(results.message, 3000);
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
           this.router.navigate(['/settings']));
+      } else {
+        this.apiService.presentToast(results.message, 3000);
+      }
+    }, err => {
+      this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
+    });
+  }
 
+  GetProviderData() {
+
+    this.apiService.Common_POST('/findProviderDetails', { providerId: this.apiService.Get_ProviderId() }).subscribe((results) => {
+      if (results.statusCode == 200) {
+        this.ProviderData = results.data;
+
+        if (results.trainingData) {
+          this.trainingData = true;
+          this.trainingDetails = results.trainingData;
+        }
+        else {
+          this.trainingData = false;
+        }
       } else {
         this.apiService.presentToast(results.message, 3000);
       }
