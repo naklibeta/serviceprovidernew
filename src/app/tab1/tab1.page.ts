@@ -31,7 +31,7 @@ export class Tab1Page implements OnInit {
 
   ngOnInit() {
 
-    this.LoadJobs();
+
 
 
 
@@ -61,12 +61,19 @@ export class Tab1Page implements OnInit {
       this.router.navigate(['/otp-verify']);
     }
 
-    let env = this;
+    debugger
 
-
-    this.IntervalVar = setInterval(() => {
+    if (this.apiService.Get_ProviderId()) {
+      let env = this;
       env.LoadJobs();
-    }, 10000);
+
+      this.IntervalVar = setInterval(() => {
+        env.LoadJobs();
+      }, 10000);
+    }
+
+
+
   }
 
   ionViewDidLeave() {
@@ -84,7 +91,7 @@ export class Tab1Page implements OnInit {
           this.today = results.data.today;
           this.category = results.data.category;
         }
-
+        this.DashboardMsg = '';
       } else {
         this.DashboardMsg = results.message;
         //this.apiService.presentToast(results.message, 3000);

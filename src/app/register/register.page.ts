@@ -17,6 +17,7 @@ export class RegisterPage implements OnInit {
 
   SelectedCategories: any = [];
   ProviderData: any = {};
+  RegisteringNew: boolean = false;
 
   constructor(public apiService: ApiService, public router: Router) {
 
@@ -26,7 +27,10 @@ export class RegisterPage implements OnInit {
 
     this.GetSelectionOptions();
 
+
+
     if (!this.apiService.Get_UserData()) {
+
       let SetEmail = localStorage.getItem('pre_email');
       if (SetEmail) {
         this.ProviderData.emailId = SetEmail
@@ -36,13 +40,9 @@ export class RegisterPage implements OnInit {
       if (SetMobile) {
         this.ProviderData.pre_mobile = SetMobile
       }
+    } else {
+
     }
-
-
-
-
-
-
   }
 
   ionViewDidEnter() {
@@ -54,11 +54,17 @@ export class RegisterPage implements OnInit {
 
   RegisterNow(formvalues: any) {
 
-    if (formvalues.mobile.length != 10) {
-      this.apiService.presentToast('Please enter correct mobile number', 3000);
-      return
-    }
+    if (!this.apiService.Get_ProviderId()) {
+      this.RegisteringNew = true;
+      if (formvalues.mobile.length != 10) {
+        this.apiService.presentToast('Please enter correct mobile number', 3000);
+        return
+      }
 
+    } else {
+      this.RegisteringNew = false;
+      formvalues.mobile = this.ProviderData.mobile;
+    }
 
     this.apiService.showLoader('Please wait, registering user..');
 
@@ -84,7 +90,7 @@ export class RegisterPage implements OnInit {
 
     let checkUpdate = '/profile';
 
-    if (!this.apiService.Get_UserData()) {
+    if (!this.apiService.Get_ProviderId()) {
       checkUpdate = '/register-provider';
     } else {
       formvalues.providerId = this.ProviderData.providerId
@@ -99,7 +105,14 @@ export class RegisterPage implements OnInit {
         localStorage.setItem('UserData', JSON.stringify(results.data));
         this.apiService.presentToast(results.message, 3000);
         localStorage.setItem('isLogged', 'true');
-        this.router.navigate(['']);
+        debugger
+        if (this.RegisteringNew == false) {
+          this.router.navigate(['/settings']);
+        } else {
+          this.router.navigate(['']);
+        }
+
+
       } else {
         this.apiService.presentToast(results.message, 3000);
       }
@@ -155,25 +168,29 @@ export class RegisterPage implements OnInit {
   GetProviderData() {
     let env = this;
 
-    this.apiService.Common_POST('/findProviderDetails', { providerId: this.apiService.Get_ProviderId() }).subscribe((results) => {
-      if (results.statusCode == 200) {
+    if (this.apiService.Get_ProviderId()) {
+      this.apiService.Common_POST('/findProviderDetails', { providerId: this.apiService.Get_ProviderId() }).subscribe((results) => {
+        if (results.statusCode == 200) {
 
 
-        env.ProviderData = results.data;
+          env.ProviderData = results.data;
 
-        if (results.serviceCategory) {
-          localStorage.setItem('selectedCategories', JSON.stringify(results.serviceCategory));
+          if (results.serviceCategory) {
+            localStorage.setItem('selectedCategories', JSON.stringify(results.serviceCategory));
 
-          this.SelectedCategories = results.serviceCategory
+            this.SelectedCategories = results.serviceCategory
+          }
+
+
+        } else {
+          this.apiService.presentToast(results.message, 3000);
         }
-
-
-      } else {
-        this.apiService.presentToast(results.message, 3000);
-      }
-    }, err => {
-      this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
-    });
+      }, err => {
+        this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
+      });
+    }
   }
+
+
 
 }

@@ -1,6 +1,10 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Registration</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="apiService.Get_ProviderId()">Update Personal Details</ion-title>
+    <ion-title *ngIf="!apiService.Get_ProviderId()">Registration</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -22,7 +26,8 @@
 
       <ion-item>
         <ion-label position="floating">Phone Number</ion-label>
-        <ion-input type="tel" maxlength="10" maxlength="10" [(ngModel)]="ProviderData.mobile" name="mobile" required>
+        <ion-input [disabled]="apiService.Get_ProviderId()" type="tel" maxlength="10" maxlength="10"
+          [(ngModel)]="ProviderData.mobile" name="mobile" required>
         </ion-input>
       </ion-item>
 

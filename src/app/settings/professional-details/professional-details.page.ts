@@ -23,6 +23,8 @@ export class ProfessionalDetailsPage implements OnInit {
 
   ngOnInit() {
 
+    this.apiService.showLoader('Please wait, gettings your info..');
+
     this.GetDegrees();
     this.GetProviderData();
   }
@@ -98,14 +100,14 @@ export class ProfessionalDetailsPage implements OnInit {
 
     if (this.SelectFrom == false) {
       var options: CameraOptions = {
-        quality: 50,
+        quality: 30,
         destinationType: this.camera.DestinationType.DATA_URL,
         encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE
       }
     } else {
       var options: CameraOptions = {
-        quality: 50,
+        quality: 30,
         sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
         destinationType: this.camera.DestinationType.DATA_URL,
         allowEdit: true

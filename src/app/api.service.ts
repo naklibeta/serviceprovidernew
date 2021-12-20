@@ -41,9 +41,17 @@ export class ApiService {
 
   public Get_ProviderId() {
     let User = localStorage.getItem('UserData');
+
+    if (!User) {
+      return false;
+    }
     let UserD = JSON.parse(User);
 
-    return UserD.providerId;
+    if (!UserD.providerId) {
+      return false;
+    } else {
+      return UserD.providerId;
+    }
   }
 
   formatDate(dateP: any) {

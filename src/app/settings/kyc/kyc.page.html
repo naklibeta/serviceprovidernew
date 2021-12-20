@@ -43,8 +43,8 @@
       <p *ngIf="inValidAcc" class="warning-text">Account number does not match</p>
       <ion-item>
         <ion-label position="floating">Confirm Bank Account Number</ion-label>
-        <ion-input (input)="CheckAc($event.target)" [(ngModel)]="ProviderData.cacNumber" type="number" name="cacNumber"
-          required maxlength="18" minlength="6">
+        <ion-input (input)="CheckAc($event.target)" [(ngModel)]="ProviderData.cacNumber" type="password"
+          name="cacNumber" required maxlength="18" minlength="6">
         </ion-input>
 
       </ion-item>

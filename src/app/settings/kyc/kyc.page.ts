@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../api.service';
 import { AlertController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
+import { LoadingController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-kyc',
@@ -27,7 +29,7 @@ export class KycPage implements OnInit {
   public selected_aBack_Image: any = '';
   public selected_aBack_File: any;
 
-  constructor(public apiService: ApiService, public alert: AlertController, public camera: Camera) { }
+  constructor(public router: Router, public apiService: ApiService, public alert: AlertController, public camera: Camera, public loadingController: LoadingController) { }
 
   ngOnInit() {
 
@@ -47,7 +49,7 @@ export class KycPage implements OnInit {
     }
 
 
-    this.apiService.showLoader('Please wait, updating details..');
+    this.showLoader('Please wait, updating details..');
 
     let ProviderId = this.apiService.Get_ProviderId();
 
@@ -74,7 +76,11 @@ export class KycPage implements OnInit {
 
     this.apiService.Common_POST('/kyc', formData).subscribe((results) => {
       if (results.statusCode == 200) {
+        this.hideLoader();
         this.GetProviderData();
+
+        this.router.navigate(['/settings']);
+
         this.apiService.presentToast(results.message, 3000);
       } else {
         this.apiService.presentToast(results.message, 3000);
@@ -93,6 +99,13 @@ export class KycPage implements OnInit {
       if (results.statusCode == 200) {
         this.ProviderData = results.data;
         if (results.data) localStorage.setItem('UserData', JSON.stringify(results.data));
+
+        if (this.ProviderData.ac_number) {
+          this.ProviderData.cacNumber = this.ProviderData.ac_number;
+        }
+
+
+
       } else {
         this.apiService.presentToast(results.message, 3000);
       }
@@ -137,14 +150,14 @@ export class KycPage implements OnInit {
 
     if (this.SelectFrom == false) {
       var options: CameraOptions = {
-        quality: 50,
+        quality: 30,
         destinationType: this.camera.DestinationType.DATA_URL,
         encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE
       }
     } else {
       var options: CameraOptions = {
-        quality: 50,
+        quality: 30,
         sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
         destinationType: this.camera.DestinationType.DATA_URL,
         allowEdit: true
@@ -210,6 +223,26 @@ export class KycPage implements OnInit {
       this.inValidAcc = false;
     }
 
+  }
+
+
+
+  showLoader(loaderMsg) {
+    this.loadingController.create({
+      message: loaderMsg
+    }).then((res) => {
+      res.present();
+      res.onDidDismiss().then((dis) => {
+      });
+    });
+
+  }
+
+  hideLoader() {
+    let env = this;
+    setTimeout(() => {
+      this.loadingController.dismiss();
+    }, 1000);
   }
 
 }
