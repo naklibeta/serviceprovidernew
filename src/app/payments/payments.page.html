@@ -20,5 +20,125 @@
 </ion-header>
 
 <ion-content>
+  <ion-tabs>
 
+    <!-- Tab bar -->
+    <ion-tab-bar slot="top">
+      <ion-tab-button (click)="TabChange(true)">
+        <ion-icon name="calendar"></ion-icon>
+        <ion-label>Completed</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="TabChange(false)">
+        <ion-icon name="person-circle"></ion-icon>
+        <ion-label>Pending</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+
+    <ion-list *ngIf="showCompletedList">
+      <ion-item lines="full" *ngFor="let completedpayment of paymentData">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <ion-label class="ion-text-wrap"><b>Order Id : </b>{{completedpayment.orderId}}</ion-label>
+            </ion-col>
+            <ion-col size="6">
+              <ion-label class="ion-text-wrap date"><b>Date : </b>{{apiService.formatDate(completedpayment.date)}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label class="ion-text-wrap"><b>Service Name : </b>{{completedpayment.serviceName}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label class="ion-text-wrap"><b>Customer Name : </b>{{completedpayment.customerName}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label class="ion-text-wrap"><b>Address : </b>{{completedpayment.address}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <ion-label class="ion-text-wrap"><b>Your Earning : </b>
+              </ion-label>
+            </ion-col>
+            <ion-col size="6">
+              <ion-label class="ion-text-wrap"><b>Amount : </b>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <ion-label class="ion-text-wrap">
+                ₹ {{completedpayment.provider_commission}}
+              </ion-label>
+            </ion-col>
+            <ion-col size="6">
+              <ion-label class="ion-text-wrap">
+                ₹ {{completedpayment.quotation.amount}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngIf="!showCompletedList">
+      <ion-item *ngFor="let pendingpayment of pendingpayments">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <ion-label class="ion-text-wrap"><b>Order Id : </b>{{pendingpayment.orderId}}</ion-label>
+            </ion-col>
+            <ion-col size="6">
+              <ion-label class="ion-text-wrap date"><b>Date : </b>{{pendingpayment.date}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label class="ion-text-wrap"><b>Service Name : </b>{{pendingpayment.serviceName}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label class="ion-text-wrap"><b>Customer Name : </b>{{pendingpayment.customerName}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label class="ion-text-wrap"><b>Address : </b>{{pendingpayment.address}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6" *ngIf="pendingpayment.provider_commission">
+              <ion-label class="ion-text-wrap"><b>Your Earning : </b>
+              </ion-label>
+            </ion-col>
+            <ion-col size="6" *ngIf="pendingpayment.quotation.amount">
+              <ion-label class="ion-text-wrap"><b>Amount : </b>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6" *ngIf="pendingpayment.provider_commission">
+              <ion-label class="ion-text-wrap">
+                ₹ {{pendingpayment.provider_commission}}
+              </ion-label>
+            </ion-col>
+            <ion-col size="6" *ngIf="pendingpayment.quotation.amount">
+              <ion-label class="ion-text-wrap">
+                ₹ {{pendingpayment.quotation.amount}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+
+  </ion-tabs>
 </ion-content>

@@ -8,6 +8,7 @@ import { LoadingController } from '@ionic/angular';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ApiService {
 
   constructor(public http: HttpClient, public toastController: ToastController, public loadingController: LoadingController) { }
@@ -33,7 +34,6 @@ export class ApiService {
     toast.present();
   }
 
-
   public Get_UserData() {
     let User = localStorage.getItem('UserData');
     return JSON.parse(User);
@@ -45,8 +45,6 @@ export class ApiService {
 
     return UserD.providerId;
   }
-
-
 
   formatDate(dateP: any) {
     var d = new Date(dateP),
@@ -117,7 +115,6 @@ export class ApiService {
   }
 
   JobStatus(status) {
-
     if (status == 0) { return 'Open'; }
     else if (status == 1) { return 'Accepted By Provider'; }
     else if (status == 2) { return 'Quotation Sent to User'; }
@@ -130,8 +127,6 @@ export class ApiService {
     else if (status == 9) { return 'Refund Initiated'; }
     else if (status == 10) { return 'Refund Processed'; }
     else { return ''; }
-
   }
-
 
 }

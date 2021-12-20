@@ -71,9 +71,6 @@ const routes: Routes = [
     path: 'help-and-support',
     loadChildren: () => import('./settings/help-and-support/help-and-support.module').then(m => m.HelpAndSupportPageModule)
   }
-
-
-
 ];
 @NgModule({
   imports: [
