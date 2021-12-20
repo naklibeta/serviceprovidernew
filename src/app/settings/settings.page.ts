@@ -3,6 +3,7 @@ import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 @Component({
   selector: 'app-settings',
@@ -20,12 +21,14 @@ export class SettingsPage implements OnInit {
   public TrainingFilled: boolean = false;
   public RefAdded: boolean = false;
 
-  constructor(public apiService: ApiService, public router: Router, public alertController: AlertController, public camera: Camera) { }
+  constructor(public apiService: ApiService, public router: Router,
+    public alertController: AlertController, public camera: Camera, public inappb: InAppBrowser) { }
 
   ngOnInit() {
 
 
   }
+
 
 
 
@@ -88,6 +91,15 @@ export class SettingsPage implements OnInit {
 
   training() {
     this.router.navigate(['/schedule-training']);
+  }
+
+  NavigateNow(pagename) {
+    this.router.navigate(['/' + pagename]);
+  }
+
+  ShowWebPage(link: any) {
+
+    const browser = this.inappb.create(link);
   }
 
   GetProviderData() {
