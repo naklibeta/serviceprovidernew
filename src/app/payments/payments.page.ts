@@ -12,6 +12,7 @@ export class PaymentsPage implements OnInit {
   public paymentData: any = [];
   public pendingpayments: any = [];
   public showCompletedList: boolean = true;
+  public no_data: boolean = false;
 
   constructor(public apiService: ApiService) { }
 
@@ -24,7 +25,12 @@ export class PaymentsPage implements OnInit {
     this.apiService.Common_POST('/completepayment', { providerId: this.apiService.Get_ProviderId() }).subscribe((results) => {
       if (results.statusCode == 200) {
         this.paymentData = results.data;
+
+        if (this.paymentData.length == 0) {
+          this.no_data = true;
+        }
       } else {
+        this.no_data = true;
       }
     }, err => {
       this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
@@ -35,7 +41,12 @@ export class PaymentsPage implements OnInit {
     this.apiService.Common_POST('/pendingpayment', { providerId: this.apiService.Get_ProviderId() }).subscribe((results) => {
       if (results.statusCode == 200) {
         this.pendingpayments = results.data;
+
+        if (this.pendingpayments.length == 0) {
+          this.no_data = true;
+        }
       } else {
+        this.no_data = true;
       }
     }, err => {
       this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);

@@ -66,7 +66,6 @@ ion-toolbar {
     margin-top: 40px;
 }
 
-
 .header-logo {
     width: 34px;
     position: absolute;
@@ -84,10 +83,12 @@ ion-toolbar {
     font-size: 12px;
     font-style: italic;
     color: #b72121;
+    background: #b7212112;
     padding-left: 10px;
     margin: 0;
+    border: 1px solid #b72121;
+    border-radius: 5px;
 }
-
 
 .status-inactive {
     color: #858585;
