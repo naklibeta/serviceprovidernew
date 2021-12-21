@@ -4,6 +4,7 @@
 
 ion-card {
     border: 1px solid #561d5e;
+    box-shadow: none;
 }
 
 ion-card-subtitle {
@@ -26,11 +27,14 @@ ion-content {
 
 .heading-section {
     text-align: center;
-    font-style: italic;
+    // font-style: italic;
     font-size: 14px;
     border-bottom: 1px solid #7e3289;
     padding: 6px;
     border-top: 1px solid #561d5e;
+    background: #561d5e;
+    color: #ffffff;
+    font-weight: 500;
 }
 
 

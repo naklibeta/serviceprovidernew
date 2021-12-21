@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './job-details.page.html',
   styleUrls: ['./job-details.page.scss'],
 })
+
 export class JobDetailsPage implements OnInit {
 
   public JobDetails: any = {};

@@ -10,15 +10,15 @@
 <ion-content fullscreen>
   <ion-grid>
     <ion-row>
-      <ion-col>
+      <ion-col size="8">
         <div>
-          <h3 class="page-title">{{JobDetails.title}}</h3>
+          <h6 class="page-title">{{JobDetails.title}}</h6>
           <p class="order-id">Order Id : {{JobId}}</p>
         </div>
       </ion-col>
-      <ion-col>
+      <ion-col size="4">
         <div>
-          <h6 class="date">{{ apiService.formatDate(JobDetails.date)}}</h6>
+          <p class="date">Date : {{ apiService.formatDate(JobDetails.date)}}</p>
         </div>
       </ion-col>
     </ion-row>
@@ -56,7 +56,7 @@
     <ion-row *ngIf="JobDetails.status!=0">
       <ion-col>
         <div>
-          <h5 class="address-tag">Customer Contact Number :</h5>
+          <h6 class="address-tag">Customer Contact Number :</h6>
         </div>
         <div>
           <h6 class="address nomargin">
@@ -69,7 +69,7 @@
     <ion-row>
       <ion-col>
         <div>
-          <h5 class="address-tag">Address :</h5>
+          <h6 class="address-tag">Address :</h6>
         </div>
         <div>
           <h6 class="address nomargin">
@@ -86,62 +86,63 @@
       </ion-col>
     </ion-row>
 
-    <ion-row>
-      <ion-col *ngIf="JobDetails.status==0" size="12">
+    <ion-row class="button-row">
+      <ion-col *ngIf="JobDetails.status==0" size="12" class="button-col">
         <div>
           <ion-button expand="block" color="themepurple" (click)="AcceptJob()">ACCEPT</ion-button>
         </div>
       </ion-col>
 
-      <ion-col *ngIf="JobDetails.status==1" size="6">
+      <ion-col *ngIf="JobDetails.status==1" size="6" class="button-col">
         <div>
           <ion-button expand="block" color="themepurple" (click)="Decline()">Decline</ion-button>
         </div>
       </ion-col>
 
       <ion-col *ngIf="JobDetails.status==1" size="6">
-        <div>
-          <ion-button expand="block" color="themepurple" (click)="SendQuotation()">Send Quotation</ion-button>
-        </div>
-      </ion-col>
+        <ion-col *ngIf="JobDetails.status==1" size="12" class="button-col">
+          <div>
+            <ion-button expand="block" color="themepurple" (click)="SendQuotation()">Send Quotation</ion-button>
+          </div>
+        </ion-col>
 
-      <ion-col *ngIf="JobDetails.status==2" size="12">
-        <div>
-          <ion-button expand="block" color="themepurple">Please wait for quotation approval</ion-button>
-        </div>
-      </ion-col>
+        <ion-col *ngIf="JobDetails.status==2" size="12" class="button-col">
+          <div>
+            <ion-button expand="block" color="themepurple">Please wait for quotation approval</ion-button>
+          </div>
+        </ion-col>
 
-      <ion-col *ngIf="JobDetails.status==3  " size="6">
-        <div>
-          <ion-button expand="block" color="themepurple" (click)="StartStatus()">Start Job</ion-button>
-        </div>
-      </ion-col>
+        <ion-col *ngIf="JobDetails.status==3  " size="6">
+          <div>
+            <ion-button expand="block" color="themepurple" (click)="StartStatus()">Start Job</ion-button>
+          </div>
+        </ion-col>
 
-      <ion-col *ngIf="JobDetails.status==5  " size="6">
-        <div>
-          <ion-button expand="block" color="themepurple" (click)="EndStatus()">End Job</ion-button>
-        </div>
-      </ion-col>
+        <ion-col *ngIf="JobDetails.status==5  " size="6">
+          <div>
+            <ion-button expand="block" color="themepurple" (click)="EndStatus()">End Job</ion-button>
+          </div>
+        </ion-col>
 
-      <ion-col size="12" *ngIf="JobDetails.status==4 ">
-        <div>
-          <ion-button expand="block" color="themepurple" (click)="SendQuotation()">Send New Quotation</ion-button>
-        </div>
-      </ion-col>
+        <ion-col size="12" *ngIf="JobDetails.status==4 ">
+          <div>
+            <ion-button expand="block" color="themepurple" (click)="SendQuotation()">Send New Quotation</ion-button>
+          </div>
+        </ion-col>
 
-      <ion-col size="6" *ngIf="JobDetails.status>=6  ">
-        <div>
-          <ion-button expand="block" color="themepurple">Job Completed</ion-button>
-        </div>
-      </ion-col>
+        <ion-col size="6" *ngIf="JobDetails.status>=6  ">
+          <div>
+            <ion-button expand="block" color="themepurple">Job Completed</ion-button>
+          </div>
+        </ion-col>
 
-      <ion-col size="6" *ngIf="JobDetails.status==3 || JobDetails.status==5 || JobDetails.status==6 ">
-        <div>
-          <ion-button expand="block" color="themepurple" (click)="UpdateQuotation()">Update Quotation</ion-button>
-        </div>
-      </ion-col>
+        <ion-col size="6" *ngIf="JobDetails.status==3 || JobDetails.status==5 || JobDetails.status==6 ">
+          <div>
+            <ion-button expand="block" color="themepurple" (click)="UpdateQuotation()">Update Quotation</ion-button>
+          </div>
+        </ion-col>
 
-      <!-- <ion-col>
+        <!-- <ion-col>
         <div>
           <ion-button expand="block" color="themeoutlinepurple">DECLINE</ion-button>
         </div>
