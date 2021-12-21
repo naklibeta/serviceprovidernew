@@ -19,7 +19,7 @@ export class ReviewsPage implements OnInit {
   }
 
   GetReviews() {
-    this.apiService.Common_POST('/reviews', { providerId: this.apiService.Get_ProviderId() }).subscribe((results) => {
+    this.apiService.Common_POST('/reviews', { providerId: 'tesUd365' }).subscribe((results) => {
       if (results.statusCode == 200) {
         this.reviewdata = results.data;
       } else {

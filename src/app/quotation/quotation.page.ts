@@ -82,7 +82,7 @@ export class QuotationPage implements OnInit {
   AmountChanged(target: any) {
 
     let value = target.value;
-    this.CoreAmount = parseInt(value);
+    this.CoreAmount = parseFloat(value);
 
     if (this.IGST == 0 && this.CGST == 0 && this.SGST == 0) {
       this.TotalAmount = this.CoreAmount
@@ -105,29 +105,24 @@ export class QuotationPage implements OnInit {
   TaxChanged(target: any, type) {
     if (!target.value) { return }
 
-    let targetval = parseInt(target.value);
+    let targetval = parseFloat(target.value);
 
     if (type == 'CGST' || type == 'SGST') {
-      this.TotalAmount = 0;
-      this.IGST_Amount = 0;
-      this.IGST = 0;
+      this.TotalAmount = this.IGST_Amount = this.IGST = 0;
 
-      if (type == 'CGST') this.CGST_Amount = (targetval / 100) * this.CoreAmount;
-      if (type == 'SGST') this.SGST_Amount = (targetval / 100) * this.CoreAmount;
-      this.TotalAmount = this.CGST_Amount + this.CoreAmount + this.SGST_Amount;
+      //reset all taxes and update only using SGST & CGST------------
+      if (type == 'CGST') this.CGST_Amount = parseFloat(((targetval / 100) * this.CoreAmount).toFixed(2));
+      if (type == 'SGST') this.SGST_Amount = parseFloat(((targetval / 100) * this.CoreAmount).toFixed(2));
+      this.TotalAmount = parseFloat((this.CGST_Amount + this.CoreAmount + this.SGST_Amount).toFixed(2));
     }
 
     if (type == 'IGST') {
 
-      //reset C/SGST------------
-      this.TotalAmount = 0;
-      this.CGST_Amount = 0;
-      this.SGST_Amount = 0;
-      this.CGST = 0;
-      this.SGST = 0;
+      //reset all taxes and update only using IGST------------
+      this.TotalAmount = this.CGST_Amount = this.SGST_Amount = this.CGST = this.SGST = 0;
 
-      this.IGST_Amount = (targetval / 100) * this.CoreAmount;
-      this.TotalAmount = this.IGST_Amount + this.CoreAmount;
+      this.IGST_Amount = parseFloat(((targetval / 100) * this.CoreAmount).toFixed(2));
+      this.TotalAmount = parseFloat((this.IGST_Amount + this.CoreAmount).toFixed(2));
 
     }
 

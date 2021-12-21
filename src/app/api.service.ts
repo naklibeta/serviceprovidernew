@@ -141,7 +141,7 @@ export class ApiService {
 
   JobStatus(status) {
     if (status == 0) { return 'Open'; }
-    else if (status == 1) { return 'Accepted By Provider'; }
+    else if (status == 1) { return 'Accepted By You'; }
     else if (status == 2) { return 'Quotation Sent to User'; }
     else if (status == 3) { return 'Quotation Accepted'; }
     else if (status == 4) { return 'Quotation Rejected'; }
