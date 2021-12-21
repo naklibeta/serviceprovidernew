@@ -12,6 +12,7 @@ export class MyJobsPage implements OnInit {
   public providerId: any = '';
   public MyJobs: any = [];
   public no_data: boolean = false;
+  public IntervalVar: any;
 
   constructor(public apiService: ApiService, public router: Router) {
     let UserData = this.apiService.Get_UserData();
@@ -19,8 +20,29 @@ export class MyJobsPage implements OnInit {
   }
 
   ngOnInit() {
+
+
+  }
+
+
+  ionViewDidEnter() {
     this.apiService.showLoader('Please wait, getting your jobs..');
-    this.GetJobs();
+
+    if (this.apiService.Get_ProviderId()) {
+      let env = this;
+      env.GetJobs();
+
+      this.IntervalVar = setInterval(() => {
+        env.GetJobs();
+      }, 10000);
+    }
+
+
+
+  }
+
+  ionViewDidLeave() {
+    clearInterval(this.IntervalVar);
   }
 
 

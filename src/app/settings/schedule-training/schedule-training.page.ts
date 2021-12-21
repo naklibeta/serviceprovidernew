@@ -27,6 +27,7 @@ export class ScheduleTrainingPage implements OnInit {
     this.apiService.showLoader('Please wait, updating details..');
 
     value.providerId = this.apiService.Get_ProviderId();
+    value.time = this.apiService.extractTime(value.time);
 
     this.apiService.Common_POST('/setTraining', value).subscribe((results) => {
       if (results.statusCode == 200) {

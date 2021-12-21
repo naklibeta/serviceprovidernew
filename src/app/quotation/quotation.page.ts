@@ -82,13 +82,16 @@ export class QuotationPage implements OnInit {
   AmountChanged(target: any) {
 
     let value = target.value;
-    this.TotalAmount = value;
+    this.CoreAmount = parseInt(value);
 
   }
 
   TaxChanged(target: any, type) {
+    if (!target.value) { return }
 
-    let targetval = target.value;
+    debugger
+
+    let targetval = parseInt(target.value);
 
     if (type == 'CGST' || type == 'SGST') {
       this.TotalAmount = 0;
@@ -98,12 +101,11 @@ export class QuotationPage implements OnInit {
       if (type == 'CGST') this.CGST_Amount = (targetval / 100) * this.CoreAmount;
       if (type == 'SGST') this.SGST_Amount = (targetval / 100) * this.CoreAmount;
       this.TotalAmount = this.CGST_Amount + this.CoreAmount + this.SGST_Amount;
-
-
     }
 
-
     if (type == 'IGST') {
+
+
 
       //reset C/SGST------------
       this.TotalAmount = 0;
@@ -111,7 +113,6 @@ export class QuotationPage implements OnInit {
       this.SGST_Amount = 0;
       this.CGST = 0;
       this.SGST = 0;
-
 
       this.IGST_Amount = (targetval / 100) * this.CoreAmount;
       this.TotalAmount = this.IGST_Amount + this.CoreAmount;

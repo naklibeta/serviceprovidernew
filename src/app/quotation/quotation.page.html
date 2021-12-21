@@ -39,7 +39,8 @@
           <p class="amount-tag">Amount :</p>
         </ion-col>
         <ion-col>
-          <ion-input placeholder="0" type="number" [(ngModel)]="CoreAmount" (input)="AmountChanged($event.target)">
+          <ion-input placeholder="0" type="number" name="core_amount" [(ngModel)]="CoreAmount"
+            (input)="AmountChanged($event.target)">
           </ion-input>
         </ion-col>
       </ion-row>
@@ -48,11 +49,13 @@
           <p>CGST @</p>
         </ion-col>
         <ion-col size="3">
-          <ion-input placeholder="0 %" type="number" [(ngModel)]="CGST" (input)="TaxChanged($event.target, 'CGST')">
+          <ion-input placeholder="0 %" type="number" name="CGST" [(ngModel)]="CGST"
+            (input)="TaxChanged($event.target, 'CGST')">
           </ion-input>
         </ion-col>
         <ion-col size="6">
-          <ion-input placeholder="0" type="number" disabled="true" [(ngModel)]="CGST_Amount"></ion-input>
+          <ion-input placeholder="0" type="number" name="CGST_Amount" disabled="true" [(ngModel)]="CGST_Amount">
+          </ion-input>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -60,11 +63,13 @@
           <p>SGST @</p>
         </ion-col>
         <ion-col size="3">
-          <ion-input placeholder="0 %" type="number" [(ngModel)]="SGST" (input)="TaxChanged($event.target, 'SGST')">
+          <ion-input placeholder="0 %" type="number" name="SGST" [(ngModel)]="SGST"
+            (input)="TaxChanged($event.target, 'SGST')">
           </ion-input>
         </ion-col>
         <ion-col size="6">
-          <ion-input placeholder="0" type="number" disabled="true" [(ngModel)]="SGST_Amount"></ion-input>
+          <ion-input placeholder="0" type="number" name="SGST_Amount" disabled="true" [(ngModel)]="SGST_Amount">
+          </ion-input>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -72,11 +77,13 @@
           <p>IGST @</p>
         </ion-col>
         <ion-col size="3">
-          <ion-input placeholder="0 %" type="number" [(ngModel)]="IGST" (input)="TaxChanged($event.target, 'IGST')">
+          <ion-input placeholder="0 %" type="number" name="IGST" [(ngModel)]="IGST"
+            (input)="TaxChanged($event.target, 'IGST')">
           </ion-input>
         </ion-col>
         <ion-col size="6">
-          <ion-input placeholder="0" type="number" disabled="true" [(ngModel)]="IGST_Amount"></ion-input>
+          <ion-input placeholder="0" type="number" name="IGST_Amount" disabled="true" [(ngModel)]="IGST_Amount">
+          </ion-input>
         </ion-col>
       </ion-row>
       <ion-row class="total-amount-row">

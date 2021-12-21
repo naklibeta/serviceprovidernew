@@ -92,6 +92,23 @@ export class ApiService {
     return [year, month, day].join('-');
   }
 
+
+  extractTime(time: any) {
+
+
+
+    var OnlyTime = time.split('T')[1];
+
+    if (OnlyTime) {
+      var SelectTime = OnlyTime.substring(0, 5);
+
+      return SelectTime
+    } else {
+      return '';
+    }
+
+  }
+
   Get_UserStatus() {
     let UserData = localStorage.getItem('UserData');
     let UserParsed = JSON.parse(UserData);
