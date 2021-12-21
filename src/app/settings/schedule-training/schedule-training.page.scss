@@ -6,7 +6,11 @@ ion-grid {
 
 .detail-col {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
+}
+
+.name {
+    text-transform: capitalize;
 }
 
 .schedule-row {
