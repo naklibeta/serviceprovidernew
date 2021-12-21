@@ -13,7 +13,7 @@
     <ion-grid>
       <ion-row>
         <ion-col class="detail-col">
-          <div>
+          <div class="name">
             Name : {{myDetails.name}}
           </div>
         </ion-col>
@@ -21,14 +21,14 @@
       <ion-row>
         <ion-col class="detail-col">
           <div>
-            Mobile number : {{myDetails.mobile}}
+            Mobile Number : {{myDetails.mobile}}
           </div>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col class="detail-col">
           <div>
-            Email id : {{myDetails.emailId}}
+            Email Id : {{myDetails.emailId}}
           </div>
         </ion-col>
       </ion-row>
@@ -57,7 +57,7 @@
         </ion-row>
       </div>
       <div *ngIf="trainingData==true" class="schedule-div">
-        <div class="warning-text">
+        <div class="warning-box">
           <ion-row class="training-detail">
             <ion-col>
               <div>Your training is scheduled on :-</div>
