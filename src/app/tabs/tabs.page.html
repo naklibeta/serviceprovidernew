@@ -8,6 +8,8 @@
 
     <ion-tab-button tab="myjobs">
       <ion-icon name="list-circle-outline"></ion-icon>
+      <ion-badge color="themepurple" *ngIf="BadgeData.myJobsCount && BadgeData.myJobsCount!=0">{{BadgeData.myJobsCount}}
+      </ion-badge>
       <ion-label>My Jobs</ion-label>
     </ion-tab-button>
 
@@ -18,6 +20,8 @@
 
     <ion-tab-button tab="notifications">
       <ion-icon name="notifications-outline"></ion-icon>
+      <ion-badge color="themepurple" *ngIf="BadgeData.notificationCount && BadgeData.notificationCount!=0">
+        {{BadgeData.notificationCount}}</ion-badge>
       <ion-label>Notifications</ion-label>
     </ion-tab-button>
 
