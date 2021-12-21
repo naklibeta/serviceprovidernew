@@ -34,6 +34,7 @@ export class KycPage implements OnInit {
   ngOnInit() {
 
     this.GetProviderData();
+    this.apiService.showLoader('Please wait, getting your details..');
   }
 
   UpdateKYCNow(values: any) {

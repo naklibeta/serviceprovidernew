@@ -3,11 +3,11 @@ import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-quotation',
-  templateUrl: './quotation.page.html',
-  styleUrls: ['./quotation.page.scss'],
+  selector: 'app-update-quotation',
+  templateUrl: './update-quotation.page.html',
+  styleUrls: ['./update-quotation.page.scss'],
 })
-export class QuotationPage implements OnInit {
+export class UpdateQuotationPage implements OnInit {
 
   public JobDetails: any = {};
   public JobId: any;
@@ -26,7 +26,7 @@ export class QuotationPage implements OnInit {
 
   ngOnInit() {
 
-    this.JobId = localStorage.getItem('jobdetails');
+    this.JobId = localStorage.getItem('jobdetailsUpdate');
     this.LoadJob();
 
   }
@@ -43,7 +43,7 @@ export class QuotationPage implements OnInit {
       "igst": this.IGST
     }
 
-    this.apiService.Common_POST('/insertQuotation', SendData).subscribe((results) => {
+    this.apiService.Common_POST('/newQuotation', SendData).subscribe((results) => {
       if (results.statusCode == 200) {
 
         if (results.data) {
@@ -67,6 +67,18 @@ export class QuotationPage implements OnInit {
 
         if (results.data) {
           this.JobDetails = results.data;
+          this.CGST = this.JobDetails.taxPercentage;
+          this.SGST = this.JobDetails.taxPercentage2;
+          this.IGST = this.JobDetails.taxPercentage3;
+
+          this.CoreAmount = this.JobDetails.quotation.taxable_amount;
+          this.TotalAmount = this.JobDetails.quotation.amount;
+
+          //-----Apply Tax Cost-----------
+          this.CGST_Amount = (this.CGST / 100) * this.CoreAmount;
+          this.SGST_Amount = (this.SGST / 100) * this.CoreAmount;
+          this.IGST_Amount = (this.IGST / 100) * this.CoreAmount;
+
         }
 
       } else {
@@ -84,11 +96,6 @@ export class QuotationPage implements OnInit {
     let value = target.value;
     this.CoreAmount = parseInt(value);
 
-    if (this.IGST == 0 && this.CGST == 0 && this.SGST == 0) {
-      this.TotalAmount = this.CoreAmount
-    }
-
-
     //----------calculate amount now------------------
 
     if (this.IGST != 0) {
@@ -98,12 +105,12 @@ export class QuotationPage implements OnInit {
       this.TaxChanged({ value: this.SGST }, 'SGST');
     }
 
-
-
   }
 
   TaxChanged(target: any, type) {
     if (!target.value) { return }
+
+    debugger
 
     let targetval = parseInt(target.value);
 
@@ -118,6 +125,8 @@ export class QuotationPage implements OnInit {
     }
 
     if (type == 'IGST') {
+
+
 
       //reset C/SGST------------
       this.TotalAmount = 0;
@@ -138,3 +147,6 @@ export class QuotationPage implements OnInit {
   }
 
 }
+
+
+

@@ -43,6 +43,10 @@ export class RegisterPage implements OnInit {
     } else {
 
     }
+
+    if (this.apiService.Get_ProviderId()) {
+      this.apiService.showLoader('Please wait, getting your details..');
+    }
   }
 
   ionViewDidEnter() {

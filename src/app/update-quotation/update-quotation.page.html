@@ -4,7 +4,7 @@
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>Quotation</ion-title>
+    <ion-title>Update Quotation</ion-title>
   </ion-toolbar>
 
 </ion-header>
@@ -27,7 +27,8 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-textarea class="text-area" placeholder="Additional Description" name="quotation" ngModel>
+          <ion-textarea *ngIf="JobDetails" class="text-area" placeholder="Additional Description" name="quotation"
+            [(ngModel)]="JobDetails.quotation.details">
           </ion-textarea>
         </ion-col>
       </ion-row>
@@ -100,7 +101,7 @@
     <ion-grid>
       <ion-row>
         <ion-col class="tag-col">
-          <ion-button expand="block" color="themepurple" type="submit" [disabled]="TotalAmount==0"> SUBMIT</ion-button>
+          <ion-button expand="block" color="themepurple" type="submit">Update</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

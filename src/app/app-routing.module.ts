@@ -56,6 +56,10 @@ const routes: Routes = [
     loadChildren: () => import('./quotation/quotation.module').then(m => m.QuotationPageModule)
   },
   {
+    path: 'update-quotation',
+    loadChildren: () => import('./update-quotation/update-quotation.module').then(m => m.UpdateQuotationPageModule)
+  },
+  {
     path: 'reference',
     loadChildren: () => import('./settings/reference/reference.module').then(m => m.ReferencePageModule)
   },
@@ -70,7 +74,12 @@ const routes: Routes = [
   {
     path: 'help-and-support',
     loadChildren: () => import('./settings/help-and-support/help-and-support.module').then(m => m.HelpAndSupportPageModule)
+  },
+  {
+    path: 'update-quotation',
+    loadChildren: () => import('./update-quotation/update-quotation.module').then(m => m.UpdateQuotationPageModule)
   }
+
 ];
 @NgModule({
   imports: [

@@ -15,7 +15,8 @@ export class ReferencePage implements OnInit {
   constructor(public apiService: ApiService, public router: Router) { }
 
   ngOnInit() {
-    this.GetProviderData()
+    this.GetProviderData();
+    this.apiService.showLoader('Please wait, getting your details..');
   }
 
   GetProviderData() {

@@ -107,13 +107,35 @@ export class JobDetailsPage implements OnInit {
   }
 
 
+  Decline() {
+    let AcceptSend = {
+      "providerId": this.apiService.Get_ProviderId(),
+      "orderId": this.JobId
+    }
+
+    this.apiService.Common_POST('/declined', AcceptSend).subscribe((results) => {
+      if (results.statusCode == 200) {
+        this.ngOnInit();
+        this.apiService.presentToast(results.message, 3000);
+
+      } else {
+        this.apiService.presentToast('Error occured, unable to end job ', 3000);
+      }
+
+    }, err => {
+      this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
+    });
+  }
+
+
 
   SendQuotation() {
     this.router.navigate(['/quotation']);
   }
 
   UpdateQuotation() {
-    this.router.navigate(['/quotation', 'update']);
+    localStorage.setItem('jobdetailsUpdate', this.JobId);
+    this.router.navigate(['/update-quotation']);
   }
 
 
