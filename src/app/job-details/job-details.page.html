@@ -90,26 +90,25 @@
     </ion-row>
 
     <ion-row class="button-row">
-      <ion-col *ngIf="JobDetails.status==0" size="12" class="button-col">
+      <ion-col *ngIf="JobDetails.status==0" size="12">
         <div>
           <ion-button expand="block" color="themepurple" (click)="AcceptJob()">ACCEPT</ion-button>
         </div>
       </ion-col>
 
-      <ion-col *ngIf="JobDetails.status==1" size="6" class="button-col">
+      <ion-col *ngIf="JobDetails.status==1" size="6">
         <div>
           <ion-button expand="block" color="themepurple" (click)="Decline()">Decline</ion-button>
         </div>
       </ion-col>
 
-      <ion-col *ngIf="JobDetails.status==1" size="6" class="button-col">
-
+      <ion-col *ngIf="JobDetails.status==1" size="6">
         <div>
           <ion-button expand="block" color="themepurple" (click)="SendQuotation()">Send Quotation</ion-button>
         </div>
       </ion-col>
 
-      <ion-col *ngIf="JobDetails.status==2" size="12" class="button-col">
+      <ion-col *ngIf="JobDetails.status==2" size="12">
         <div>
           <ion-button expand="block" color="themepurple">Please wait for quotation approval</ion-button>
         </div>
