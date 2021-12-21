@@ -11,12 +11,37 @@ export class NotificationPage implements OnInit {
 
   public notificationsdata: any = [];
   public no_data: boolean = false;
+  public IntervalVar: any;
 
   constructor(public apiService: ApiService) { }
 
   ngOnInit() {
     this.GetNotifications()
-    this.MarkRead()
+
+  }
+
+
+  ionViewDidEnter() {
+
+
+
+
+    if (this.apiService.Get_ProviderId()) {
+      let env = this;
+      env.GetNotifications();
+
+      // this.IntervalVar = setInterval(() => {
+      //   env.GetNotifications();
+      // }, 10000);
+    }
+
+
+
+  }
+
+  ionViewDidLeave() {
+    clearInterval(this.IntervalVar);
+    this.MarkRead();
   }
 
   GetNotifications() {

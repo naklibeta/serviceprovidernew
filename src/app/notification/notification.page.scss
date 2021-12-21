@@ -15,3 +15,13 @@ p {
     font-size: 11px;
     margin: auto;
 }
+
+
+ion-item.active {
+    --background: #efefef;
+
+    h6 {
+        color: #561d5e;
+        font-weight: 600;
+    }
+}

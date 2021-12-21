@@ -1,33 +1,48 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Notification</ion-title>
+    <ion-row>
+      <ion-col col-6>
+        <ion-title>
+          <img class="header-logo" src="assets/imgs/Icon.png">
+          <span class="header-name"> Notifications </span>
+        </ion-title>
+      </ion-col>
+      <ion-col col-6 class="text-right status-user">
+        <a *ngIf="apiService.Get_UserStatus() == 'InActive' ">
+          <ion-icon name="ellipse" class="status-inactive"> </ion-icon> InActive
+        </a>
+        <a *ngIf="apiService.Get_UserStatus() == 'Active' ">
+          <ion-icon name="ellipse" class="status-active"> </ion-icon> Active
+        </a>
+      </ion-col>
+    </ion-row>
   </ion-toolbar>
-</ion-header>
 
-<ion-content fullscreen>
+  <ion-content fullscreen>
 
-  <div class="no-data-msg" *ngIf=" no_data">
-    <span> No notification(s) found </span>
-  </div>
+    <div class="no-data-msg" *ngIf=" no_data">
+      <span> No notification(s) found </span>
+    </div>
 
-  <ion-list>
-    <ion-item lines="full" *ngFor="let notification of notificationsdata">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="6">
-            <h6>Order Id : {{notification.orderId}}</h6>
-          </ion-col>
-          <ion-col size="6">
-            <p class="date">Date : {{apiService.formatDate(notification.date)}}</p>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="12">
-            <p>{{notification.title}}</p>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
-  </ion-list>
+    <ion-list>
+      <ion-item [ngClass]="{'active': notification.status == 0}" lines="full"
+        *ngFor="let notification of notificationsdata">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <h6>Order Id : {{notification.orderId}}</h6>
+            </ion-col>
+            <ion-col size="6">
+              <p class="date">Date : {{apiService.formatDate(notification.date)}}</p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>{{notification.title}}</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
 
-</ion-content>
+  </ion-content>
