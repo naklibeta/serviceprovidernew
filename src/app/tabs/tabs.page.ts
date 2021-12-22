@@ -14,6 +14,10 @@ export class TabsPage {
   constructor(public router: Router, public apiService: ApiService) {
 
     this.BadgeData = { myJobsCount: 0, notificationCount: 0 }
+
+  }
+
+  ionViewDidEnter() {
     let CheckLogin = localStorage.getItem('isLogged');
 
 
