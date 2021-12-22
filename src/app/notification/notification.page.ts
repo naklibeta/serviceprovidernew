@@ -16,13 +16,11 @@ export class NotificationPage implements OnInit {
   constructor(public apiService: ApiService) { }
 
   ngOnInit() {
-    //this.GetNotifications()
 
   }
 
 
   ionViewDidEnter() {
-
 
     if (this.apiService.Get_ProviderId()) {
       let env = this;
@@ -32,8 +30,6 @@ export class NotificationPage implements OnInit {
         env.GetNotifications();
       }, 10000);
     }
-
-
 
   }
 

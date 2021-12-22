@@ -13,13 +13,29 @@ export class PaymentsPage implements OnInit {
   public pendingpayments: any = [];
   public showCompletedList: boolean = true;
   public no_data: boolean = false;
+  public IntervalVar: any;
 
   constructor(public apiService: ApiService) { }
 
   ngOnInit() {
-    this.GetPaymentDetails()
-    this.GetPendingPaymentDetails()
+
   }
+
+  ionViewDidEnter() {
+    let env = this;
+    this.GetPaymentDetails();
+    this.GetPendingPaymentDetails();
+
+    this.IntervalVar = setInterval(() => {
+      env.GetPaymentDetails();
+      env.GetPendingPaymentDetails();
+    }, 10000);
+  }
+
+  ionViewDidLeave() {
+    clearInterval(this.IntervalVar);
+  }
+
 
   GetPaymentDetails() {
     this.apiService.Common_POST('/completepayment', { providerId: this.apiService.Get_ProviderId() }).subscribe((results) => {
