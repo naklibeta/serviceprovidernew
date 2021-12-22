@@ -33,7 +33,7 @@ export class MyJobsPage implements OnInit {
       env.GetJobs();
 
       this.IntervalVar = setInterval(() => {
-        // env.GetJobs();
+        env.GetJobs();
       }, 10000);
     }
 
