@@ -54,6 +54,8 @@ export class MyJobsPage implements OnInit {
 
         if (this.MyJobs.length == 0) {
           this.no_data = true;
+        } else {
+          this.no_data = false;
         }
 
       } else {
