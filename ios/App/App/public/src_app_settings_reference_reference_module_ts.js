@@ -112,6 +112,7 @@ let ReferencePage = class ReferencePage {
     }
     ngOnInit() {
         this.GetProviderData();
+        this.apiService.showLoader('Please wait, getting your details..');
     }
     GetProviderData() {
         this.apiService.Common_POST('/findProviderDetails', { providerId: this.apiService.Get_ProviderId() }).subscribe((results) => {

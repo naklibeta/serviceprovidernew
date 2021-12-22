@@ -115,8 +115,19 @@ let MyJobsPage = class MyJobsPage {
         this.providerId = UserData.providerId;
     }
     ngOnInit() {
+    }
+    ionViewDidEnter() {
         this.apiService.showLoader('Please wait, getting your jobs..');
-        this.GetJobs();
+        if (this.apiService.Get_ProviderId()) {
+            let env = this;
+            env.GetJobs();
+            this.IntervalVar = setInterval(() => {
+                // env.GetJobs();
+            }, 10000);
+        }
+    }
+    ionViewDidLeave() {
+        clearInterval(this.IntervalVar);
     }
     GetJobs() {
         this.apiService.Common_POST('/myjobs', { provider_id: this.providerId }).subscribe((results) => {
@@ -164,7 +175,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("ion-card-header {\n  padding: 7px 21px;\n  font-weight: bolder;\n}\n\nion-card-title {\n  font-size: 14px;\n}\n\nion-card-content {\n  font-size: 11px;\n}\n\n.color-theme {\n  color: #561d5e;\n}\n\n.status-txt {\n  font-size: 9px;\n}\n\n.text-detail {\n  font-size: 10px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm15LWpvYnMucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksaUJBQUE7RUFDQSxtQkFBQTtBQUNKOztBQUVBO0VBQ0ksZUFBQTtBQUNKOztBQUVBO0VBQ0ksZUFBQTtBQUNKOztBQUVBO0VBQ0ksY0FBQTtBQUNKOztBQUVBO0VBQ0ksY0FBQTtBQUNKOztBQUdBO0VBQ0ksZUFBQTtBQUFKIiwiZmlsZSI6Im15LWpvYnMucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW9uLWNhcmQtaGVhZGVyIHtcclxuICAgIHBhZGRpbmc6IDdweCAyMXB4O1xyXG4gICAgZm9udC13ZWlnaHQ6IGJvbGRlcjtcclxufVxyXG5cclxuaW9uLWNhcmQtdGl0bGUge1xyXG4gICAgZm9udC1zaXplOiAxNHB4O1xyXG59XHJcblxyXG5pb24tY2FyZC1jb250ZW50IHtcclxuICAgIGZvbnQtc2l6ZTogMTFweDtcclxufVxyXG5cclxuLmNvbG9yLXRoZW1lIHtcclxuICAgIGNvbG9yOiAjNTYxZDVlO1xyXG59XHJcblxyXG4uc3RhdHVzLXR4dCB7XHJcbiAgICBmb250LXNpemU6IDlweDtcclxufVxyXG5cclxuXHJcbi50ZXh0LWRldGFpbCB7XHJcbiAgICBmb250LXNpemU6IDEwcHg7XHJcbn0iXX0= */");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("ion-card {\n  box-shadow: none;\n  border: 1px solid #561d5e;\n}\n\nion-card-header {\n  padding: 7px 21px;\n  font-weight: bolder;\n}\n\nion-card-title {\n  font-size: 14px;\n}\n\nion-card-content {\n  font-size: 11px;\n}\n\n.job-status {\n  text-align: end;\n}\n\n.color-theme {\n  color: #561d5e;\n}\n\n.status-txt {\n  font-size: 9px;\n}\n\n.text-detail {\n  font-size: 10px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm15LWpvYnMucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksZ0JBQUE7RUFDQSx5QkFBQTtBQUNKOztBQUVBO0VBQ0ksaUJBQUE7RUFDQSxtQkFBQTtBQUNKOztBQUVBO0VBQ0ksZUFBQTtBQUNKOztBQUVBO0VBQ0ksZUFBQTtBQUNKOztBQUVBO0VBQ0ksZUFBQTtBQUNKOztBQUVBO0VBQ0ksY0FBQTtBQUNKOztBQUVBO0VBQ0ksY0FBQTtBQUNKOztBQUdBO0VBQ0ksZUFBQTtBQUFKIiwiZmlsZSI6Im15LWpvYnMucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW9uLWNhcmQge1xyXG4gICAgYm94LXNoYWRvdzogbm9uZTtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkICM1NjFkNWVcclxufVxyXG5cclxuaW9uLWNhcmQtaGVhZGVyIHtcclxuICAgIHBhZGRpbmc6IDdweCAyMXB4O1xyXG4gICAgZm9udC13ZWlnaHQ6IGJvbGRlcjtcclxufVxyXG5cclxuaW9uLWNhcmQtdGl0bGUge1xyXG4gICAgZm9udC1zaXplOiAxNHB4O1xyXG59XHJcblxyXG5pb24tY2FyZC1jb250ZW50IHtcclxuICAgIGZvbnQtc2l6ZTogMTFweDtcclxufVxyXG5cclxuLmpvYi1zdGF0dXMge1xyXG4gICAgdGV4dC1hbGlnbjogZW5kO1xyXG59XHJcblxyXG4uY29sb3ItdGhlbWUge1xyXG4gICAgY29sb3I6ICM1NjFkNWU7XHJcbn1cclxuXHJcbi5zdGF0dXMtdHh0IHtcclxuICAgIGZvbnQtc2l6ZTogOXB4O1xyXG59XHJcblxyXG5cclxuLnRleHQtZGV0YWlsIHtcclxuICAgIGZvbnQtc2l6ZTogMTBweDtcclxufSJdfQ== */");
 
 /***/ }),
 
@@ -179,7 +190,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header [translucent]=\"true\">\r\n  <ion-toolbar>\r\n    <ion-row>\r\n      <ion-col col-6>\r\n        <ion-title>\r\n          <img class=\"header-logo\" src=\"assets/imgs/Icon.png\">\r\n          <span class=\"header-name\"> My Jobs </span>\r\n        </ion-title>\r\n      </ion-col>\r\n      <ion-col col-6 class=\"text-right status-user\">\r\n        <a *ngIf=\"apiService.Get_UserStatus() == 'InActive' \">\r\n          <ion-icon name=\"ellipse\" class=\"status-inactive\"> </ion-icon> InActive\r\n        </a>\r\n        <a *ngIf=\"apiService.Get_UserStatus() == 'Active' \">\r\n          <ion-icon name=\"ellipse\" class=\"status-active\"> </ion-icon> Active\r\n        </a>\r\n      </ion-col>\r\n    </ion-row>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n\r\n  <div class=\"no-data-msg\" *ngIf=\" no_data\">\r\n    <span> No job(s) found </span>\r\n  </div>\r\n\r\n  <ion-card *ngFor=\"let joblist of MyJobs\">\r\n\r\n    <ion-card-content>\r\n\r\n      <ion-row (click)=\"GotoJobs(joblist)\">\r\n        <ion-col size=\"7\">\r\n          <ion-card-title>{{joblist.title}}</ion-card-title>\r\n        </ion-col>\r\n        <ion-col size=\"5\">\r\n          <span class=\"status-txt\"> {{ apiService.JobStatus(joblist.status) }} </span>\r\n          <ion-icon name=\"ellipse\" class=\"color-theme\"></ion-icon>\r\n        </ion-col>\r\n\r\n        <ion-col size=\"12\">\r\n          <p class=\"date text-detail\">Preferred Date:- {{apiService.formatDate(joblist.date)}} </p>\r\n          <p class=\"text-detail\"> {{joblist.detail | slice:0:100}} </p>\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n    </ion-card-content>\r\n\r\n  </ion-card>\r\n\r\n</ion-content>");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header [translucent]=\"true\">\r\n  <ion-toolbar>\r\n    <ion-row>\r\n      <ion-col col-6>\r\n        <ion-title>\r\n          <img class=\"header-logo\" src=\"assets/imgs/Icon.png\">\r\n          <span class=\"header-name\"> My Jobs </span>\r\n        </ion-title>\r\n      </ion-col>\r\n      <ion-col col-6 class=\"text-right status-user\">\r\n        <a *ngIf=\"apiService.Get_UserStatus() == 'InActive' \">\r\n          <ion-icon name=\"ellipse\" class=\"status-inactive\"> </ion-icon> InActive\r\n        </a>\r\n        <a *ngIf=\"apiService.Get_UserStatus() == 'Active' \">\r\n          <ion-icon name=\"ellipse\" class=\"status-active\"> </ion-icon> Active\r\n        </a>\r\n      </ion-col>\r\n    </ion-row>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n\r\n  <div class=\"no-data-msg\" *ngIf=\" no_data\">\r\n    <span> No job(s) found </span>\r\n  </div>\r\n\r\n  <ion-card *ngFor=\"let joblist of MyJobs\">\r\n\r\n    <ion-card-content>\r\n\r\n      <ion-row (click)=\"GotoJobs(joblist)\">\r\n        <ion-col size=\"7\">\r\n          <ion-card-title>{{joblist.title}}</ion-card-title>\r\n        </ion-col>\r\n        <ion-col size=\"5\" class=\"job-status\">\r\n          <span class=\"status-txt\"> {{ apiService.JobStatus(joblist.status) }} </span>\r\n          <ion-icon name=\"ellipse\" class=\"color-theme\"></ion-icon>\r\n        </ion-col>\r\n\r\n        <ion-col size=\"12\">\r\n          <p class=\"date text-detail\">Preferred Date:- {{apiService.formatDate(joblist.date)}} </p>\r\n          <p class=\"text-detail\"> {{joblist.detail | slice:0:100}} </p>\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n    </ion-card-content>\r\n\r\n  </ion-card>\r\n\r\n</ion-content>");
 
 /***/ })
 

@@ -126,6 +126,7 @@ let KycPage = class KycPage {
     }
     ngOnInit() {
         this.GetProviderData();
+        this.apiService.showLoader('Please wait, getting your details..');
     }
     UpdateKYCNow(values) {
         if (!this.ProviderData.aadharCardFront && !this.selected_aFront_Image) {

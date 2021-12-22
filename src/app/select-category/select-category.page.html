@@ -20,7 +20,7 @@
 
 
 
-    <ul>
+    <ul *ngIf="CategoryData.length!=0">
       <li *ngFor="let category of CategoryData; let i=index;">
         <input type="checkbox" id="list-item-{{i}}" class="subcat-inputs">
 

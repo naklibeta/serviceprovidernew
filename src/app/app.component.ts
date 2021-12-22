@@ -3,6 +3,8 @@ import { ApiService } from '../app/api.service';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+
+
 import {
   ActionPerformed,
   PushNotificationSchema,
@@ -23,6 +25,9 @@ export class AppComponent {
 
     const url = this.router.url;
 
+
+    //SplashScreen.hide();
+
     console.log('codeupdated--');
     let env = this;
     PushNotifications.requestPermissions().then(result => {
@@ -34,11 +39,11 @@ export class AppComponent {
 
     });
 
-    // PushNotifications.addListener('registration',
-    //   (token: Token) => {
-    //     env.UpdateDeviceToken(token);
-    //   }
-    // );
+    PushNotifications.addListener('registration',
+      (token: Token) => {
+        env.UpdateDeviceToken(token);
+      }
+    );
 
     // PushNotifications.addListener('registrationError', (error: any) => {
     // });
@@ -47,18 +52,14 @@ export class AppComponent {
     this.platform.backButton.subscribeWithPriority(1, () => {
       const urlcheck = this.router.url;
 
-      debugger
-
       if (urlcheck == '/tabs/tab1' || urlcheck == '/' || urlcheck == '/my-jobs' || urlcheck == '/payments'
-        || urlcheck == 'notification' || urlcheck == '/settings'
+        || urlcheck == 'notification' || urlcheck == '/settings' || urlcheck == '/otp-verify'
       ) {
-
-
         this.ChooseExit();
-
-
-      } else {
+      } else if (this.apiService.Get_ProviderId()) {
         this.router.navigate(['/tabs/tab1']);
+      } else {
+        this.router.navigate(['/otp-verify']);
       }
     });
 

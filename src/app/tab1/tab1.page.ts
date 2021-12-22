@@ -62,8 +62,6 @@ export class Tab1Page implements OnInit {
       this.router.navigate(['/otp-verify']);
     }
 
-    debugger
-
     if (this.apiService.Get_ProviderId()) {
       let env = this;
       env.LoadJobs();
@@ -72,8 +70,6 @@ export class Tab1Page implements OnInit {
         env.LoadJobs();
       }, 10000);
     }
-
-
 
   }
 

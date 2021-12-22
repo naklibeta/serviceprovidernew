@@ -126,7 +126,7 @@ let QuotationPage = class QuotationPage {
         let SendData = {
             "orderId": this.JobId,
             "quotation": values.quotation,
-            "amount": this.TotalAmount,
+            "amount": this.CoreAmount,
             "gst": this.CGST,
             "sgst": this.SGST,
             "igst": this.IGST
@@ -161,29 +161,38 @@ let QuotationPage = class QuotationPage {
     }
     AmountChanged(target) {
         let value = target.value;
-        this.TotalAmount = value;
+        this.CoreAmount = parseFloat(value);
+        if (this.IGST == 0 && this.CGST == 0 && this.SGST == 0) {
+            this.TotalAmount = this.CoreAmount;
+        }
+        //----------calculate amount now------------------
+        if (this.IGST != 0) {
+            this.TaxChanged({ value: this.IGST }, 'IGST');
+        }
+        else {
+            this.TaxChanged({ value: this.CGST }, 'CGST');
+            this.TaxChanged({ value: this.SGST }, 'SGST');
+        }
     }
     TaxChanged(target, type) {
-        let targetval = target.value;
+        if (!target.value) {
+            return;
+        }
+        let targetval = parseFloat(target.value);
         if (type == 'CGST' || type == 'SGST') {
-            this.TotalAmount = 0;
-            this.IGST_Amount = 0;
-            this.IGST = 0;
+            this.TotalAmount = this.IGST_Amount = this.IGST = 0;
+            //reset all taxes and update only using SGST & CGST------------
             if (type == 'CGST')
-                this.CGST_Amount = (targetval / 100) * this.CoreAmount;
+                this.CGST_Amount = parseFloat(((targetval / 100) * this.CoreAmount).toFixed(2));
             if (type == 'SGST')
-                this.SGST_Amount = (targetval / 100) * this.CoreAmount;
-            this.TotalAmount = this.CGST_Amount + this.CoreAmount + this.SGST_Amount;
+                this.SGST_Amount = parseFloat(((targetval / 100) * this.CoreAmount).toFixed(2));
+            this.TotalAmount = parseFloat((this.CGST_Amount + this.CoreAmount + this.SGST_Amount).toFixed(2));
         }
         if (type == 'IGST') {
-            //reset C/SGST------------
-            this.TotalAmount = 0;
-            this.CGST_Amount = 0;
-            this.SGST_Amount = 0;
-            this.CGST = 0;
-            this.SGST = 0;
-            this.IGST_Amount = (targetval / 100) * this.CoreAmount;
-            this.TotalAmount = this.IGST_Amount + this.CoreAmount;
+            //reset all taxes and update only using IGST------------
+            this.TotalAmount = this.CGST_Amount = this.SGST_Amount = this.CGST = this.SGST = 0;
+            this.IGST_Amount = parseFloat(((targetval / 100) * this.CoreAmount).toFixed(2));
+            this.TotalAmount = parseFloat((this.IGST_Amount + this.CoreAmount).toFixed(2));
         }
     }
     CalculateTotal() {
@@ -231,7 +240,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\r\n\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-back-button text=\"\"></ion-back-button>\r\n    </ion-buttons>\r\n    <ion-title>Quotation</ion-title>\r\n  </ion-toolbar>\r\n\r\n</ion-header>\r\n\r\n<ion-content fullscreen>\r\n  <form #regForm=\"ngForm\" (ngSubmit)=\"SendQuo(regForm.value)\">\r\n\r\n    <ion-grid>\r\n      <ion-row>\r\n        <ion-col class=\"tag-con\">\r\n          <ion-label class=\"tag\">{{JobDetails.title}}</ion-label>\r\n        </ion-col>\r\n      </ion-row>\r\n      <ion-row>\r\n        <ion-col class=\"date-tag-con\">\r\n          <ion-label class=\"date-tag\" position=\"stacked\">Preferred Date :\r\n            {{apiService.formatDate(JobDetails.date)}}\r\n          </ion-label>\r\n        </ion-col>\r\n      </ion-row>\r\n      <ion-row>\r\n        <ion-col>\r\n          <ion-textarea class=\"text-area\" placeholder=\"Additional Description\" name=\"quotation\" ngModel>\r\n          </ion-textarea>\r\n        </ion-col>\r\n      </ion-row>\r\n    </ion-grid>\r\n\r\n    <ion-grid>\r\n      <ion-row>\r\n        <ion-col class=\"tag-col\">\r\n          <p class=\"amount-tag\">Amount :</p>\r\n        </ion-col>\r\n        <ion-col>\r\n          <ion-input placeholder=\"0\" type=\"number\" [(ngModel)]=\"CoreAmount\" (input)=\"AmountChanged($event.target)\">\r\n          </ion-input>\r\n        </ion-col>\r\n      </ion-row>\r\n      <ion-row>\r\n        <ion-col size=\"3\" class=\"tag-col\">\r\n          <p>CGST @</p>\r\n        </ion-col>\r\n        <ion-col size=\"3\">\r\n          <ion-input placeholder=\"0 %\" type=\"number\" [(ngModel)]=\"CGST\" (input)=\"TaxChanged($event.target, 'CGST')\">\r\n          </ion-input>\r\n        </ion-col>\r\n        <ion-col size=\"6\">\r\n          <ion-input placeholder=\"0\" type=\"number\" disabled=\"true\" [(ngModel)]=\"CGST_Amount\"></ion-input>\r\n        </ion-col>\r\n      </ion-row>\r\n      <ion-row>\r\n        <ion-col size=\"3\" class=\"tag-col\">\r\n          <p>SGST @</p>\r\n        </ion-col>\r\n        <ion-col size=\"3\">\r\n          <ion-input placeholder=\"0 %\" type=\"number\" [(ngModel)]=\"SGST\" (input)=\"TaxChanged($event.target, 'SGST')\">\r\n          </ion-input>\r\n        </ion-col>\r\n        <ion-col size=\"6\">\r\n          <ion-input placeholder=\"0\" type=\"number\" disabled=\"true\" [(ngModel)]=\"SGST_Amount\"></ion-input>\r\n        </ion-col>\r\n      </ion-row>\r\n      <ion-row>\r\n        <ion-col size=\"3\" class=\"tag-col\">\r\n          <p>IGST @</p>\r\n        </ion-col>\r\n        <ion-col size=\"3\">\r\n          <ion-input placeholder=\"0 %\" type=\"number\" [(ngModel)]=\"IGST\" (input)=\"TaxChanged($event.target, 'IGST')\">\r\n          </ion-input>\r\n        </ion-col>\r\n        <ion-col size=\"6\">\r\n          <ion-input placeholder=\"0\" type=\"number\" disabled=\"true\" [(ngModel)]=\"IGST_Amount\"></ion-input>\r\n        </ion-col>\r\n      </ion-row>\r\n      <ion-row class=\"total-amount-row\">\r\n        <ion-col class=\"tag-col\">\r\n          <p class=\"amount-tag\">Total Amount :</p>\r\n          <p class=\"tax-tag\">* inclusive of all taxes</p>\r\n        </ion-col>\r\n        <ion-col>\r\n          <p>₹ {{TotalAmount}}/-</p>\r\n        </ion-col>\r\n      </ion-row>\r\n    </ion-grid>\r\n\r\n    <ion-grid>\r\n      <ion-row>\r\n        <ion-col class=\"tag-col\">\r\n          <ion-button expand=\"block\" color=\"themepurple\" type=\"submit\"> SUBMIT</ion-button>\r\n        </ion-col>\r\n      </ion-row>\r\n    </ion-grid>\r\n\r\n  </form>\r\n</ion-content>");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\r\n\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-back-button text=\"\"></ion-back-button>\r\n    </ion-buttons>\r\n    <ion-title>Quotation</ion-title>\r\n  </ion-toolbar>\r\n\r\n</ion-header>\r\n\r\n<ion-content fullscreen>\r\n  <form #regForm=\"ngForm\" (ngSubmit)=\"SendQuo(regForm.value)\">\r\n\r\n    <ion-grid>\r\n      <ion-row>\r\n        <ion-col class=\"tag-con\">\r\n          <ion-label class=\"tag\">{{JobDetails.title}}</ion-label>\r\n        </ion-col>\r\n      </ion-row>\r\n      <ion-row>\r\n        <ion-col class=\"date-tag-con\">\r\n          <ion-label class=\"date-tag\" position=\"stacked\">Preferred Date :\r\n            {{apiService.formatDate(JobDetails.date)}}\r\n          </ion-label>\r\n        </ion-col>\r\n      </ion-row>\r\n      <ion-row>\r\n        <ion-col>\r\n          <ion-textarea class=\"text-area\" placeholder=\"Additional Description\" name=\"quotation\" ngModel>\r\n          </ion-textarea>\r\n        </ion-col>\r\n      </ion-row>\r\n    </ion-grid>\r\n\r\n    <ion-grid>\r\n      <ion-row>\r\n        <ion-col class=\"tag-col\">\r\n          <p class=\"amount-tag\">Amount :</p>\r\n        </ion-col>\r\n        <ion-col>\r\n          <ion-input placeholder=\"0\" type=\"number\" name=\"core_amount\" [(ngModel)]=\"CoreAmount\"\r\n            (input)=\"AmountChanged($event.target)\">\r\n          </ion-input>\r\n        </ion-col>\r\n      </ion-row>\r\n      <ion-row>\r\n        <ion-col size=\"3\" class=\"tag-col\">\r\n          <p>CGST @</p>\r\n        </ion-col>\r\n        <ion-col size=\"3\">\r\n          <ion-input placeholder=\"0 %\" type=\"number\" name=\"CGST\" [(ngModel)]=\"CGST\"\r\n            (input)=\"TaxChanged($event.target, 'CGST')\">\r\n          </ion-input>\r\n        </ion-col>\r\n        <ion-col size=\"6\">\r\n          <ion-input placeholder=\"0\" type=\"number\" name=\"CGST_Amount\" disabled=\"true\" [(ngModel)]=\"CGST_Amount\">\r\n          </ion-input>\r\n        </ion-col>\r\n      </ion-row>\r\n      <ion-row>\r\n        <ion-col size=\"3\" class=\"tag-col\">\r\n          <p>SGST @</p>\r\n        </ion-col>\r\n        <ion-col size=\"3\">\r\n          <ion-input placeholder=\"0 %\" type=\"number\" name=\"SGST\" [(ngModel)]=\"SGST\"\r\n            (input)=\"TaxChanged($event.target, 'SGST')\">\r\n          </ion-input>\r\n        </ion-col>\r\n        <ion-col size=\"6\">\r\n          <ion-input placeholder=\"0\" type=\"number\" name=\"SGST_Amount\" disabled=\"true\" [(ngModel)]=\"SGST_Amount\">\r\n          </ion-input>\r\n        </ion-col>\r\n      </ion-row>\r\n      <ion-row>\r\n        <ion-col size=\"3\" class=\"tag-col\">\r\n          <p>IGST @</p>\r\n        </ion-col>\r\n        <ion-col size=\"3\">\r\n          <ion-input placeholder=\"0 %\" type=\"number\" name=\"IGST\" [(ngModel)]=\"IGST\"\r\n            (input)=\"TaxChanged($event.target, 'IGST')\">\r\n          </ion-input>\r\n        </ion-col>\r\n        <ion-col size=\"6\">\r\n          <ion-input placeholder=\"0\" type=\"number\" name=\"IGST_Amount\" disabled=\"true\" [(ngModel)]=\"IGST_Amount\">\r\n          </ion-input>\r\n        </ion-col>\r\n      </ion-row>\r\n      <ion-row class=\"total-amount-row\">\r\n        <ion-col class=\"tag-col\">\r\n          <p class=\"amount-tag\">Total Amount :</p>\r\n          <p class=\"tax-tag\">* inclusive of all taxes</p>\r\n        </ion-col>\r\n        <ion-col>\r\n          <p>₹ {{TotalAmount}}/-</p>\r\n        </ion-col>\r\n      </ion-row>\r\n    </ion-grid>\r\n\r\n    <ion-grid>\r\n      <ion-row>\r\n        <ion-col class=\"tag-col\">\r\n          <ion-button expand=\"block\" color=\"themepurple\" type=\"submit\" [disabled]=\"TotalAmount==0\"> SUBMIT</ion-button>\r\n        </ion-col>\r\n      </ion-row>\r\n    </ion-grid>\r\n\r\n  </form>\r\n</ion-content>");
 
 /***/ })
 

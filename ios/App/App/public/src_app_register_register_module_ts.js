@@ -130,6 +130,9 @@ let RegisterPage = class RegisterPage {
         }
         else {
         }
+        if (this.apiService.Get_ProviderId()) {
+            this.apiService.showLoader('Please wait, getting your details..');
+        }
     }
     ionViewDidEnter() {
         let catSelected = localStorage.getItem('selectedCategories');

@@ -25,6 +25,12 @@ export class OtpVerifyPage implements OnInit {
   constructor(public apiService: ApiService, public router: Router) { }
 
   ngOnInit() {
+    this.ResetOTPFields();
+    this.ShowEnterOTP = false;
+  }
+
+  ionViewDidEnter() {
+    this.ResetOTPFields();
     this.ShowEnterOTP = false;
   }
 
@@ -63,11 +69,7 @@ export class OtpVerifyPage implements OnInit {
 
           //--------------------------
 
-          let doc1: any = document.getElementById('otp1');
-          let doc2: any = document.getElementById('otp2');
-          let doc3: any = document.getElementById('otp3');
-          let doc4: any = document.getElementById('otp4');
-          doc1.value = doc2.value = doc3.value = doc4.value = '';
+          this.ResetOTPFields();
 
           //--------------------------------
         } else {
@@ -81,6 +83,15 @@ export class OtpVerifyPage implements OnInit {
     }, err => {
       this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
     });
+  }
+
+
+  ResetOTPFields() {
+    let doc1: any = document.getElementById('otp1');
+    let doc2: any = document.getElementById('otp2');
+    let doc3: any = document.getElementById('otp3');
+    let doc4: any = document.getElementById('otp4');
+    if (doc1) doc1.value = doc2.value = doc3.value = doc4.value = '';
   }
 
   VerifyNow() {

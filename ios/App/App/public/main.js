@@ -108,6 +108,16 @@ let ApiService = class ApiService {
             day = '0' + day;
         return [year, month, day].join('-');
     }
+    extractTime(time) {
+        var OnlyTime = time.split('T')[1];
+        if (OnlyTime) {
+            var SelectTime = OnlyTime.substring(0, 5);
+            return SelectTime;
+        }
+        else {
+            return '';
+        }
+    }
     Get_UserStatus() {
         let UserData = localStorage.getItem('UserData');
         let UserParsed = JSON.parse(UserData);
@@ -139,7 +149,7 @@ let ApiService = class ApiService {
             return 'Open';
         }
         else if (status == 1) {
-            return 'Accepted By Provider';
+            return 'Accepted By You';
         }
         else if (status == 2) {
             return 'Quotation Sent to User';
@@ -259,6 +269,10 @@ const routes = [
         loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_quotation_quotation_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./quotation/quotation.module */ 8419)).then(m => m.QuotationPageModule)
     },
     {
+        path: 'update-quotation',
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_update-quotation_update-quotation_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./update-quotation/update-quotation.module */ 1484)).then(m => m.UpdateQuotationPageModule)
+    },
+    {
         path: 'reference',
         loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_settings_reference_reference_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./settings/reference/reference.module */ 2735)).then(m => m.ReferencePageModule)
     },
@@ -273,6 +287,10 @@ const routes = [
     {
         path: 'help-and-support',
         loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_settings_help-and-support_help-and-support_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./settings/help-and-support/help-and-support.module */ 1192)).then(m => m.HelpAndSupportPageModule)
+    },
+    {
+        path: 'update-quotation',
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_update-quotation_update-quotation_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./update-quotation/update-quotation.module */ 1484)).then(m => m.UpdateQuotationPageModule)
     }
 ];
 let AppRoutingModule = class AppRoutingModule {
@@ -326,6 +344,7 @@ let AppComponent = class AppComponent {
         this.alert = alert;
         this.Token = '';
         const url = this.router.url;
+        //SplashScreen.hide();
         console.log('codeupdated--');
         let env = this;
         _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_3__.PushNotifications.requestPermissions().then(result => {
@@ -336,16 +355,13 @@ let AppComponent = class AppComponent {
             }
         }, err => {
         });
-        // PushNotifications.addListener('registration',
-        //   (token: Token) => {
-        //     env.UpdateDeviceToken(token);
-        //   }
-        // );
+        _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_3__.PushNotifications.addListener('registration', (token) => {
+            env.UpdateDeviceToken(token);
+        });
         // PushNotifications.addListener('registrationError', (error: any) => {
         // });
         this.platform.backButton.subscribeWithPriority(1, () => {
             const urlcheck = this.router.url;
-            debugger;
             if (urlcheck == '/tabs/tab1' || urlcheck == '/' || urlcheck == '/my-jobs' || urlcheck == '/payments'
                 || urlcheck == 'notification' || urlcheck == '/settings') {
                 this.ChooseExit();
