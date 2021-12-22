@@ -44,6 +44,8 @@ export class PaymentsPage implements OnInit {
 
         if (this.paymentData.length == 0) {
           this.no_data = true;
+        } else {
+          this.no_data = false;
         }
       } else {
         this.no_data = true;

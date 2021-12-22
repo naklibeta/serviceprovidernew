@@ -45,6 +45,8 @@ export class NotificationPage implements OnInit {
 
         if (this.notificationsdata.length == 0) {
           this.no_data = true;
+        } else {
+          this.no_data = false;
         }
       } else {
         this.no_data = true;

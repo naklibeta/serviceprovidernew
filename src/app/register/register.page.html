@@ -43,6 +43,7 @@
       <ion-item *ngIf="Cities.length!=0">
         <ion-label position="floating">City</ion-label>
         <ion-select type="text" [(ngModel)]="ProviderData.cityId" name="cityId" required>
+          <ion-select-option value="">Please select city</ion-select-option>
           <ion-select-option [value]="city.id" *ngFor="let city of Cities">{{city.city}}</ion-select-option>
         </ion-select>
       </ion-item>

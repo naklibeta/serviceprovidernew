@@ -80,7 +80,7 @@ export class KycPage implements OnInit {
         this.hideLoader();
         this.GetProviderData();
 
-        this.router.navigate(['/settings']);
+        this.router.navigate(['/tabs/settings']);
 
         this.apiService.presentToast(results.message, 3000);
       } else {

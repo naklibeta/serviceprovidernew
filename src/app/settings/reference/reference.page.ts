@@ -53,7 +53,7 @@ export class ReferencePage implements OnInit {
 
   back() {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-      this.router.navigate(['/settings']));
+      this.router.navigate(['/tabs/settings']));
   }
 
 }

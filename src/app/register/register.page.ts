@@ -18,6 +18,7 @@ export class RegisterPage implements OnInit {
   SelectedCategories: any = [];
   ProviderData: any = {};
   RegisteringNew: boolean = false;
+  CityBinded: boolean = false;
 
   constructor(public apiService: ApiService, public router: Router) {
 
@@ -111,7 +112,7 @@ export class RegisterPage implements OnInit {
         localStorage.setItem('isLogged', 'true');
         debugger
         if (this.RegisteringNew == false) {
-          this.router.navigate(['/settings']);
+          this.router.navigate(['/tabs/settings']);
         } else {
           this.router.navigate(['']);
         }
@@ -133,6 +134,7 @@ export class RegisterPage implements OnInit {
     this.apiService.Common_GET('/findStates').subscribe((results) => {
       if (results.statusCode == 200) {
         this.States = results.data;
+
         this.GetProviderData();
       } else {
         this.apiService.presentToast(results.message, 3000);
@@ -146,6 +148,14 @@ export class RegisterPage implements OnInit {
 
   GetCitis(id: any) {
 
+    let env = this;
+
+    if (env.apiService.Get_ProviderId()) {
+      if (env.ProviderData.stateId != id && env.CityBinded == true) {
+        env.ProviderData.cityId = '';
+      }
+    }
+
     //------------Get Data CIties------------------------------------------
 
     this.apiService.Common_GET('/findCityByState/' + id.value).subscribe((results) => {
@@ -153,6 +163,13 @@ export class RegisterPage implements OnInit {
         this.Cities = results.data;
 
         this.ProviderData.cityId = this.ProviderData.cityId;
+
+
+        setTimeout(() => {
+          env.CityBinded = true;
+        }, 2000);
+
+
       } else {
         this.apiService.presentToast(results.message, 3000);
       }

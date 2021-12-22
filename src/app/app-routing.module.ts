@@ -14,11 +14,6 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./register/register.module').then(m => m.RegisterPageModule)
   },
-
-  {
-    path: 'updateregister',
-    loadChildren: () => import('./settings/register/updateregister.module').then(m => m.UpdateRegisterPageModule)
-  },
   {
     path: 'my-jobs',
     loadChildren: () => import('./my-jobs/my-jobs.module').then(m => m.MyJobsPageModule)
