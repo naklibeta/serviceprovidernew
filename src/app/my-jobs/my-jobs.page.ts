@@ -26,6 +26,7 @@ export class MyJobsPage implements OnInit {
 
 
   ionViewDidEnter() {
+
     this.apiService.showLoader('Please wait, getting your jobs..');
 
     if (this.apiService.Get_ProviderId()) {
@@ -37,8 +38,6 @@ export class MyJobsPage implements OnInit {
       }, 10000);
     }
 
-
-
   }
 
   ionViewDidLeave() {
@@ -49,7 +48,7 @@ export class MyJobsPage implements OnInit {
   GetJobs() {
 
 
-    this.apiService.Common_POST('/myjobs', { provider_id: this.providerId }).subscribe((results) => {
+    this.apiService.Common_POST('/myjobs', { provider_id: this.apiService.Get_ProviderId() }).subscribe((results) => {
       if (results.statusCode == 200) {
         this.MyJobs = results.data;
 
