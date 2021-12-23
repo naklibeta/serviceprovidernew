@@ -12,10 +12,9 @@
   <ion-list>
     <ion-item lines="full" *ngFor="let reviews of reviewdata">
       <ion-label>
-        <h3>{{reviews.name}}</h3>
+        <h6>{{reviews.name}}</h6>
         <div>
-
-          <ion-icon style="color: #f7c704;" *ngFor="let item of [].constructor(reviews.ratings)" name="star">
+          <ion-icon *ngFor="let item of [].constructor(reviews.ratings)" name="star">
           </ion-icon>
         </div>
         <p class="ion-text-wrap">{{reviews.review}}</p>
