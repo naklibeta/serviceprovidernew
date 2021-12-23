@@ -111,6 +111,7 @@ export class ApiService {
 
   Get_UserStatus() {
     let UserData = localStorage.getItem('UserData');
+    if (!UserData) return 'InActive';
     let UserParsed = JSON.parse(UserData);
 
     let Status = UserParsed.is_active;

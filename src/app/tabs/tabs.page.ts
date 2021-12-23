@@ -18,6 +18,8 @@ export class TabsPage {
   }
 
   ionViewDidEnter() {
+
+    debugger
     let CheckLogin = localStorage.getItem('isLogged');
 
 

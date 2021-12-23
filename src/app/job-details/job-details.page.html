@@ -90,19 +90,19 @@
     </ion-row>
 
     <ion-row class="button-row">
-      <ion-col *ngIf="JobDetails.status==0" size="12">
+      <ion-col *ngIf="JobDetails.status==0 && apiService.Get_UserStatus()=='Active' " size="12">
         <div>
           <ion-button expand="block" color="themepurple" (click)="AcceptJob()">ACCEPT</ion-button>
         </div>
       </ion-col>
 
-      <ion-col *ngIf="JobDetails.status==1" size="6">
+      <ion-col *ngIf="JobDetails.status==1 && apiService.Get_ProviderId() == JobDetails.providerId" size="6">
         <div>
           <ion-button expand="block" color="themepurple" (click)="Decline()">Decline</ion-button>
         </div>
       </ion-col>
 
-      <ion-col *ngIf="JobDetails.status==1" size="6">
+      <ion-col *ngIf="JobDetails.status==1 && apiService.Get_ProviderId() == JobDetails.providerId" size="6">
         <div>
           <ion-button expand="block" color="themepurple" (click)="SendQuotation()">Send Quotation</ion-button>
         </div>
@@ -132,7 +132,7 @@
         </div>
       </ion-col>
 
-      <ion-col size="6" *ngIf="JobDetails.status>=6  ">
+      <ion-col size="6" *ngIf="JobDetails.status>=6  &&  JobDetails.status!=9  &&  JobDetails.status!=10">
         <div>
           <ion-button expand="block" color="themepurple">Job Completed</ion-button>
         </div>
@@ -141,6 +141,19 @@
       <ion-col size="6" *ngIf="JobDetails.status==3 || JobDetails.status==5 || JobDetails.status==6 ">
         <div>
           <ion-button expand="block" color="themepurple" (click)="UpdateQuotation()">Update Quotation</ion-button>
+        </div>
+      </ion-col>
+
+
+      <ion-col size="6" *ngIf="JobDetails.status==8 ">
+        <div>
+          <ion-button expand="block" color="themepurple">Payment Recieved</ion-button>
+        </div>
+      </ion-col>
+
+      <ion-col size="12" *ngIf="JobDetails.status==9 || JobDetails.status==10">
+        <div>
+          <ion-button expand="block" color="themepurple">Payment Refunded to Customer</ion-button>
         </div>
       </ion-col>
 

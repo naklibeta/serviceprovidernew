@@ -73,7 +73,7 @@
 
     <ion-row>
       <ion-col size="6" *ngFor="let categoryjobs of category">
-        <ion-card>
+        <ion-card (click)="JobDetails(categoryjobs)">
           <ion-card-header>
             <ion-card-subtitle>
               <ion-icon name="briefcase-outline"></ion-icon> {{categoryjobs.title}}

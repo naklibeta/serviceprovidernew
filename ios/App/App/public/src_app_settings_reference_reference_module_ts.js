@@ -142,7 +142,7 @@ let ReferencePage = class ReferencePage {
         });
     }
     back() {
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => this.router.navigate(['/settings']));
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => this.router.navigate(['/tabs/settings']));
     }
 };
 ReferencePage.ctorParameters = () => [

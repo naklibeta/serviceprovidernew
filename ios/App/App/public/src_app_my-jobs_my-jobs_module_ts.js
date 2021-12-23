@@ -122,7 +122,7 @@ let MyJobsPage = class MyJobsPage {
             let env = this;
             env.GetJobs();
             this.IntervalVar = setInterval(() => {
-                // env.GetJobs();
+                env.GetJobs();
             }, 10000);
         }
     }
@@ -130,14 +130,19 @@ let MyJobsPage = class MyJobsPage {
         clearInterval(this.IntervalVar);
     }
     GetJobs() {
-        this.apiService.Common_POST('/myjobs', { provider_id: this.providerId }).subscribe((results) => {
+        this.apiService.Common_POST('/myjobs', { provider_id: this.apiService.Get_ProviderId() }).subscribe((results) => {
             if (results.statusCode == 200) {
                 this.MyJobs = results.data;
                 if (this.MyJobs.length == 0) {
                     this.no_data = true;
                 }
+                else {
+                    this.no_data = false;
+                }
             }
             else {
+                this.MyJobs = [];
+                this.no_data = true;
             }
         }, err => {
             this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
@@ -190,7 +195,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header [translucent]=\"true\">\r\n  <ion-toolbar>\r\n    <ion-row>\r\n      <ion-col col-6>\r\n        <ion-title>\r\n          <img class=\"header-logo\" src=\"assets/imgs/Icon.png\">\r\n          <span class=\"header-name\"> My Jobs </span>\r\n        </ion-title>\r\n      </ion-col>\r\n      <ion-col col-6 class=\"text-right status-user\">\r\n        <a *ngIf=\"apiService.Get_UserStatus() == 'InActive' \">\r\n          <ion-icon name=\"ellipse\" class=\"status-inactive\"> </ion-icon> InActive\r\n        </a>\r\n        <a *ngIf=\"apiService.Get_UserStatus() == 'Active' \">\r\n          <ion-icon name=\"ellipse\" class=\"status-active\"> </ion-icon> Active\r\n        </a>\r\n      </ion-col>\r\n    </ion-row>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n\r\n  <div class=\"no-data-msg\" *ngIf=\" no_data\">\r\n    <span> No job(s) found </span>\r\n  </div>\r\n\r\n  <ion-card *ngFor=\"let joblist of MyJobs\">\r\n\r\n    <ion-card-content>\r\n\r\n      <ion-row (click)=\"GotoJobs(joblist)\">\r\n        <ion-col size=\"7\">\r\n          <ion-card-title>{{joblist.title}}</ion-card-title>\r\n        </ion-col>\r\n        <ion-col size=\"5\" class=\"job-status\">\r\n          <span class=\"status-txt\"> {{ apiService.JobStatus(joblist.status) }} </span>\r\n          <ion-icon name=\"ellipse\" class=\"color-theme\"></ion-icon>\r\n        </ion-col>\r\n\r\n        <ion-col size=\"12\">\r\n          <p class=\"date text-detail\">Preferred Date:- {{apiService.formatDate(joblist.date)}} </p>\r\n          <p class=\"text-detail\"> {{joblist.detail | slice:0:100}} </p>\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n    </ion-card-content>\r\n\r\n  </ion-card>\r\n\r\n</ion-content>");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header [translucent]=\"true\">\r\n  <ion-toolbar>\r\n    <ion-row>\r\n      <ion-col col-6>\r\n        <ion-title>\r\n          <img class=\"header-logo\" src=\"assets/imgs/Icon.png\">\r\n          <span class=\"header-name\"> My Jobs </span>\r\n        </ion-title>\r\n      </ion-col>\r\n      <ion-col col-6 class=\"text-right status-user\">\r\n        <a *ngIf=\"apiService.Get_UserStatus() == 'InActive' \">\r\n          <ion-icon name=\"ellipse\" class=\"status-inactive\"> </ion-icon> InActive\r\n        </a>\r\n        <a *ngIf=\"apiService.Get_UserStatus() == 'Active' \">\r\n          <ion-icon name=\"ellipse\" class=\"status-active\"> </ion-icon> Active\r\n        </a>\r\n      </ion-col>\r\n    </ion-row>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n\r\n  <div class=\"no-data-msg\" *ngIf=\" no_data\">\r\n    <span> No job(s) found </span>\r\n  </div>\r\n\r\n  <ion-card *ngFor=\"let joblist of MyJobs\">\r\n\r\n    <ion-card-content>\r\n\r\n      <ion-row (click)=\"GotoJobs(joblist)\">\r\n        <ion-col size=\"7\">\r\n          <ion-card-title>{{joblist.title}}</ion-card-title>\r\n        </ion-col>\r\n\r\n        <ion-col size=\"5\" class=\"job-status\">\r\n          <span class=\"status-txt\"> {{ apiService.JobStatus(joblist.status) }} </span>\r\n          <ion-icon name=\"ellipse\" class=\"color-theme\"></ion-icon>\r\n        </ion-col>\r\n\r\n        <ion-col size=\"12\">\r\n          <p class=\"date text-detail\">Preferred Date:- {{apiService.formatDate(joblist.date)}} </p>\r\n          <p class=\"text-detail\"> {{joblist.detail | slice:0:100}} </p>\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n    </ion-card-content>\r\n\r\n  </ion-card>\r\n\r\n</ion-content>");
 
 /***/ })
 

@@ -24,17 +24,22 @@ export class Tab1Page implements OnInit {
   public DashboardMsg: any = '';
 
   constructor(public apiService: ApiService, public router: Router) {
-    let UserData = this.apiService.Get_UserData();
-    this.providerId = UserData.providerId;
+
   }
 
 
 
   ngOnInit() {
 
+    let UserData = this.apiService.Get_UserData();
+    if (UserData) this.providerId = UserData.providerId;
 
+    let providerIc_check = this.apiService.Get_ProviderId();
 
-
+    if (!providerIc_check) {
+      clearInterval(this.IntervalVar);
+      this.router.navigate(['/otp-verify']);
+    }
 
   }
 
@@ -55,12 +60,8 @@ export class Tab1Page implements OnInit {
 
   ionViewDidEnter() {
 
-    let providerIc_check = this.apiService.Get_ProviderId();
-
-    if (!providerIc_check) {
-      clearInterval(this.IntervalVar);
-      this.router.navigate(['/otp-verify']);
-    }
+    let UserData = this.apiService.Get_UserData();
+    if (UserData) this.providerId = UserData.providerId;
 
     if (this.apiService.Get_ProviderId()) {
       let env = this;

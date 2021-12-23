@@ -124,7 +124,7 @@ let ScheduleTrainingPage = class ScheduleTrainingPage {
         this.apiService.Common_POST('/setTraining', value).subscribe((results) => {
             if (results.statusCode == 200) {
                 this.apiService.presentToast(results.message, 3000);
-                this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => this.router.navigate(['/settings']));
+                this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => this.router.navigate(['/tabs/settings']));
             }
             else {
                 this.apiService.presentToast(results.message, 3000);

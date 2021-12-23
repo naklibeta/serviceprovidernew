@@ -21,13 +21,14 @@
 
       <ion-item>
         <ion-label position="floating">Email</ion-label>
-        <ion-input email type="email" [(ngModel)]="ProviderData.emailId" name="emailId" required></ion-input>
+        <ion-input [disabled]="ProviderData.makeEmailDisabled == true" email type="email"
+          [(ngModel)]="ProviderData.emailId" name="emailId" required></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Phone Number</ion-label>
-        <ion-input [disabled]="apiService.Get_ProviderId()" type="tel" maxlength="10" maxlength="10"
-          [(ngModel)]="ProviderData.mobile" name="mobile" required>
+        <ion-input [disabled]="apiService.Get_ProviderId() || ProviderData.makeMobileDisabled == true" type="Number"
+          maxlength="10" [(ngModel)]="ProviderData.mobile" name="mobile" required>
         </ion-input>
       </ion-item>
 

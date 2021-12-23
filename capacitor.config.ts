@@ -7,10 +7,10 @@ const config: CapacitorConfig = {
   bundledWebRuntime: false,
   plugins: {
     "SplashScreen": {
-      "launchShowDuration": 5000,
-      "launchAutoHide": true,
-      "showSpinner": true
+      "launchAutoHide": false,
+      "showSpinner": false
     }
+
   }
 };
 

@@ -50,7 +50,7 @@
           <p>CGST @</p>
         </ion-col>
         <ion-col size="3">
-          <ion-input placeholder="0 %" type="number" name="CGST" [(ngModel)]="CGST"
+          <ion-input placeholder="0 %" type="tel" maxlength="2" name="CGST" [(ngModel)]="CGST"
             (input)="TaxChanged($event.target, 'CGST')">
           </ion-input>
         </ion-col>
@@ -64,7 +64,7 @@
           <p>SGST @</p>
         </ion-col>
         <ion-col size="3">
-          <ion-input placeholder="0 %" type="number" name="SGST" [(ngModel)]="SGST"
+          <ion-input placeholder="0 %" type="tel" maxlength="2" name="SGST" [(ngModel)]="SGST"
             (input)="TaxChanged($event.target, 'SGST')">
           </ion-input>
         </ion-col>
@@ -78,7 +78,7 @@
           <p>IGST @</p>
         </ion-col>
         <ion-col size="3">
-          <ion-input placeholder="0 %" type="number" name="IGST" [(ngModel)]="IGST"
+          <ion-input placeholder="0 %" type="tel" maxlength="2" name="IGST" [(ngModel)]="IGST"
             (input)="TaxChanged($event.target, 'IGST')">
           </ion-input>
         </ion-col>

@@ -38,7 +38,7 @@
 
 
           <li class="subcategorylist">
-            <ion-item>
+            <div class="list-con">
               <ion-label> {{subcategory.name}} {{subcategory.selected}} </ion-label>
               <ion-checkbox *ngIf="!subcategory.selected" slot="end" (click)="SelectCategory(subcategory)"
                 class="subcat-checkbox-{{i}}">
@@ -47,7 +47,7 @@
               <ion-checkbox checked="checked" *ngIf="subcategory.selected" slot="end"
                 (click)="SelectCategory(subcategory)" class="subcat-checkbox-{{i}}">
               </ion-checkbox>
-            </ion-item>
+            </div>
           </li>
 
 

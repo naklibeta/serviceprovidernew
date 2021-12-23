@@ -115,6 +115,11 @@ let OtpVerifyPage = class OtpVerifyPage {
         this.WarningTxt = false;
     }
     ngOnInit() {
+        this.ResetOTPFields();
+        this.ShowEnterOTP = false;
+    }
+    ionViewDidEnter() {
+        this.ResetOTPFields();
         this.ShowEnterOTP = false;
     }
     LoginNow() {
@@ -141,11 +146,7 @@ let OtpVerifyPage = class OtpVerifyPage {
                     }, 1000);
                     this.TimerTextShow = true;
                     //--------------------------
-                    let doc1 = document.getElementById('otp1');
-                    let doc2 = document.getElementById('otp2');
-                    let doc3 = document.getElementById('otp3');
-                    let doc4 = document.getElementById('otp4');
-                    doc1.value = doc2.value = doc3.value = doc4.value = '';
+                    this.ResetOTPFields();
                     //--------------------------------
                 }
                 else {
@@ -158,6 +159,14 @@ let OtpVerifyPage = class OtpVerifyPage {
         }, err => {
             this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
         });
+    }
+    ResetOTPFields() {
+        let doc1 = document.getElementById('otp1');
+        let doc2 = document.getElementById('otp2');
+        let doc3 = document.getElementById('otp3');
+        let doc4 = document.getElementById('otp4');
+        if (doc1)
+            doc1.value = doc2.value = doc3.value = doc4.value = '';
     }
     VerifyNow() {
         let OTPEntered = this.otp1.value + '' + this.otp2.value + '' + this.otp3.value + '' + this.otp4.value;

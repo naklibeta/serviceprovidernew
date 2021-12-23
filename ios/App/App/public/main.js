@@ -120,6 +120,8 @@ let ApiService = class ApiService {
     }
     Get_UserStatus() {
         let UserData = localStorage.getItem('UserData');
+        if (!UserData)
+            return 'InActive';
         let UserParsed = JSON.parse(UserData);
         let Status = UserParsed.is_active;
         if (Status == '0' || Status == 0) {
@@ -229,10 +231,6 @@ const routes = [
         loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_register_register_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./register/register.module */ 2474)).then(m => m.RegisterPageModule)
     },
     {
-        path: 'updateregister',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_settings_register_updateregister_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./settings/register/updateregister.module */ 3933)).then(m => m.UpdateRegisterPageModule)
-    },
-    {
         path: 'my-jobs',
         loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_my-jobs_my-jobs_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./my-jobs/my-jobs.module */ 21)).then(m => m.MyJobsPageModule)
     },
@@ -319,14 +317,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppComponent": () => (/* binding */ AppComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 1855);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 1855);
 /* harmony import */ var _raw_loader_app_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./app.component.html */ 1106);
 /* harmony import */ var _app_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.component.scss */ 3069);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 2741);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 2741);
 /* harmony import */ var _app_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../app/api.service */ 8213);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 4595);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ 9535);
-/* harmony import */ var _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @capacitor/push-notifications */ 7047);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 4595);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ 9535);
+/* harmony import */ var _capacitor_splash_screen__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @capacitor/splash-screen */ 7835);
+/* harmony import */ var _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @capacitor/push-notifications */ 7047);
+
 
 
 
@@ -343,19 +343,22 @@ let AppComponent = class AppComponent {
         this.router = router;
         this.alert = alert;
         this.Token = '';
+        setTimeout(() => {
+            _capacitor_splash_screen__WEBPACK_IMPORTED_MODULE_3__.SplashScreen.hide();
+        }, 2000);
         const url = this.router.url;
         //SplashScreen.hide();
         console.log('codeupdated--');
         let env = this;
-        _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_3__.PushNotifications.requestPermissions().then(result => {
+        _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_4__.PushNotifications.requestPermissions().then(result => {
             if (result.receive === 'granted') {
-                _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_3__.PushNotifications.register();
+                _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_4__.PushNotifications.register();
             }
             else {
             }
         }, err => {
         });
-        _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_3__.PushNotifications.addListener('registration', (token) => {
+        _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_4__.PushNotifications.addListener('registration', (token) => {
             env.UpdateDeviceToken(token);
         });
         // PushNotifications.addListener('registrationError', (error: any) => {
@@ -363,16 +366,19 @@ let AppComponent = class AppComponent {
         this.platform.backButton.subscribeWithPriority(1, () => {
             const urlcheck = this.router.url;
             if (urlcheck == '/tabs/tab1' || urlcheck == '/' || urlcheck == '/my-jobs' || urlcheck == '/payments'
-                || urlcheck == 'notification' || urlcheck == '/settings') {
+                || urlcheck == 'notification' || urlcheck == '/settings' || urlcheck == '/otp-verify') {
                 this.ChooseExit();
             }
-            else {
+            else if (this.apiService.Get_ProviderId()) {
                 this.router.navigate(['/tabs/tab1']);
+            }
+            else {
+                this.router.navigate(['/otp-verify']);
             }
         });
     }
     ChooseExit() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
             const alert = yield this.alert.create({
                 cssClass: 'my-custom-class',
                 header: 'Exit App!',
@@ -410,12 +416,12 @@ let AppComponent = class AppComponent {
 };
 AppComponent.ctorParameters = () => [
     { type: _app_api_service__WEBPACK_IMPORTED_MODULE_2__.ApiService },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.Platform },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_6__.Router },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.AlertController }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.Platform },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__.Router },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.AlertController }
 ];
-AppComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
+AppComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_8__.Component)({
         selector: 'app-root',
         template: _raw_loader_app_component_html__WEBPACK_IMPORTED_MODULE_0__.default,
         styles: [_app_component_scss__WEBPACK_IMPORTED_MODULE_1__.default]

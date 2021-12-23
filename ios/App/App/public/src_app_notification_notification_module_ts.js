@@ -109,7 +109,6 @@ let NotificationPage = class NotificationPage {
         this.no_data = false;
     }
     ngOnInit() {
-        //this.GetNotifications()
     }
     ionViewDidEnter() {
         if (this.apiService.Get_ProviderId()) {
@@ -131,8 +130,12 @@ let NotificationPage = class NotificationPage {
                 if (this.notificationsdata.length == 0) {
                     this.no_data = true;
                 }
+                else {
+                    this.no_data = false;
+                }
             }
             else {
+                this.notificationsdata = [];
                 this.no_data = true;
             }
         }, err => {

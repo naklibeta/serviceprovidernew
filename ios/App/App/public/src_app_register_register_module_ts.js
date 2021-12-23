@@ -115,17 +115,20 @@ let RegisterPage = class RegisterPage {
         this.SelectedCategories = [];
         this.ProviderData = {};
         this.RegisteringNew = false;
+        this.CityBinded = false;
     }
     ngOnInit() {
         this.GetSelectionOptions();
-        if (!this.apiService.Get_UserData()) {
+        if (!this.apiService.Get_ProviderId()) {
             let SetEmail = localStorage.getItem('pre_email');
             if (SetEmail) {
                 this.ProviderData.emailId = SetEmail;
+                this.ProviderData.makeEmailDisabled = true;
             }
             let SetMobile = localStorage.getItem('pre_mobile');
             if (SetMobile) {
-                this.ProviderData.pre_mobile = SetMobile;
+                this.ProviderData.mobile = SetMobile;
+                this.ProviderData.makeMobileDisabled = true;
             }
         }
         else {
@@ -141,9 +144,14 @@ let RegisterPage = class RegisterPage {
     RegisterNow(formvalues) {
         if (!this.apiService.Get_ProviderId()) {
             this.RegisteringNew = true;
-            if (formvalues.mobile.length != 10) {
-                this.apiService.presentToast('Please enter correct mobile number', 3000);
-                return;
+            if (formvalues.mobile) {
+                if (formvalues.mobile.length != 10) {
+                    this.apiService.presentToast('Please enter correct mobile number', 3000);
+                    return;
+                }
+            }
+            else {
+                formvalues.mobile = this.ProviderData.mobile;
             }
         }
         else {
@@ -176,9 +184,10 @@ let RegisterPage = class RegisterPage {
                 localStorage.setItem('UserData', JSON.stringify(results.data));
                 this.apiService.presentToast(results.message, 3000);
                 localStorage.setItem('isLogged', 'true');
-                debugger;
+                localStorage.removeItem('pre_email');
+                localStorage.removeItem('pre_mobile');
                 if (this.RegisteringNew == false) {
-                    this.router.navigate(['/settings']);
+                    this.router.navigate(['/tabs/settings']);
                 }
                 else {
                     this.router.navigate(['']);
@@ -206,11 +215,20 @@ let RegisterPage = class RegisterPage {
         });
     }
     GetCitis(id) {
+        let env = this;
+        // if (env.apiService.Get_ProviderId()) {
+        if (env.ProviderData.stateId != id && env.CityBinded == true) {
+            env.ProviderData.cityId = '';
+        }
+        // }
         //------------Get Data CIties------------------------------------------
         this.apiService.Common_GET('/findCityByState/' + id.value).subscribe((results) => {
             if (results.statusCode == 200) {
                 this.Cities = results.data;
                 this.ProviderData.cityId = this.ProviderData.cityId;
+                setTimeout(() => {
+                    env.CityBinded = true;
+                }, 2000);
             }
             else {
                 this.apiService.presentToast(results.message, 3000);
@@ -284,7 +302,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-back-button text=\"\"></ion-back-button>\r\n    </ion-buttons>\r\n    <ion-title *ngIf=\"apiService.Get_ProviderId()\">Update Personal Details</ion-title>\r\n    <ion-title *ngIf=\"!apiService.Get_ProviderId()\">Registration</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n\r\n  <div class=\"form-section\">\r\n\r\n    <form #regForm=\"ngForm\" (ngSubmit)=\"RegisterNow(regForm.value)\">\r\n\r\n      <ion-item>\r\n        <ion-label position=\"floating\">Full Name</ion-label>\r\n        <ion-input [(ngModel)]=\"ProviderData.name\" type=\"text\" name=\"name\" required></ion-input>\r\n      </ion-item>\r\n\r\n      <ion-item>\r\n        <ion-label position=\"floating\">Email</ion-label>\r\n        <ion-input email type=\"email\" [(ngModel)]=\"ProviderData.emailId\" name=\"emailId\" required></ion-input>\r\n      </ion-item>\r\n\r\n      <ion-item>\r\n        <ion-label position=\"floating\">Phone Number</ion-label>\r\n        <ion-input [disabled]=\"apiService.Get_ProviderId()\" type=\"tel\" maxlength=\"10\" maxlength=\"10\"\r\n          [(ngModel)]=\"ProviderData.mobile\" name=\"mobile\" required>\r\n        </ion-input>\r\n      </ion-item>\r\n\r\n      <ion-item *ngIf=\"States.length!=0\">\r\n        <ion-label position=\"floating\">State</ion-label>\r\n        <ion-select type=\"text\" [(ngModel)]=\"ProviderData.stateId\" name=\"stateId\" (ionChange)=\"GetCitis($event.target)\"\r\n          required>\r\n          <ion-select-option [value]=\"state.id\" *ngFor=\"let state of States\">\r\n            {{state.name}} </ion-select-option>\r\n        </ion-select>\r\n      </ion-item>\r\n\r\n      <ion-item *ngIf=\"Cities.length!=0\">\r\n        <ion-label position=\"floating\">City</ion-label>\r\n        <ion-select type=\"text\" [(ngModel)]=\"ProviderData.cityId\" name=\"cityId\" required>\r\n          <ion-select-option [value]=\"city.id\" *ngFor=\"let city of Cities\">{{city.city}}</ion-select-option>\r\n        </ion-select>\r\n      </ion-item>\r\n\r\n      <ion-item (click)=\"ShowCategories()\">\r\n        <ion-label position=\"floating\">Category</ion-label>\r\n        <p> <span *ngFor=\"let cats of SelectedCategories\"> {{cats.name}}, </span> </p>\r\n      </ion-item>\r\n\r\n      <ion-item>\r\n        <ion-label position=\"floating\">Current Address</ion-label>\r\n        <ion-input type=\"text\" [(ngModel)]=\"ProviderData.address\" name=\"address\" required></ion-input>\r\n      </ion-item>\r\n\r\n      <br>\r\n      <ion-button [disabled]=\"!regForm.valid\" type=\"submit\" class=\"theme-btn\" expand=\"block\">Submit\r\n      </ion-button>\r\n\r\n    </form>\r\n\r\n  </div>\r\n\r\n</ion-content>");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-back-button text=\"\"></ion-back-button>\r\n    </ion-buttons>\r\n    <ion-title *ngIf=\"apiService.Get_ProviderId()\">Update Personal Details</ion-title>\r\n    <ion-title *ngIf=\"!apiService.Get_ProviderId()\">Registration</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n\r\n  <div class=\"form-section\">\r\n\r\n    <form #regForm=\"ngForm\" (ngSubmit)=\"RegisterNow(regForm.value)\">\r\n\r\n      <ion-item>\r\n        <ion-label position=\"floating\">Full Name</ion-label>\r\n        <ion-input [(ngModel)]=\"ProviderData.name\" type=\"text\" name=\"name\" required></ion-input>\r\n      </ion-item>\r\n\r\n      <ion-item>\r\n        <ion-label position=\"floating\">Email</ion-label>\r\n        <ion-input [disabled]=\"ProviderData.makeEmailDisabled == true\" email type=\"email\"\r\n          [(ngModel)]=\"ProviderData.emailId\" name=\"emailId\" required></ion-input>\r\n      </ion-item>\r\n\r\n      <ion-item>\r\n        <ion-label position=\"floating\">Phone Number</ion-label>\r\n        <ion-input [disabled]=\"apiService.Get_ProviderId() || ProviderData.makeMobileDisabled == true\" type=\"Number\"\r\n          maxlength=\"10\" [(ngModel)]=\"ProviderData.mobile\" name=\"mobile\" required>\r\n        </ion-input>\r\n      </ion-item>\r\n\r\n      <ion-item *ngIf=\"States.length!=0\">\r\n        <ion-label position=\"floating\">State</ion-label>\r\n        <ion-select type=\"text\" [(ngModel)]=\"ProviderData.stateId\" name=\"stateId\" (ionChange)=\"GetCitis($event.target)\"\r\n          required>\r\n          <ion-select-option [value]=\"state.id\" *ngFor=\"let state of States\">\r\n            {{state.name}} </ion-select-option>\r\n        </ion-select>\r\n      </ion-item>\r\n\r\n      <ion-item *ngIf=\"Cities.length!=0\">\r\n        <ion-label position=\"floating\">City</ion-label>\r\n        <ion-select type=\"text\" [(ngModel)]=\"ProviderData.cityId\" name=\"cityId\" required>\r\n          <ion-select-option value=\"\">Please select city</ion-select-option>\r\n          <ion-select-option [value]=\"city.id\" *ngFor=\"let city of Cities\">{{city.city}}</ion-select-option>\r\n        </ion-select>\r\n      </ion-item>\r\n\r\n      <ion-item (click)=\"ShowCategories()\">\r\n        <ion-label position=\"floating\">Category</ion-label>\r\n        <p> <span *ngFor=\"let cats of SelectedCategories\"> {{cats.name}}, </span> </p>\r\n      </ion-item>\r\n\r\n      <ion-item>\r\n        <ion-label position=\"floating\">Current Address</ion-label>\r\n        <ion-input type=\"text\" [(ngModel)]=\"ProviderData.address\" name=\"address\" required></ion-input>\r\n      </ion-item>\r\n\r\n      <br>\r\n      <ion-button [disabled]=\"!regForm.valid\" type=\"submit\" class=\"theme-btn\" expand=\"block\">Submit\r\n      </ion-button>\r\n\r\n    </form>\r\n\r\n  </div>\r\n\r\n</ion-content>");
 
 /***/ })
 

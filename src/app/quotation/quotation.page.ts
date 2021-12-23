@@ -34,6 +34,8 @@ export class QuotationPage implements OnInit {
 
   SendQuo(values: any) {
 
+    this.apiService.showLoader('Please wait, sending quotation..');
+
     let SendData = {
       "orderId": this.JobId,
       "quotation": values.quotation,
@@ -103,7 +105,15 @@ export class QuotationPage implements OnInit {
   }
 
   TaxChanged(target: any, type) {
-    if (!target.value) { return }
+    if (!target.value) {
+
+      if (!target.value && type == 'IGST') { this.IGST_Amount = 0 }
+      if (!target.value && type == 'CGST') { this.CGST_Amount = 0 }
+      if (!target.value && type == 'SGST') { this.SGST_Amount = 0 }
+
+      return;
+
+    }
 
     let targetval = parseFloat(target.value);
 
@@ -117,6 +127,8 @@ export class QuotationPage implements OnInit {
     }
 
     if (type == 'IGST') {
+
+
 
       //reset all taxes and update only using IGST------------
       this.TotalAmount = this.CGST_Amount = this.SGST_Amount = this.CGST = this.SGST = 0;

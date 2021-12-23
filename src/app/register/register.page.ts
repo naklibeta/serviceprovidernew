@@ -29,17 +29,18 @@ export class RegisterPage implements OnInit {
     this.GetSelectionOptions();
 
 
-
-    if (!this.apiService.Get_UserData()) {
+    if (!this.apiService.Get_ProviderId()) {
 
       let SetEmail = localStorage.getItem('pre_email');
       if (SetEmail) {
-        this.ProviderData.emailId = SetEmail
+        this.ProviderData.emailId = SetEmail;
+        this.ProviderData.makeEmailDisabled = true;
       }
 
       let SetMobile = localStorage.getItem('pre_mobile');
       if (SetMobile) {
-        this.ProviderData.pre_mobile = SetMobile
+        this.ProviderData.mobile = SetMobile;
+        this.ProviderData.makeMobileDisabled = true;
       }
     } else {
 
@@ -61,10 +62,15 @@ export class RegisterPage implements OnInit {
 
     if (!this.apiService.Get_ProviderId()) {
       this.RegisteringNew = true;
-      if (formvalues.mobile.length != 10) {
-        this.apiService.presentToast('Please enter correct mobile number', 3000);
-        return
+      if (formvalues.mobile) {
+        if (formvalues.mobile.length != 10) {
+          this.apiService.presentToast('Please enter correct mobile number', 3000);
+          return
+        }
+      } else {
+        formvalues.mobile = this.ProviderData.mobile;
       }
+
 
     } else {
       this.RegisteringNew = false;
@@ -110,7 +116,8 @@ export class RegisterPage implements OnInit {
         localStorage.setItem('UserData', JSON.stringify(results.data));
         this.apiService.presentToast(results.message, 3000);
         localStorage.setItem('isLogged', 'true');
-        debugger
+        localStorage.removeItem('pre_email');
+        localStorage.removeItem('pre_mobile');
         if (this.RegisteringNew == false) {
           this.router.navigate(['/tabs/settings']);
         } else {
@@ -150,11 +157,11 @@ export class RegisterPage implements OnInit {
 
     let env = this;
 
-    if (env.apiService.Get_ProviderId()) {
-      if (env.ProviderData.stateId != id && env.CityBinded == true) {
-        env.ProviderData.cityId = '';
-      }
+    // if (env.apiService.Get_ProviderId()) {
+    if (env.ProviderData.stateId != id && env.CityBinded == true) {
+      env.ProviderData.cityId = '';
     }
+    // }
 
     //------------Get Data CIties------------------------------------------
 

@@ -120,13 +120,19 @@ export class SelectCategoryPage implements OnInit {
 
   SelectAllSubcats(i: any, targetval) {
 
-    let allEl: any = document.querySelectorAll(".subcat-checkbox-" + i);
-    allEl.forEach(element => {
-      if (targetval.checked == true && element.ariaChecked == 'true' || targetval.checked == false && element.ariaChecked == 'false') {
-      } else {
-        element.click();
-      }
-    });
+    let env = this;
+
+    setTimeout(() => {
+      let allEl: any = document.querySelectorAll(".subcat-checkbox-" + i);
+      allEl.forEach(element => {
+        if (targetval.checked == true && element.ariaChecked == 'true' || targetval.checked == false && element.ariaChecked == 'false') {
+        } else {
+          element.click();
+        }
+      });
+    }, 100);
+
+
 
   }
 

@@ -12,20 +12,39 @@ export class JobDetailsPage implements OnInit {
 
   public JobDetails: any = {};
   public JobId: any;
+  IntervalVar: any;
 
   constructor(public apiService: ApiService, public router: Router) { }
 
   ngOnInit() {
 
-    this.JobId = localStorage.getItem('jobdetails');
-    this.LoadJob();
 
+    this.JobId = localStorage.getItem('jobdetails');
+
+
+  }
+
+  ionViewDidEnter() {
+    this.apiService.showLoader('Please wait, getting job details..');
+    if (this.apiService.Get_ProviderId()) {
+      let env = this;
+      env.LoadJob();
+
+      this.IntervalVar = setInterval(() => {
+        env.LoadJob();
+      }, 10000);
+    }
+
+  }
+
+  ionViewDidLeave() {
+    clearInterval(this.IntervalVar);
   }
 
 
   LoadJob() {
 
-    this.apiService.showLoader('Please wait, getting job details..');
+
 
     this.apiService.Common_POST('/jobDetails', { orderId: this.JobId }).subscribe((results) => {
       if (results.statusCode == 200) {

@@ -192,10 +192,16 @@ let Tab1Page = class Tab1Page {
         this.category = [];
         this.providerId = '';
         this.DashboardMsg = '';
-        let UserData = this.apiService.Get_UserData();
-        this.providerId = UserData.providerId;
     }
     ngOnInit() {
+        let UserData = this.apiService.Get_UserData();
+        if (UserData)
+            this.providerId = UserData.providerId;
+        let providerIc_check = this.apiService.Get_ProviderId();
+        if (!providerIc_check) {
+            clearInterval(this.IntervalVar);
+            this.router.navigate(['/otp-verify']);
+        }
     }
     // UpdateDeviceToken(token) {
     //   let Data = {
@@ -210,12 +216,9 @@ let Tab1Page = class Tab1Page {
     //   });
     // }
     ionViewDidEnter() {
-        let providerIc_check = this.apiService.Get_ProviderId();
-        if (!providerIc_check) {
-            clearInterval(this.IntervalVar);
-            this.router.navigate(['/otp-verify']);
-        }
-        debugger;
+        let UserData = this.apiService.Get_UserData();
+        if (UserData)
+            this.providerId = UserData.providerId;
         if (this.apiService.Get_ProviderId()) {
             let env = this;
             env.LoadJobs();
@@ -228,6 +231,7 @@ let Tab1Page = class Tab1Page {
         clearInterval(this.IntervalVar);
     }
     LoadJobs() {
+        // this.DashboardMsg = '';
         this.apiService.Common_POST('/getJobs', { provider_id: this.providerId }).subscribe((results) => {
             if (results.statusCode == 200) {
                 if (results.data) {
@@ -322,7 +326,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-row>\n      <ion-col col-6>\n        <ion-title>\n          <img class=\"header-logo\" src=\"assets/imgs/Icon.png\">\n          <span class=\"header-name\"> Home </span>\n        </ion-title>\n      </ion-col>\n      <ion-col col-6 class=\"text-right status-user\">\n        <a *ngIf=\"apiService.Get_UserStatus() == 'InActive' \">\n          <ion-icon name=\"ellipse\" class=\"status-inactive\"> </ion-icon> InActive\n        </a>\n        <a *ngIf=\"apiService.Get_UserStatus() == 'Active' \">\n          <ion-icon name=\"ellipse\" class=\"status-active\"> </ion-icon> Active\n        </a>\n      </ion-col>\n    </ion-row>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n\n  <div class=\"middle-content\" *ngIf=\"DashboardMsg\">\n    <p class=\"input-content\"> {{DashboardMsg}} </p>\n  </div>\n\n\n\n  <div class=\"jobs-list\">\n    <p class=\"heading-section\" *ngIf=\"upcoming.length!=0\">Upcoming Jobs Request</p>\n\n    <ion-row>\n      <ion-col size=\"6\" *ngFor=\"let upcomingjobs of upcoming\">\n        <ion-card (click)=\"JobDetails(upcomingjobs)\">\n          <ion-card-header>\n            <ion-card-subtitle>\n              <ion-icon name=\"briefcase-outline\"></ion-icon> {{upcomingjobs.title}}\n            </ion-card-subtitle>\n          </ion-card-header>\n\n          <ion-card-content>\n            <p class=\"small-font\">{{upcomingjobs.requirement | slice:0:50}} </p>\n            <p class=\"small-font pref-date\">Service Date: {{upcomingjobs.date}} </p>\n          </ion-card-content>\n        </ion-card>\n      </ion-col>\n    </ion-row>\n\n\n    <p class=\"heading-section\" *ngIf=\"today.length!=0\">Today Jobs Request</p>\n\n\n    <ion-row>\n      <ion-col size=\"6\" *ngFor=\"let todayjobs of today\">\n        <ion-card (click)=\"JobDetails(todayjobs)\">\n          <ion-card-header>\n            <ion-card-subtitle>\n              <ion-icon name=\"briefcase-outline\"></ion-icon> {{todayjobs.title}}\n            </ion-card-subtitle>\n          </ion-card-header>\n\n          <ion-card-content>\n            <p class=\"small-font\">{{todayjobs.requirement | slice:0:50}} </p>\n            <p class=\"small-font pref-date\">Service Date: {{todayjobs.date}} </p>\n          </ion-card-content>\n        </ion-card>\n      </ion-col>\n    </ion-row>\n\n    <p class=\"heading-section\" *ngIf=\"category.length!=0\">Jobs Near You</p>\n\n\n    <ion-row>\n      <ion-col size=\"6\" *ngFor=\"let categoryjobs of category\">\n        <ion-card>\n          <ion-card-header>\n            <ion-card-subtitle>\n              <ion-icon name=\"briefcase-outline\"></ion-icon> {{categoryjobs.title}}\n            </ion-card-subtitle>\n          </ion-card-header>\n\n          <ion-card-content>\n            <p class=\"small-font\">{{categoryjobs.requirement | slice:0:50}} </p>\n            <p class=\"small-font pref-date\">Service Date: {{categoryjobs.date}} </p>\n          </ion-card-content>\n        </ion-card>\n      </ion-col>\n    </ion-row>\n\n\n\n\n  </div>\n\n\n\n\n\n\n</ion-content>");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-row>\n      <ion-col col-6>\n        <ion-title>\n          <img class=\"header-logo\" src=\"assets/imgs/Icon.png\">\n          <span class=\"header-name\"> Home </span>\n        </ion-title>\n      </ion-col>\n      <ion-col col-6 class=\"text-right status-user\">\n        <a *ngIf=\"apiService.Get_UserStatus() == 'InActive' \">\n          <ion-icon name=\"ellipse\" class=\"status-inactive\"> </ion-icon> InActive\n        </a>\n        <a *ngIf=\"apiService.Get_UserStatus() == 'Active' \">\n          <ion-icon name=\"ellipse\" class=\"status-active\"> </ion-icon> Active\n        </a>\n      </ion-col>\n    </ion-row>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n\n  <div class=\"middle-content\" *ngIf=\"DashboardMsg\">\n    <p class=\"input-content\"> {{DashboardMsg}} </p>\n  </div>\n\n\n\n  <div class=\"jobs-list\">\n    <p class=\"heading-section\" *ngIf=\"upcoming.length!=0\">Upcoming Jobs Request</p>\n\n    <ion-row>\n      <ion-col size=\"6\" *ngFor=\"let upcomingjobs of upcoming\">\n        <ion-card (click)=\"JobDetails(upcomingjobs)\">\n          <ion-card-header>\n            <ion-card-subtitle>\n              <ion-icon name=\"briefcase-outline\"></ion-icon> {{upcomingjobs.title}}\n            </ion-card-subtitle>\n          </ion-card-header>\n\n          <ion-card-content>\n            <p class=\"small-font\">{{upcomingjobs.requirement | slice:0:50}} </p>\n            <p class=\"small-font pref-date\">Service Date: {{upcomingjobs.date}} </p>\n          </ion-card-content>\n        </ion-card>\n      </ion-col>\n    </ion-row>\n\n\n    <p class=\"heading-section\" *ngIf=\"today.length!=0\">Today Jobs Request</p>\n\n\n    <ion-row>\n      <ion-col size=\"6\" *ngFor=\"let todayjobs of today\">\n        <ion-card (click)=\"JobDetails(todayjobs)\">\n          <ion-card-header>\n            <ion-card-subtitle>\n              <ion-icon name=\"briefcase-outline\"></ion-icon> {{todayjobs.title}}\n            </ion-card-subtitle>\n          </ion-card-header>\n\n          <ion-card-content>\n            <p class=\"small-font\">{{todayjobs.requirement | slice:0:50}} </p>\n            <p class=\"small-font pref-date\">Service Date: {{todayjobs.date}} </p>\n          </ion-card-content>\n        </ion-card>\n      </ion-col>\n    </ion-row>\n\n    <p class=\"heading-section\" *ngIf=\"category.length!=0\">Jobs Near You</p>\n\n\n    <ion-row>\n      <ion-col size=\"6\" *ngFor=\"let categoryjobs of category\">\n        <ion-card (click)=\"JobDetails(categoryjobs)\">\n          <ion-card-header>\n            <ion-card-subtitle>\n              <ion-icon name=\"briefcase-outline\"></ion-icon> {{categoryjobs.title}}\n            </ion-card-subtitle>\n          </ion-card-header>\n\n          <ion-card-content>\n            <p class=\"small-font\">{{categoryjobs.requirement | slice:0:50}} </p>\n            <p class=\"small-font pref-date\">Service Date: {{categoryjobs.date}} </p>\n          </ion-card-content>\n        </ion-card>\n      </ion-col>\n    </ion-row>\n\n\n\n\n  </div>\n\n\n\n\n\n\n</ion-content>");
 
 /***/ })
 

@@ -3,6 +3,7 @@ import { ApiService } from '../app/api.service';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 
 import {
@@ -21,7 +22,14 @@ export class AppComponent {
 
   public Token: any = '';
 
-  constructor(public apiService: ApiService, private platform: Platform, public router: Router, public alert: AlertController) {
+  constructor(public apiService: ApiService,
+    private platform: Platform, public router: Router, public alert: AlertController,
+  ) {
+
+
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 2000);
 
     const url = this.router.url;
 

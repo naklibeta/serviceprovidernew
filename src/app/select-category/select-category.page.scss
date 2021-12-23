@@ -42,7 +42,7 @@ ul ul li {
 
 }
 
-.select-all-check{
+.select-all-check {
     position: absolute;
     margin-top: 15px;
     right: 15px;
@@ -58,7 +58,7 @@ input[type="checkbox"]~ul {
 input[type="checkbox"]:checked~ul {
     height: 100%;
     transform-origin: top;
-    transition: transform .2s ease-out;
+    // transition: transform 1s ease-out;
     transform: scaleY(1);
 }
 
@@ -90,4 +90,10 @@ input[type="checkbox"]:checked+label {
     right: 10px;
     top: 16px;
     color: #561d5e;
+}
+
+
+.list-con {
+    padding: 15px 15px;
+    border-bottom: 1px solid #d5d5d5;
 }
