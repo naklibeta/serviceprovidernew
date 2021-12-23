@@ -59,6 +59,8 @@ export class MyJobsPage implements OnInit {
         }
 
       } else {
+        this.MyJobs = [];
+        this.no_data = true;
       }
     }, err => {
       this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);

@@ -48,6 +48,7 @@ export class PaymentsPage implements OnInit {
           this.no_data = false;
         }
       } else {
+        this.paymentData = [];
         this.no_data = true;
       }
     }, err => {

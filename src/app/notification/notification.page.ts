@@ -49,6 +49,7 @@ export class NotificationPage implements OnInit {
           this.no_data = false;
         }
       } else {
+        this.notificationsdata = [];
         this.no_data = true;
       }
     }, err => {

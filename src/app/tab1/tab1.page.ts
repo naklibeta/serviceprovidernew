@@ -80,6 +80,7 @@ export class Tab1Page implements OnInit {
 
 
   LoadJobs() {
+    // this.DashboardMsg = '';
     this.apiService.Common_POST('/getJobs', { provider_id: this.providerId }).subscribe((results) => {
       if (results.statusCode == 200) {
 
