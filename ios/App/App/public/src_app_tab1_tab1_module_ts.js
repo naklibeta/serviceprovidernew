@@ -202,6 +202,7 @@ let Tab1Page = class Tab1Page {
             clearInterval(this.IntervalVar);
             this.router.navigate(['/otp-verify']);
         }
+        this.LoadJobs();
     }
     // UpdateDeviceToken(token) {
     //   let Data = {
@@ -215,7 +216,7 @@ let Tab1Page = class Tab1Page {
     //     this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
     //   });
     // }
-    ionViewDidEnter() {
+    ionViewWillEnter() {
         let UserData = this.apiService.Get_UserData();
         if (UserData)
             this.providerId = UserData.providerId;

@@ -12,7 +12,7 @@
 <ion-content fullscreen>
   <form #regForm="ngForm" (ngSubmit)="SendQuo(regForm.value)">
 
-    <ion-grid>
+    <ion-grid *ngIf="JobDetails">
       <ion-row>
         <ion-col class="tag-con">
           <ion-label class="tag">{{JobDetails.title}}</ion-label>
@@ -28,7 +28,7 @@
       <ion-row>
         <ion-col>
           <ion-textarea *ngIf="JobDetails" class="text-area" placeholder="Additional Description" name="quotation"
-            [(ngModel)]="JobDetails.quotation.details">
+            [(ngModel)]="JobDetails.quotation.details" required>
           </ion-textarea>
         </ion-col>
       </ion-row>
@@ -101,7 +101,9 @@
     <ion-grid>
       <ion-row>
         <ion-col class="tag-col">
-          <ion-button expand="block" color="themepurple" type="submit">Update</ion-button>
+          <ion-button expand="block" color="themepurple" type="submit"
+            [disabled]="TotalAmount==0 || !TotalAmount && !regForm.valid ">
+            SUBMIT</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

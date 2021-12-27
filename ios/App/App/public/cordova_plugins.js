@@ -26,6 +26,14 @@
         ]
         },
       {
+          "id": "cordova-plugin-app-version.AppVersionPlugin",
+          "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
+          "pluginId": "cordova-plugin-app-version",
+        "clobbers": [
+          "cordova.getAppVersion"
+        ]
+        },
+      {
           "id": "cordova-plugin-inappbrowser.inappbrowser",
           "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
           "pluginId": "cordova-plugin-inappbrowser",
@@ -45,6 +53,7 @@
     module.exports.metadata =
     // TOP OF METADATA
     {
+      "cordova-plugin-app-version": "0.1.12",
       "cordova-plugin-camera": "6.0.0",
       "cordova-plugin-inappbrowser": "5.0.0"
     };

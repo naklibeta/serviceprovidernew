@@ -4,6 +4,8 @@ import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
+import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 
 import {
@@ -21,10 +23,13 @@ import {
 export class AppComponent {
 
   public Token: any = '';
+  public LatestVersion: any;
 
-  constructor(public apiService: ApiService,
-    private platform: Platform, public router: Router, public alert: AlertController,
+  constructor(public apiService: ApiService, public inappb: InAppBrowser,
+    private platform: Platform, public router: Router, public alert: AlertController, public appversion: AppVersion
   ) {
+
+    this.CheckAppVersion();
 
 
     setTimeout(() => {
@@ -105,6 +110,11 @@ export class AppComponent {
 
 
   UpdateDeviceToken(token) {
+
+    if (!this.apiService.Get_ProviderId()) {
+      return;
+    }
+
     let Data = {
       "device_type": 'android',
       "device_token": token.value,
@@ -118,6 +128,50 @@ export class AppComponent {
       this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
     });
   }
+
+  CheckAppVersion() {
+    this.apiService.Common_GET('/spapp-version').subscribe((results) => {
+
+      this.LatestVersion = results.versionCode;
+
+      this.appversion.getVersionCode().then(value => {
+        console.log(value, 'currentverison');
+
+        if (value != this.LatestVersion) {
+          this.ShowUpdateAlert();
+        }
+      }).catch(err => {
+
+      });
+
+
+    });
+  }
+
+  async ShowUpdateAlert() {
+    const alert = await this.alert.create({
+      cssClass: 'my-custom-class',
+      header: 'New Update Available!',
+      message: 'Please update latest version of NakliBeta Service Provider App!',
+      buttons: [
+        {
+          text: 'Update',
+          role: 'cancel',
+          cssClass: 'secondary',
+
+          handler: (blah) => {
+
+
+            const browser = this.inappb.create("https://play.google.com/store/apps/details?id=com.service.naklibeta.nakli_beta_service_provider");
+
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
 
 
 

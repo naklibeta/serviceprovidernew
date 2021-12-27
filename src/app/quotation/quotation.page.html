@@ -27,7 +27,8 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-textarea class="text-area" placeholder="Additional Description" name="quotation" ngModel>
+          <ion-textarea class="text-area" placeholder="Additional Description" minlength="10" name="quotation" ngModel
+            required>
           </ion-textarea>
         </ion-col>
       </ion-row>
@@ -100,7 +101,9 @@
     <ion-grid>
       <ion-row>
         <ion-col class="tag-col">
-          <ion-button expand="block" color="themepurple" type="submit" [disabled]="TotalAmount==0"> SUBMIT</ion-button>
+          <ion-button expand="block" color="themepurple" type="submit"
+            [disabled]="TotalAmount==0 || !TotalAmount && !regForm.valid ">
+            SUBMIT</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

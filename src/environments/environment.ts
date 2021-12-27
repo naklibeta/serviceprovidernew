@@ -6,7 +6,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://jobbanko.com/api/provider',
+  //apiUrl: 'https://jobbanko.com/api/provider',
+  apiUrl: "http://34.84.233.160:3000/api/provider"
 };
 
 /*

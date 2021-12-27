@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://jobbanko.com/api/provider',
+  apiUrl: 'https://naklibeta.com/api/api/provider',
 };

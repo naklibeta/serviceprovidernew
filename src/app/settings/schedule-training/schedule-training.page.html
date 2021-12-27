@@ -40,7 +40,8 @@
         </ion-row>
         <ion-row>
           <ion-col class="date-col">
-            <ion-datetime presentation="time-date" placeholder="Preferred Date" ngModel name="date"></ion-datetime>
+            <ion-datetime required presentation="time-date" placeholder="Preferred Date" ngModel name="date">
+            </ion-datetime>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -51,7 +52,8 @@
         <ion-row class="button-row">
           <ion-col class="button-col">
             <div>
-              <ion-button class="button" color="themepurple" expand="block" type="submit">SUBMIT</ion-button>
+              <ion-button [disabled]="!regForm.valid" class="button" color="themepurple" expand="block" type="submit">
+                SUBMIT</ion-button>
             </div>
           </ion-col>
         </ion-row>

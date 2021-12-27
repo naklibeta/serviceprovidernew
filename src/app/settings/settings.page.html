@@ -76,8 +76,8 @@
         <span class="menu-label"> KYC </span>
       </ion-col>
       <ion-col size="2">
-        <ion-icon *ngIf="apiService.Get_UserStatus() == 'Active' " name="checkmark-outline" color="success"></ion-icon>
-        <ion-icon *ngIf="apiService.Get_UserStatus() == 'InActive' " name="alert-circle-outline" color="danger">
+        <ion-icon *ngIf="KYCDone " name="checkmark-outline" color="success"></ion-icon>
+        <ion-icon *ngIf="!KYCDone" name="alert-circle-outline" color="danger">
         </ion-icon>
       </ion-col>
     </ion-row>

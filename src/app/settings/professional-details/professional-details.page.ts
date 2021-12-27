@@ -3,6 +3,7 @@ import { ApiService } from '../../api.service';
 import { Router } from '@angular/router';
 import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 import { AlertController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-professional-details',
@@ -19,7 +20,7 @@ export class ProfessionalDetailsPage implements OnInit {
   public selectedFile: any;
 
 
-  constructor(public apiService: ApiService, public router: Router, public camera: Camera, public alertController: AlertController) { }
+  constructor(public loadingctrl: LoadingController, public apiService: ApiService, public router: Router, public camera: Camera, public alertController: AlertController) { }
 
   ngOnInit() {
 
@@ -49,6 +50,7 @@ export class ProfessionalDetailsPage implements OnInit {
 
 
     this.apiService.Common_POST('/qualification', formData).subscribe((results) => {
+      this.hideLoader();
       if (results.statusCode == 200) {
         this.apiService.presentToast(results.message, 3000);
 
@@ -57,7 +59,10 @@ export class ProfessionalDetailsPage implements OnInit {
       } else {
         this.apiService.presentToast(results.message, 3000);
       }
+
+
     }, err => {
+      this.hideLoader();
       this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
     });
 
@@ -175,7 +180,23 @@ export class ProfessionalDetailsPage implements OnInit {
   }
 
 
+  showLoader(loaderMsg) {
+    this.loadingctrl.create({
+      message: loaderMsg
+    }).then((res) => {
+      res.present();
+      res.onDidDismiss().then((dis) => {
+      });
+    });
 
+  }
+
+  hideLoader() {
+    let env = this;
+    setTimeout(() => {
+      this.loadingctrl.dismiss();
+    }, 1000);
+  }
 
 
 

@@ -23,13 +23,14 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-input placeholder="Enter your name" type="text" [(ngModel)]="ProviderData.name1" name="name1">
+          <ion-input required placeholder="Enter your name" type="text" [(ngModel)]="ProviderData.name1" name="name1">
           </ion-input>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-input placeholder="Mobile number" type="number" [(ngModel)]="ProviderData.mobile1" name="mobile1">
+          <ion-input required placeholder="Mobile number" minlength="10" maxlength="10" type="tel"
+            [(ngModel)]="ProviderData.mobile1" name="mobile1">
           </ion-input>
         </ion-col>
       </ion-row>
@@ -53,7 +54,8 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-input placeholder="Mobile number" type="number" [(ngModel)]="ProviderData.mobile2" name="mobile2">
+          <ion-input placeholder="Mobile number" minlength="10" maxlength="10" type="tel"
+            [(ngModel)]="ProviderData.mobile2" name="mobile2">
           </ion-input>
         </ion-col>
       </ion-row>
@@ -62,7 +64,7 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-button color="themepurple" expand="block" type="submit">UPDATE</ion-button>
+          <ion-button [disabled]="!regForm.valid" color="themepurple" expand="block" type="submit">UPDATE</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

@@ -49,7 +49,7 @@ export class QuotationPage implements OnInit {
       if (results.statusCode == 200) {
 
         if (results.data) {
-          this.router.navigate(['/my-jobs']);
+          this.router.navigate(['/tabs/myjobs']);
           this.apiService.presentToast(results.message, 3000);
         }
 

@@ -20,6 +20,7 @@ export class SettingsPage implements OnInit {
   public Qualification: boolean = false;
   public TrainingFilled: boolean = false;
   public RefAdded: boolean = false;
+  public KYCDone: boolean = false;
 
   constructor(public apiService: ApiService, public router: Router,
     public alertController: AlertController, public camera: Camera, public inappb: InAppBrowser) { }
@@ -35,9 +36,12 @@ export class SettingsPage implements OnInit {
 
 
   ionViewDidEnter() {
+    this.selectedImage = '';
+    this.selectedFile = null;
     console.log('view changes');
     this.GetProviderData();
   }
+
 
 
 
@@ -108,8 +112,6 @@ export class SettingsPage implements OnInit {
       if (results.statusCode == 200) {
         this.ProviderData = results.data;
 
-        debugger
-
         //---------------Set Flags--------------------------
         if (this.ProviderData.degree && this.ProviderData.education) {
           this.Qualification = true;
@@ -133,6 +135,14 @@ export class SettingsPage implements OnInit {
           this.RefAdded = true;
         } else {
           this.RefAdded = false;
+        }
+
+        //-----------Check KYC------------
+
+        if (this.ProviderData.is_active == 1) {
+          this.KYCDone = true;
+        } else {
+          this.KYCDone = false;
         }
 
       } else {

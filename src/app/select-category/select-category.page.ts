@@ -147,8 +147,9 @@ export class SelectCategoryPage implements OnInit {
     }
 
     this.CategoryData = this.OrgCategoryData.filter(item => {
-
-      return item.subCateName.startsWith(valueSearch);
+      let checkname = item.subCateName.toLowerCase();
+      let givenname = valueSearch.toLowerCase();
+      return checkname.startsWith(givenname);
 
     });
 

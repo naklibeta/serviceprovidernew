@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class UpdateQuotationPage implements OnInit {
 
-  public JobDetails: any = {};
+  public JobDetails;
   public JobId: any;
 
   public CoreAmount: any = 0;
@@ -34,6 +34,8 @@ export class UpdateQuotationPage implements OnInit {
 
   SendQuo(values: any) {
 
+    this.apiService.showLoader('Sending Quotation Updates, Please wait..');
+
     let SendData = {
       "orderId": this.JobId,
       "quotation": values.quotation,
@@ -47,7 +49,7 @@ export class UpdateQuotationPage implements OnInit {
       if (results.statusCode == 200) {
 
         if (results.data) {
-          this.router.navigate(['/my-jobs']);
+          this.router.navigate(['/tabs/myjobs']);
           this.apiService.presentToast(results.message, 3000);
         }
 
@@ -94,7 +96,12 @@ export class UpdateQuotationPage implements OnInit {
   AmountChanged(target: any) {
 
     let value = target.value;
-    this.CoreAmount = parseInt(value);
+    this.CoreAmount = parseFloat(value);
+
+    if (this.IGST == 0 && this.CGST == 0 && this.SGST == 0) {
+      this.TotalAmount = this.CoreAmount
+    }
+
 
     //----------calculate amount now------------------
 
@@ -105,12 +112,12 @@ export class UpdateQuotationPage implements OnInit {
       this.TaxChanged({ value: this.SGST }, 'SGST');
     }
 
+
+
   }
 
   TaxChanged(target: any, type) {
     if (!target.value) { return }
-
-    debugger
 
     let targetval = parseInt(target.value);
 

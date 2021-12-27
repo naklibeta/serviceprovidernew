@@ -41,6 +41,9 @@ export class Tab1Page implements OnInit {
       this.router.navigate(['/otp-verify']);
     }
 
+
+    this.LoadJobs();
+
   }
 
   // UpdateDeviceToken(token) {
@@ -58,7 +61,7 @@ export class Tab1Page implements OnInit {
   //   });
   // }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
 
     let UserData = this.apiService.Get_UserData();
     if (UserData) this.providerId = UserData.providerId;
@@ -90,9 +93,18 @@ export class Tab1Page implements OnInit {
           this.today = results.data.today;
           this.category = results.data.category;
         }
-        this.DashboardMsg = '';
+        if (results.message) {
+          this.DashboardMsg = results.message;
+        } else {
+          this.DashboardMsg = '';
+        }
       } else {
         this.DashboardMsg = results.message;
+        if (results.data) {
+          this.upcoming = results.data.upcoming;
+          this.today = results.data.today;
+          this.category = results.data.category;
+        }
         //this.apiService.presentToast(results.message, 3000);
       }
 

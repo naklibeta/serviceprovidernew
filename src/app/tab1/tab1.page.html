@@ -41,7 +41,7 @@
 
           <ion-card-content>
             <p class="small-font">{{upcomingjobs.requirement | slice:0:50}} </p>
-            <p class="small-font pref-date">Service Date: {{upcomingjobs.date}} </p>
+            <p class="small-font pref-date">Service Date: {{apiService.formatDateYMD( upcomingjobs.date)}} </p>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -62,7 +62,7 @@
 
           <ion-card-content>
             <p class="small-font">{{todayjobs.requirement | slice:0:50}} </p>
-            <p class="small-font pref-date">Service Date: {{todayjobs.date}} </p>
+            <p class="small-font pref-date">Service Date: {{ apiService.formatDateYMD(todayjobs.date)}} </p>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -82,7 +82,7 @@
 
           <ion-card-content>
             <p class="small-font">{{categoryjobs.requirement | slice:0:50}} </p>
-            <p class="small-font pref-date">Service Date: {{categoryjobs.date}} </p>
+            <p class="small-font pref-date">Service Date: {{apiService.formatDateYMD(categoryjobs.date)}} </p>
           </ion-card-content>
         </ion-card>
       </ion-col>

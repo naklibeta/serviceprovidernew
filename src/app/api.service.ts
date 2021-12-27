@@ -18,6 +18,10 @@ export class ApiService {
     return this.http.post(postFix, data);
   }
 
+  public test(): Observable<any> {
+    return this.http.post('/', { "sdf": "sf" });
+  }
+
   public Common_POST(postFix: any, data: any): Observable<any> {
     return this.http.post(environment.apiUrl + postFix, data);
   }
