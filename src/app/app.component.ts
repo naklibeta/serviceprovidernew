@@ -108,7 +108,6 @@ export class AppComponent {
     await alert.present();
   }
 
-
   UpdateDeviceToken(token) {
 
     if (!this.apiService.Get_ProviderId()) {
