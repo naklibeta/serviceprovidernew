@@ -122,8 +122,10 @@ export class ApiService {
 
     if (Status == '0' || Status == 0) {
       return 'InActive';
-    } else {
+    } else if (Status == '1' || Status == 1) {
       return 'Active';
+    } else {
+      return 'InActive';
     }
   }
 

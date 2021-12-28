@@ -45,9 +45,16 @@ export class KycPage implements OnInit {
     }
 
     if (!this.ProviderData.aadharCardBack && !this.selected_aBack_Image) {
-      this.apiService.presentToast('Please select Aadhar Card Front Image', 3000);
+      this.apiService.presentToast('Please select Aadhar Card Back Image', 3000);
       return;
     }
+
+    if (this.ProviderData.cacNumber != this.ProviderData.ac_number) {
+      this.apiService.presentToast('Account number does not match!', 3000);
+      return;
+    }
+
+
 
 
     this.showLoader('Please wait, updating details..');
@@ -87,6 +94,7 @@ export class KycPage implements OnInit {
         this.apiService.presentToast(results.message, 3000);
       }
     }, err => {
+      this.hideLoader();
       this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
     });
 
@@ -104,8 +112,6 @@ export class KycPage implements OnInit {
         if (this.ProviderData.ac_number) {
           this.ProviderData.cacNumber = this.ProviderData.ac_number;
         }
-
-
 
       } else {
         this.apiService.presentToast(results.message, 3000);

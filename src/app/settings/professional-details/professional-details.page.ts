@@ -37,6 +37,13 @@ export class ProfessionalDetailsPage implements OnInit {
     let ProviderId = this.apiService.Get_ProviderId();
 
     let formData: FormData = new FormData();
+
+    if (!values.occupation) { values.occupation = '' }
+    if (!values.education) { values.education = '' }
+    if (!values.degree) { values.degree = '' }
+    if (!values.aboutUs) { values.aboutUs = '' }
+    if (!values.gstin) { values.gstin = '' }
+
     formData.append('occupation', values.occupation);
     formData.append('education', values.education);
     formData.append('degree', values.degree);

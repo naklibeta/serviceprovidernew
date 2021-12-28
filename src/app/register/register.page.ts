@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +21,7 @@ export class RegisterPage implements OnInit {
   RegisteringNew: boolean = false;
   CityBinded: boolean = false;
 
-  constructor(public apiService: ApiService, public router: Router) {
+  constructor(public apiService: ApiService, public router: Router, public loader: LoadingController) {
 
   }
 
@@ -77,7 +78,7 @@ export class RegisterPage implements OnInit {
       formvalues.mobile = this.ProviderData.mobile;
     }
 
-    this.apiService.showLoader('Please wait, registering user..');
+    this.showLoader('Please wait, registering user..');
 
     //----find state name and city name-------------------------------------------------------
 
@@ -109,6 +110,7 @@ export class RegisterPage implements OnInit {
 
 
     this.apiService.Common_POST(checkUpdate, formvalues).subscribe((results) => {
+      this.hideLoader();
       if (results.statusCode == 200) {
 
 
@@ -130,6 +132,7 @@ export class RegisterPage implements OnInit {
         this.apiService.presentToast(results.message, 3000);
       }
     }, err => {
+      this.hideLoader();
       this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
     });
   }
@@ -211,6 +214,25 @@ export class RegisterPage implements OnInit {
         this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
       });
     }
+  }
+
+
+  showLoader(loaderMsg) {
+    this.loader.create({
+      message: loaderMsg
+    }).then((res) => {
+      res.present();
+      res.onDidDismiss().then((dis) => {
+      });
+    });
+
+  }
+
+  hideLoader() {
+    let env = this;
+    setTimeout(() => {
+      this.loader.dismiss();
+    }, 1000);
   }
 
 

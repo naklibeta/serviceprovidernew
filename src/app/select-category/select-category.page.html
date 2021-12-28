@@ -10,16 +10,9 @@
 <ion-content>
 
 
-
   <ion-searchbar showCancelButton="never" (input)="SearchByName($event.target)"></ion-searchbar>
 
-
-
   <div class="wrapper">
-
-
-
-
     <ul *ngIf="CategoryData.length!=0">
       <li *ngFor="let category of CategoryData; let i=index;">
         <input type="checkbox" id="list-item-{{i}}" class="subcat-inputs">
@@ -30,12 +23,10 @@
         <input type="checkbox" id="list-selectall-{{i}}" class="select-all-check"
           (click)="SelectAllSubcats(i, $event.target)" *ngIf="!category.selected">
 
-
         <label for="list-item-{{i}}" class="first">
           <ion-icon name="caret-down-outline"></ion-icon> {{category.subCateName}}
         </label>
         <ul *ngFor="let subcategory of category.serviceDetails">
-
 
           <li class="subcategorylist">
             <div class="list-con">
@@ -49,8 +40,6 @@
               </ion-checkbox>
             </div>
           </li>
-
-
         </ul>
       </li>
     </ul>
