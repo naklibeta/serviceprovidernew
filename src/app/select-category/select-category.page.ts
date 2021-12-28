@@ -27,9 +27,6 @@ export class SelectCategoryPage implements OnInit {
       this.SelectedCategoryData = this.SelectedCategories;
     }
 
-
-
-
   }
 
 
@@ -67,19 +64,13 @@ export class SelectCategoryPage implements OnInit {
   GetSelectionOptions() {
 
     //------------Get Data and fill all three select fields------------------------------------------
-
     this.apiService.Common_GET('/getService').subscribe((results) => {
       if (results.statusCode == 200) {
         this.OrgCategoryData = this.CategoryData = results.data;
-
-
         let env = this;
-
         setTimeout(() => {
           env.SetSelected();
         }, 1000);
-
-
       } else {
         this.apiService.presentToast(results.message, 3000);
       }
@@ -87,12 +78,10 @@ export class SelectCategoryPage implements OnInit {
       this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
     });
 
-
   }
 
 
   SelectCategory(subcategorydata: any) {
-
 
     let MakeObject = {
       id: subcategorydata.id,

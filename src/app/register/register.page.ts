@@ -54,7 +54,7 @@ export class RegisterPage implements OnInit {
   ionViewDidEnter() {
 
     let catSelected = localStorage.getItem('selectedCategories');
-    this.SelectedCategories = JSON.parse(catSelected);
+    if (catSelected) this.SelectedCategories = JSON.parse(catSelected);
   }
 
 
@@ -108,7 +108,6 @@ export class RegisterPage implements OnInit {
     }
 
 
-
     this.apiService.Common_POST(checkUpdate, formvalues).subscribe((results) => {
       if (results.statusCode == 200) {
 
@@ -118,6 +117,8 @@ export class RegisterPage implements OnInit {
         localStorage.setItem('isLogged', 'true');
         localStorage.removeItem('pre_email');
         localStorage.removeItem('pre_mobile');
+        //-------remove selected categories-----------------------
+        if ('/register-provider' == checkUpdate) localStorage.removeItem('selectedCategories');
         if (this.RegisteringNew == false) {
           this.router.navigate(['/tabs/settings']);
         } else {
@@ -141,7 +142,6 @@ export class RegisterPage implements OnInit {
     this.apiService.Common_GET('/findStates').subscribe((results) => {
       if (results.statusCode == 200) {
         this.States = results.data;
-
         this.GetProviderData();
       } else {
         this.apiService.presentToast(results.message, 3000);
@@ -199,17 +199,11 @@ export class RegisterPage implements OnInit {
     if (this.apiService.Get_ProviderId()) {
       this.apiService.Common_POST('/findProviderDetails', { providerId: this.apiService.Get_ProviderId() }).subscribe((results) => {
         if (results.statusCode == 200) {
-
-
           env.ProviderData = results.data;
-
           if (results.serviceCategory) {
             localStorage.setItem('selectedCategories', JSON.stringify(results.serviceCategory));
-
             this.SelectedCategories = results.serviceCategory
           }
-
-
         } else {
           this.apiService.presentToast(results.message, 3000);
         }

@@ -129,22 +129,18 @@ export class AppComponent {
   }
 
   CheckAppVersion() {
+
     this.apiService.Common_GET('/spapp-version').subscribe((results) => {
-
       this.LatestVersion = results.versionCode;
-
       this.appversion.getVersionCode().then(value => {
         console.log(value, 'currentverison');
-
         if (value != this.LatestVersion) {
           this.ShowUpdateAlert();
         }
       }).catch(err => {
-
       });
-
-
     });
+
   }
 
   async ShowUpdateAlert() {
