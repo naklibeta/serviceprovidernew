@@ -46,7 +46,7 @@
         </ion-row>
         <ion-row>
           <ion-col class="date-col">
-            <ion-datetime displayFormat="hh:mm" placeholder="Preferred Time" ngModel name="time"></ion-datetime>
+            <ion-datetime displayFormat="HH:mm" placeholder="Preferred Time" ngModel name="time"></ion-datetime>
           </ion-col>
         </ion-row>
         <ion-row class="button-row">
@@ -64,7 +64,7 @@
             <ion-col>
               <div>Your training is scheduled on :-</div>
               <div>
-                Date : {{trainingDetails.date}}
+                Date : {{apiService.formatDate(trainingDetails.date)}}
               </div>
               <div>
                 Time : {{trainingDetails.time}}

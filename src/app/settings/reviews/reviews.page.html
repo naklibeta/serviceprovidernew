@@ -9,6 +9,10 @@
 
 <ion-content fullscreen>
 
+  <div class="no-data-msg" *ngIf=" no_data">
+    <span> No review(s) found </span>
+  </div>
+
   <ion-list>
     <ion-item lines="full" *ngFor="let reviews of reviewdata">
       <ion-label>
