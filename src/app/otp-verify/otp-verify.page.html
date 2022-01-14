@@ -1,8 +1,8 @@
 <ion-content>
 
-  <div class="top-logo-section theme-color-back">
+  <div class="top-logo-section ">
     <div class="middle-content">
-      <img src="assets/imgs/logo.png">
+      <img src="assets/imgs/indianbeta-logo.png">
     </div>
   </div>
 
@@ -11,9 +11,14 @@
       <ion-item class="custom-input-otp">
         <ion-label position="floating">Email ID / Phone Number</ion-label>
         <ion-input (input)="validateEmail($event.target)" [(ngModel)]="username"></ion-input>
+
+
       </ion-item>
+      <p style="    text-align: left;
+      font-size: 10px;">Please enter registered email address or 10 digit mobile number</p>
       <br>
-      <ion-button [disabled]="username.length==0" (click)="LoginNow()" class="theme-btn" expand="block">Login / SignUp
+      <ion-button [disabled]="username.length==0 || WarningTxt==false" (click)="LoginNow()" class="theme-btn"
+        expand="block">Login / SignUp
       </ion-button>
     </div>
   </div>

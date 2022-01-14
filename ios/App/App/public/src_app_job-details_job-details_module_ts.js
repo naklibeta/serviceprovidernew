@@ -92,12 +92,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "JobDetailsPage": () => (/* binding */ JobDetailsPage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 1855);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 1855);
 /* harmony import */ var _raw_loader_job_details_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./job-details.page.html */ 1803);
 /* harmony import */ var _job_details_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./job-details.page.scss */ 1931);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 2741);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 2741);
 /* harmony import */ var _api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../api.service */ 8213);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 9535);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ 4595);
+
 
 
 
@@ -105,13 +107,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let JobDetailsPage = class JobDetailsPage {
-    constructor(apiService, router) {
+    constructor(apiService, router, loader) {
         this.apiService = apiService;
         this.router = router;
+        this.loader = loader;
         this.JobDetails = {};
     }
     ngOnInit() {
         this.JobId = localStorage.getItem('jobdetails');
+        this.LoadJob();
     }
     ionViewDidEnter() {
         this.apiService.showLoader('Please wait, getting job details..');
@@ -141,11 +145,13 @@ let JobDetailsPage = class JobDetailsPage {
         });
     }
     AcceptJob() {
+        this.showLoader('Please wait..');
         let AcceptSend = {
             "provider_id": this.apiService.Get_ProviderId(),
             "orderId": this.JobId
         };
         this.apiService.Common_POST('/accept', AcceptSend).subscribe((results) => {
+            this.hideLoader();
             if (results.statusCode == 200) {
                 this.ngOnInit();
                 this.apiService.presentToast(results.message, 3000);
@@ -154,15 +160,18 @@ let JobDetailsPage = class JobDetailsPage {
                 this.apiService.presentToast('Error occured, unable to accept job ', 3000);
             }
         }, err => {
+            this.hideLoader();
             this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
         });
     }
     StartStatus() {
+        this.showLoader('Please wait..');
         let AcceptSend = {
             "provider_id": this.apiService.Get_ProviderId(),
             "orderId": this.JobId
         };
         this.apiService.Common_POST('/start', AcceptSend).subscribe((results) => {
+            this.hideLoader();
             if (results.statusCode == 200) {
                 this.ngOnInit();
                 this.apiService.presentToast(results.message, 3000);
@@ -171,15 +180,18 @@ let JobDetailsPage = class JobDetailsPage {
                 this.apiService.presentToast('Error occured, unable to start job ', 3000);
             }
         }, err => {
+            this.hideLoader();
             this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
         });
     }
     EndStatus() {
+        this.showLoader('Please wait..');
         let AcceptSend = {
             "provider_id": this.apiService.Get_ProviderId(),
             "orderId": this.JobId
         };
         this.apiService.Common_POST('/end', AcceptSend).subscribe((results) => {
+            this.hideLoader();
             if (results.statusCode == 200) {
                 this.ngOnInit();
                 this.apiService.presentToast(results.message, 3000);
@@ -188,10 +200,12 @@ let JobDetailsPage = class JobDetailsPage {
                 this.apiService.presentToast('Error occured, unable to end job ', 3000);
             }
         }, err => {
+            this.hideLoader();
             this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
         });
     }
     Decline() {
+        this.showLoader('Please wait..');
         let AcceptSend = {
             "providerId": this.apiService.Get_ProviderId(),
             "orderId": this.JobId
@@ -205,6 +219,7 @@ let JobDetailsPage = class JobDetailsPage {
                 this.apiService.presentToast('Error occured, unable to end job ', 3000);
             }
         }, err => {
+            this.hideLoader();
             this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
         });
     }
@@ -215,13 +230,29 @@ let JobDetailsPage = class JobDetailsPage {
         localStorage.setItem('jobdetailsUpdate', this.JobId);
         this.router.navigate(['/update-quotation']);
     }
+    showLoader(loaderMsg) {
+        this.loader.create({
+            message: loaderMsg
+        }).then((res) => {
+            res.present();
+            res.onDidDismiss().then((dis) => {
+            });
+        });
+    }
+    hideLoader() {
+        let env = this;
+        setTimeout(() => {
+            this.loader.dismiss();
+        }, 1000);
+    }
 };
 JobDetailsPage.ctorParameters = () => [
     { type: _api_service__WEBPACK_IMPORTED_MODULE_2__.ApiService },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__.Router }
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__.Router },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.LoadingController }
 ];
-JobDetailsPage = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
+JobDetailsPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
         selector: 'app-job-details',
         template: _raw_loader_job_details_page_html__WEBPACK_IMPORTED_MODULE_0__.default,
         styles: [_job_details_page_scss__WEBPACK_IMPORTED_MODULE_1__.default]
@@ -258,7 +289,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-back-button text=\"\"></ion-back-button>\r\n    </ion-buttons>\r\n    <ion-title>Job Details</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content fullscreen>\r\n  <ion-grid>\r\n\r\n\r\n    <ion-row>\r\n      <ion-col size=\"8\">\r\n        <div>\r\n          <h6 class=\"page-title\">{{JobDetails.title}}</h6>\r\n          <p class=\"order-id\">Order Id : {{JobId}}</p>\r\n        </div>\r\n      </ion-col>\r\n      <ion-col size=\"4\">\r\n        <div>\r\n          <p class=\"date\">Date : {{ apiService.formatDate(JobDetails.date)}}</p>\r\n        </div>\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n    <ion-row>\r\n      <ion-col>\r\n        <div class=\"img-div\">\r\n          <ion-img [src]=\"JobDetails.url\"></ion-img>\r\n        </div>\r\n      </ion-col>\r\n    </ion-row>\r\n    <ion-row>\r\n      <ion-col>\r\n        <div>\r\n          <p class=\"detail-content\">\r\n            {{JobDetails.detail}}\r\n          </p>\r\n        </div>\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n\r\n    <ion-row *ngIf=\"JobDetails.status!=0\">\r\n      <ion-col>\r\n        <div>\r\n          <h5 class=\"address-tag\">Customer Name :</h5>\r\n        </div>\r\n        <div>\r\n          <h6 class=\"address nomargin\">\r\n            {{JobDetails.customerName}}\r\n          </h6>\r\n        </div>\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n    <ion-row *ngIf=\"JobDetails.status!=0\">\r\n      <ion-col>\r\n        <div>\r\n          <h6 class=\"address-tag\">Customer Contact Number :</h6>\r\n        </div>\r\n        <div>\r\n          <h6 class=\"address nomargin\">\r\n            {{JobDetails.mobile}}\r\n          </h6>\r\n        </div>\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n    <ion-row>\r\n      <ion-col>\r\n        <div>\r\n          <h6 class=\"address-tag\">Address :</h6>\r\n        </div>\r\n        <div>\r\n          <h6 class=\"address nomargin\">\r\n            {{JobDetails.address}}\r\n          </h6>\r\n        </div>\r\n        <!-- <div>\r\n          <p class=\"detail-content\">\r\n            Accusam et justo duo dolores et ea rebum. Stet\r\n            clita kasd gubergren, no sea takimata sanctus est\r\n            Lorem ipsum dolor sit amet Sampler.\r\n          </p>\r\n        </div> -->\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n    <ion-row class=\"button-row\">\r\n      <ion-col *ngIf=\"JobDetails.status==0 && apiService.Get_UserStatus()=='Active' \" size=\"12\">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\" (click)=\"AcceptJob()\">ACCEPT</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <ion-col *ngIf=\"JobDetails.status==1 && apiService.Get_ProviderId() == JobDetails.providerId\" size=\"6\">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\" (click)=\"Decline()\">Decline</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <ion-col *ngIf=\"JobDetails.status==1 && apiService.Get_ProviderId() == JobDetails.providerId\" size=\"6\">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\" (click)=\"SendQuotation()\">Send Quotation</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <ion-col *ngIf=\"JobDetails.status==2\" size=\"12\">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\">Please wait for quotation approval</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <ion-col *ngIf=\"JobDetails.status==3  \" size=\"6\">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\" (click)=\"StartStatus()\">Start Job</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <ion-col *ngIf=\"JobDetails.status==5  \" size=\"6\">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\" (click)=\"EndStatus()\">End Job</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <ion-col size=\"12\" *ngIf=\"JobDetails.status==4 \">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\" (click)=\"SendQuotation()\">Send New Quotation</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <ion-col size=\"6\" *ngIf=\"JobDetails.status>=6  &&  JobDetails.status!=9  &&  JobDetails.status!=10\">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\">Job Completed</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <ion-col size=\"6\" *ngIf=\"JobDetails.status==3 || JobDetails.status==5 || JobDetails.status==6 \">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\" (click)=\"UpdateQuotation()\">Update Quotation</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n\r\n      <ion-col size=\"6\" *ngIf=\"JobDetails.status==8 \">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\">Payment Recieved</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <ion-col size=\"12\" *ngIf=\"JobDetails.status==9 || JobDetails.status==10\">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\">Payment Refunded to Customer</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <!-- <ion-col>\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themeoutlinepurple\">DECLINE</ion-button>\r\n        </div>\r\n      </ion-col> -->\r\n    </ion-row>\r\n  </ion-grid>\r\n</ion-content>");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-back-button text=\"\"></ion-back-button>\r\n    </ion-buttons>\r\n    <ion-title>Job Details</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content fullscreen>\r\n  <ion-grid>\r\n\r\n\r\n    <ion-row>\r\n      <ion-col size=\"8\">\r\n        <div>\r\n          <h6 class=\"page-title\">{{JobDetails.title}}</h6>\r\n          <p class=\"order-id\">Order Id : {{JobId}}</p>\r\n        </div>\r\n      </ion-col>\r\n      <ion-col size=\"4\">\r\n        <div>\r\n          <p class=\"date\">Date : {{ apiService.formatDate(JobDetails.date)}}</p>\r\n        </div>\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n    <ion-row>\r\n      <ion-col>\r\n        <div class=\"img-div\">\r\n          <ion-img [src]=\"JobDetails.url\"></ion-img>\r\n        </div>\r\n      </ion-col>\r\n    </ion-row>\r\n    <ion-row>\r\n      <ion-col>\r\n        <div>\r\n          <p class=\"detail-content\">\r\n            {{JobDetails.detail}}\r\n          </p>\r\n        </div>\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n\r\n    <ion-row *ngIf=\"JobDetails.status!=0\">\r\n      <ion-col>\r\n        <div>\r\n          <h5 class=\"address-tag\">Customer Name :</h5>\r\n        </div>\r\n        <div>\r\n          <h6 class=\"address nomargin\">\r\n            {{JobDetails.customerName}}\r\n          </h6>\r\n        </div>\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n    <ion-row *ngIf=\"JobDetails.status!=0\">\r\n      <ion-col>\r\n        <div>\r\n          <h6 class=\"address-tag\">Customer Contact Number :</h6>\r\n        </div>\r\n        <div>\r\n          <h6 class=\"address nomargin\">\r\n            {{JobDetails.mobile}}\r\n          </h6>\r\n        </div>\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n    <ion-row>\r\n      <ion-col>\r\n        <div>\r\n          <h6 class=\"address-tag\">Address :</h6>\r\n        </div>\r\n        <div>\r\n          <h6 class=\"address nomargin\">\r\n            {{JobDetails.address}}\r\n          </h6>\r\n        </div>\r\n        <!-- <div>\r\n          <p class=\"detail-content\">\r\n            Accusam et justo duo dolores et ea rebum. Stet\r\n            clita kasd gubergren, no sea takimata sanctus est\r\n            Lorem ipsum dolor sit amet Sampler.\r\n          </p>\r\n        </div> -->\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n    <ion-row class=\"button-row\">\r\n      <ion-col *ngIf=\"JobDetails.status==0 && apiService.Get_UserStatus()=='Active' \" size=\"12\">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\" (click)=\"AcceptJob()\">ACCEPT</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <ion-col *ngIf=\"JobDetails.status==1 && apiService.Get_ProviderId() == JobDetails.providerId\" size=\"6\">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\" (click)=\"Decline()\">Decline</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <ion-col *ngIf=\"JobDetails.status==1 && apiService.Get_ProviderId() == JobDetails.providerId\" size=\"6\">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\" (click)=\"SendQuotation()\">Send Quotation</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <ion-col *ngIf=\"JobDetails.status==2\" size=\"6\">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\">Wait for approval</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <ion-col *ngIf=\"JobDetails.status==3  \" size=\"6\">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\" (click)=\"StartStatus()\">Start Job</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <ion-col *ngIf=\"JobDetails.status==5  \" size=\"6\">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\" (click)=\"EndStatus()\">End Job</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <ion-col size=\"12\" *ngIf=\"JobDetails.status==4 \">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\" (click)=\"SendQuotation()\">Send New Quotation</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <ion-col size=\"6\" *ngIf=\"JobDetails.status>=6  &&  JobDetails.status!=9  &&  JobDetails.status!=10\">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\">Job Completed</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <ion-col size=\"6\"\r\n        *ngIf=\"JobDetails.status==3 || JobDetails.status==5 || JobDetails.status==6 || JobDetails.status==2\">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\" (click)=\"UpdateQuotation()\">Update Quotation</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n\r\n      <ion-col size=\"6\" *ngIf=\"JobDetails.status==8 \">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\">Payment Recieved</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <ion-col size=\"12\" *ngIf=\"JobDetails.status==9 || JobDetails.status==10\">\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themepurple\">Payment Refunded to Customer</ion-button>\r\n        </div>\r\n      </ion-col>\r\n\r\n      <!-- <ion-col>\r\n        <div>\r\n          <ion-button expand=\"block\" color=\"themeoutlinepurple\">DECLINE</ion-button>\r\n        </div>\r\n      </ion-col> -->\r\n    </ion-row>\r\n  </ion-grid>\r\n</ion-content>");
 
 /***/ })
 

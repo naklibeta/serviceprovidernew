@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-settings',
@@ -31,7 +32,14 @@ export class SettingsPage implements OnInit {
   }
 
 
-
+  async ShareApp() {
+    await Share.share({
+      title: 'Share IndianBeta Partner App',
+      text: 'Refer IndianBeta Partner app to your known, help us to join new service partners',
+      url: 'https://play.google.com/store/apps/details?id=com.service.naklibeta.nakli_beta_service_provider',
+      dialogTitle: 'Share app with your friends',
+    });
+  }
 
 
 

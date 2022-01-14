@@ -13,6 +13,12 @@
 
     <form #regForm="ngForm" (ngSubmit)="UpdateKYCNow(regForm.value)">
 
+      <p style="font-size: 12px;padding: 8px;color: #890000;">Note: As service Provider/Partner, your service
+        charges/invoice amount will be
+        deposited in
+        your bank account,
+        so these information are essential for you to be filled. </p>
+
 
       <ion-item>
         <ion-label position="floating">Account Holder Name</ion-label>
@@ -80,6 +86,8 @@
         <img *ngIf="selected_aBack_Image != '' " [src]="selected_aBack_Image" class="cert-img"
           (click)="ChooseImage('aBack')">
       </ion-item>
+
+
 
 
 

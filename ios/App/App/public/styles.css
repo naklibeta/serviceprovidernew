@@ -200,17 +200,17 @@
   }
 }
 .ion-color-themepurple {
-  --ion-color-base: var(--ion-color-themepurple, #561d5e) !important;
+  --ion-color-base: var(--ion-color-themepurple, #11346D) !important;
   --ion-color-base-rgb: var(--ion-color-themepurple-rgb, 56, 128, 255) !important;
   --ion-color-contrast: var(--ion-color-themepurple-contrast, #fff) !important;
   --ion-color-contrast-rgb: var(--ion-color-themepurple-contrast-rgb, 255, 255, 255) !important;
-  --ion-color-shade: var(--ion-color-themepurple-shade, #561d5e) !important;
-  --ion-color-tint: var(--ion-color-themepurple-tint, #561d5e) !important;
+  --ion-color-shade: var(--ion-color-themepurple-shade, #11346D) !important;
+  --ion-color-tint: var(--ion-color-themepurple-tint, #11346D) !important;
 }
 .ion-color-themeoutlinepurple {
   --ion-color-base: var(--ion-color-themeoutlinepurple, #fff) !important;
   --ion-color-base-rgb: var(--ion-color-themeoutlinepurple-rgb, 56, 128, 255) !important;
-  --ion-color-contrast: var(--ion-color-themeoutlinepurple-contrast, #561d5e) !important;
+  --ion-color-contrast: var(--ion-color-themeoutlinepurple-contrast, #11346D) !important;
   --ion-color-contrast-rgb: var(--ion-color-themeoutlinepurple-contrast-rgb, 255, 255, 255) !important;
   --ion-color-shade: var(--ion-color-themeoutlinepurple-shade, #fff) !important;
   --ion-color-tint: var(--ion-color-themeoutlinepurple-tint, #fff) !important;
@@ -248,12 +248,12 @@ html.ios ion-modal .ion-page {
   border-radius: inherit;
 }
 .ion-color-themepurple {
-  --ion-color-base: var(--ion-color-themepurple, #561d5e) !important;
+  --ion-color-base: var(--ion-color-themepurple, #11346D) !important;
   --ion-color-base-rgb: var(--ion-color-themepurple-rgb, 56, 128, 255) !important;
   --ion-color-contrast: var(--ion-color-themepurple-contrast, #fff) !important;
   --ion-color-contrast-rgb: var(--ion-color-themepurple-contrast-rgb, 255, 255, 255) !important;
-  --ion-color-shade: var(--ion-color-themepurple-shade, #561d5e) !important;
-  --ion-color-tint: var(--ion-color-themepurple-tint, #561d5e) !important;
+  --ion-color-shade: var(--ion-color-themepurple-shade, #11346D) !important;
+  --ion-color-tint: var(--ion-color-themepurple-tint, #11346D) !important;
 }
 .ion-color-primary {
   --ion-color-base: var(--ion-color-primary, #3880ff) !important;
@@ -1268,10 +1268,10 @@ ion-content {
   font-family: "Poppins", sans-serif;
 }
 .theme-color-back {
-  background: #f7c704;
+  background: #f56728;
 }
 ion-toolbar {
-  --background: #f7c704 !important;
+  --background: #f56728 !important;
 }
 .text-left {
   text-align: left;
@@ -1280,7 +1280,7 @@ ion-toolbar {
   text-align: right;
 }
 .theme-btn {
-  --background: #561d5e !important;
+  --background: #11346D !important;
 }
 .mtb-10 {
   margin-top: 10px;
@@ -1297,7 +1297,7 @@ ion-toolbar {
 }
 .header-name {
   margin-left: 30px;
-  color: #561d5e;
+  color: #11346D;
 }
 .warning-text {
   font-size: 12px;
@@ -1329,7 +1329,7 @@ ion-toolbar {
   margin-top: 7px;
 }
 .status-user a {
-  color: #561d5e;
+  color: #11346D;
   font-size: 13px;
   position: relative;
 }

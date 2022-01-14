@@ -11,22 +11,33 @@ import { LoadingController } from '@ionic/angular';
 
 export class ApiService {
 
-  constructor(public http: HttpClient, public toastController: ToastController, public loadingController: LoadingController) { }
+  checkchange: any;
+
+  constructor(public http: HttpClient, public toastController: ToastController, public loadingController: LoadingController) {
+    //this.checkchange = localStorage.getItem('URIchanged');
+  }
+
+
 
 
   public Common_Test(postFix: any, data: any): Observable<any> {
     return this.http.post(postFix, data);
   }
 
-  public test(): Observable<any> {
-    return this.http.post('/', { "sdf": "sf" });
-  }
+  //-----Need to change when CI cors error solved permanently-------------------------
 
   public Common_POST(postFix: any, data: any): Observable<any> {
+
+    // if (this.checkchange) {
+    //   environment.apiUrl = this.checkchange;
+    // }
     return this.http.post(environment.apiUrl + postFix, data);
   }
 
   public Common_GET(postFix: any): Observable<any> {
+    // if (this.checkchange) {
+    //   environment.apiUrl = this.checkchange;
+    // }
     return this.http.get(environment.apiUrl + postFix);
   }
 
@@ -37,6 +48,8 @@ export class ApiService {
     });
     toast.present();
   }
+
+
 
   public Get_UserData() {
     let User = localStorage.getItem('UserData');
@@ -144,6 +157,12 @@ export class ApiService {
     setTimeout(() => {
       this.loadingController.dismiss();
     }, 2000);
+  }
+
+  hideLoaderInstant() {
+
+    this.loadingController.dismiss();
+
   }
 
   JobStatus(status) {

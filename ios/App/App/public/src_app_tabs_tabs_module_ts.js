@@ -142,7 +142,6 @@ let TabsPage = class TabsPage {
         this.BadgeData = { myJobsCount: 0, notificationCount: 0 };
     }
     ionViewDidEnter() {
-        debugger;
         let CheckLogin = localStorage.getItem('isLogged');
         if (CheckLogin && CheckLogin == 'true') {
         }

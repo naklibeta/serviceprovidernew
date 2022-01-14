@@ -50,6 +50,7 @@ export class MyJobsPage implements OnInit {
 
     this.apiService.Common_POST('/myjobs', { provider_id: this.apiService.Get_ProviderId() }).subscribe((results) => {
       if (results.statusCode == 200) {
+        this.apiService.hideLoaderInstant();
         this.MyJobs = results.data;
 
         if (this.MyJobs.length == 0) {

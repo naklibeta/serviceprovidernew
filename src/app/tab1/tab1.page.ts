@@ -46,6 +46,12 @@ export class Tab1Page implements OnInit {
 
   }
 
+  Navigate(message) {
+    if (message.includes('kyc') || message.includes('KYC')) {
+      this.router.navigate(['/kyc']);
+    }
+  }
+
   // UpdateDeviceToken(token) {
   //   let Data = {
   //     "device_type": 'android',

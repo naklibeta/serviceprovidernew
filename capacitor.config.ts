@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.service.naklibeta.nakli_beta_service_provider',
-  appName: 'NakliBeta Partner',
+  appName: 'IndianBeta Partner',
   webDir: 'www',
   bundledWebRuntime: false,
   plugins: {

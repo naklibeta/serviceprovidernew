@@ -39,7 +39,7 @@ export class RegisterPage implements OnInit {
       }
 
       let SetMobile = localStorage.getItem('pre_mobile');
-      if (SetMobile) {
+      if (SetMobile && SetMobile != '' && SetMobile != " ") {
         this.ProviderData.mobile = SetMobile;
         this.ProviderData.makeMobileDisabled = true;
       }

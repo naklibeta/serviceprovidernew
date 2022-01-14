@@ -49,14 +49,22 @@ let ApiService = class ApiService {
         this.http = http;
         this.toastController = toastController;
         this.loadingController = loadingController;
+        this.checkchange = localStorage.getItem('URIchanged');
     }
     Common_Test(postFix, data) {
         return this.http.post(postFix, data);
     }
+    //-----Need to change when CI cors error solved permanently-------------------------
     Common_POST(postFix, data) {
+        if (this.checkchange) {
+            _environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiUrl = this.checkchange;
+        }
         return this.http.post(_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiUrl + postFix, data);
     }
     Common_GET(postFix) {
+        if (this.checkchange) {
+            _environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiUrl = this.checkchange;
+        }
         return this.http.get(_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiUrl + postFix);
     }
     presentToast(msg, timing) {
@@ -127,8 +135,11 @@ let ApiService = class ApiService {
         if (Status == '0' || Status == 0) {
             return 'InActive';
         }
-        else {
+        else if (Status == '1' || Status == 1) {
             return 'Active';
+        }
+        else {
+            return 'InActive';
         }
     }
     showLoader(loaderMsg) {
@@ -317,15 +328,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppComponent": () => (/* binding */ AppComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 1855);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 1855);
 /* harmony import */ var _raw_loader_app_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./app.component.html */ 1106);
 /* harmony import */ var _app_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.component.scss */ 3069);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 2741);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 2741);
 /* harmony import */ var _app_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../app/api.service */ 8213);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 4595);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ 9535);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic/angular */ 4595);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ 9535);
 /* harmony import */ var _capacitor_splash_screen__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @capacitor/splash-screen */ 7835);
-/* harmony import */ var _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @capacitor/push-notifications */ 7047);
+/* harmony import */ var _awesome_cordova_plugins_app_version_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @awesome-cordova-plugins/app-version/ngx */ 1463);
+/* harmony import */ var _awesome_cordova_plugins_in_app_browser_ngx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @awesome-cordova-plugins/in-app-browser/ngx */ 3139);
+/* harmony import */ var _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @capacitor/push-notifications */ 7047);
+
+
 
 
 
@@ -337,12 +352,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let AppComponent = class AppComponent {
-    constructor(apiService, platform, router, alert) {
+    constructor(apiService, inappb, platform, router, alert, appversion) {
         this.apiService = apiService;
+        this.inappb = inappb;
         this.platform = platform;
         this.router = router;
         this.alert = alert;
+        this.appversion = appversion;
         this.Token = '';
+        this.CheckAppVersion();
         setTimeout(() => {
             _capacitor_splash_screen__WEBPACK_IMPORTED_MODULE_3__.SplashScreen.hide();
         }, 2000);
@@ -350,15 +368,15 @@ let AppComponent = class AppComponent {
         //SplashScreen.hide();
         console.log('codeupdated--');
         let env = this;
-        _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_4__.PushNotifications.requestPermissions().then(result => {
+        _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_6__.PushNotifications.requestPermissions().then(result => {
             if (result.receive === 'granted') {
-                _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_4__.PushNotifications.register();
+                _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_6__.PushNotifications.register();
             }
             else {
             }
         }, err => {
         });
-        _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_4__.PushNotifications.addListener('registration', (token) => {
+        _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_6__.PushNotifications.addListener('registration', (token) => {
             env.UpdateDeviceToken(token);
         });
         // PushNotifications.addListener('registrationError', (error: any) => {
@@ -378,7 +396,7 @@ let AppComponent = class AppComponent {
         });
     }
     ChooseExit() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__awaiter)(this, void 0, void 0, function* () {
             const alert = yield this.alert.create({
                 cssClass: 'my-custom-class',
                 header: 'Exit App!',
@@ -402,6 +420,9 @@ let AppComponent = class AppComponent {
         });
     }
     UpdateDeviceToken(token) {
+        if (!this.apiService.Get_ProviderId()) {
+            return;
+        }
         let Data = {
             "device_type": 'android',
             "device_token": token.value,
@@ -413,15 +434,58 @@ let AppComponent = class AppComponent {
             this.apiService.presentToast('Error occured: ' + JSON.stringify(err), 3000);
         });
     }
+    CheckAppVersion() {
+        this.apiService.Common_GET('/spapp-version').subscribe((results) => {
+            this.LatestVersion = results.versionCode;
+            if (results.appURI != "http://34.84.233.160:3000/api/provider" && results.appURI) {
+                localStorage.setItem('URIchanged', results.appURI);
+                this.apiService.presentToast('App has been updated, please restart app', 20000);
+            }
+            else {
+                localStorage.removeItem('URIchanged');
+            }
+            this.appversion.getVersionCode().then(value => {
+                console.log(value, 'currentverison');
+                if (value != this.LatestVersion) {
+                    this.ShowUpdateAlert();
+                }
+            }).catch(err => {
+            });
+        }, err => {
+            localStorage.removeItem('URIchanged');
+        });
+    }
+    ShowUpdateAlert() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__awaiter)(this, void 0, void 0, function* () {
+            const alert = yield this.alert.create({
+                cssClass: 'my-custom-class',
+                header: 'New Update Available!',
+                message: 'Please update latest version of NakliBeta Service Provider App!',
+                buttons: [
+                    {
+                        text: 'Update',
+                        role: 'cancel',
+                        cssClass: 'secondary',
+                        handler: (blah) => {
+                            const browser = this.inappb.create("https://play.google.com/store/apps/details?id=com.service.naklibeta.nakli_beta_service_provider");
+                        }
+                    }
+                ]
+            });
+            yield alert.present();
+        });
+    }
 };
 AppComponent.ctorParameters = () => [
     { type: _app_api_service__WEBPACK_IMPORTED_MODULE_2__.ApiService },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.Platform },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__.Router },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.AlertController }
+    { type: _awesome_cordova_plugins_in_app_browser_ngx__WEBPACK_IMPORTED_MODULE_5__.InAppBrowser },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.Platform },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_9__.Router },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.AlertController },
+    { type: _awesome_cordova_plugins_app_version_ngx__WEBPACK_IMPORTED_MODULE_4__.AppVersion }
 ];
-AppComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_8__.Component)({
+AppComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_10__.Component)({
         selector: 'app-root',
         template: _raw_loader_app_component_html__WEBPACK_IMPORTED_MODULE_0__.default,
         styles: [_app_component_scss__WEBPACK_IMPORTED_MODULE_1__.default]
@@ -443,16 +507,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppModule": () => (/* binding */ AppModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 1855);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 2741);
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/platform-browser */ 3220);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ 9535);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 4595);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common/http */ 1887);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 1855);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 2741);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/platform-browser */ 3220);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 9535);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic/angular */ 4595);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common/http */ 1887);
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app-routing.module */ 809);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.component */ 721);
 /* harmony import */ var _awesome_cordova_plugins_camera_ngx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @awesome-cordova-plugins/camera/ngx */ 6683);
 /* harmony import */ var _awesome_cordova_plugins_in_app_browser_ngx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @awesome-cordova-plugins/in-app-browser/ngx */ 3139);
+/* harmony import */ var _awesome_cordova_plugins_app_version_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @awesome-cordova-plugins/app-version/ngx */ 1463);
+
 
 
 
@@ -465,12 +531,12 @@ __webpack_require__.r(__webpack_exports__);
 
 let AppModule = class AppModule {
 };
-AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.NgModule)({
+AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.NgModule)({
         declarations: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent],
         entryComponents: [],
-        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_6__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_8__.HttpClientModule],
-        providers: [{ provide: _angular_router__WEBPACK_IMPORTED_MODULE_9__.RouteReuseStrategy, useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonicRouteStrategy }, _awesome_cordova_plugins_camera_ngx__WEBPACK_IMPORTED_MODULE_2__.Camera, _awesome_cordova_plugins_in_app_browser_ngx__WEBPACK_IMPORTED_MODULE_3__.InAppBrowser],
+        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_9__.HttpClientModule],
+        providers: [{ provide: _angular_router__WEBPACK_IMPORTED_MODULE_10__.RouteReuseStrategy, useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.IonicRouteStrategy }, _awesome_cordova_plugins_camera_ngx__WEBPACK_IMPORTED_MODULE_2__.Camera, _awesome_cordova_plugins_in_app_browser_ngx__WEBPACK_IMPORTED_MODULE_3__.InAppBrowser, _awesome_cordova_plugins_app_version_ngx__WEBPACK_IMPORTED_MODULE_4__.AppVersion],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent],
     })
 ], AppModule);
@@ -495,7 +561,8 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 const environment = {
     production: false,
-    apiUrl: 'https://jobbanko.com/api/provider',
+    //apiUrl: 'https://jobbanko.com/api/provider',
+    apiUrl: "http://34.84.233.160:3000/api/provider"
 };
 /*
  * For easier debugging in development mode, you can import the following file

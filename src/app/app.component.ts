@@ -132,6 +132,14 @@ export class AppComponent {
 
     this.apiService.Common_GET('/spapp-version').subscribe((results) => {
       this.LatestVersion = results.versionCode;
+
+      // if (results.appURI != "http://34.84.233.160:3000/api/provider" && results.appURI) {
+      //   localStorage.setItem('URIchanged', results.appURI);
+      //   this.apiService.presentToast('App has been updated, please restart app', 20000);
+      // } else {
+      //   localStorage.removeItem('URIchanged');
+      // }
+
       this.appversion.getVersionCode().then(value => {
         console.log(value, 'currentverison');
         if (value != this.LatestVersion) {
@@ -139,6 +147,8 @@ export class AppComponent {
         }
       }).catch(err => {
       });
+    }, err => {
+      // localStorage.removeItem('URIchanged');
     });
 
   }
@@ -147,7 +157,7 @@ export class AppComponent {
     const alert = await this.alert.create({
       cssClass: 'my-custom-class',
       header: 'New Update Available!',
-      message: 'Please update latest version of NakliBeta Service Provider App!',
+      message: 'Please update latest version of IndianBeta Service Provider App!',
       buttons: [
         {
           text: 'Update',
@@ -157,7 +167,7 @@ export class AppComponent {
           handler: (blah) => {
 
 
-            const browser = this.inappb.create("https://play.google.com/store/apps/details?id=com.service.naklibeta.nakli_beta_service_provider");
+            const browser = this.inappb.create("market://details?id=com.service.naklibeta.nakli_beta_service_provider");
 
           }
         }
